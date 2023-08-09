@@ -15,19 +15,19 @@ public class Watchlist {
         this.itemIds = itemIds;
     }
 
-    public String getUserId() {
-        return this.userId;
-    }
-
-    public List<String> getItemIds() {
-        return Collections.unmodifiableList(this.itemIds);
-    }
-
     public void addItemId(final String itemId) {
         this.itemIds.add(itemId);
     }
 
     public void removeItemId(final String itemId) {
         this.itemIds.remove(itemId);
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public List<String> getItemIds() {
+        return Collections.unmodifiableList(this.itemIds);
     }
 }
