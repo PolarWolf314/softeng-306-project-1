@@ -1,5 +1,7 @@
 package nz.ac.aucklanduni.se306project1.models.items;
 
+import java.util.Objects;
+
 public abstract class CartItemSpecifications {
     private int quantity;
     private String colour;
@@ -24,5 +26,20 @@ public abstract class CartItemSpecifications {
 
     public String getSize() {
         return this.size;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartItemSpecifications)) return false;
+        final CartItemSpecifications that = (CartItemSpecifications) o;
+        return this.quantity == that.quantity &&
+                Objects.equals(this.colour, that.colour) &&
+                Objects.equals(this.size, that.size);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.quantity, this.colour, this.size);
     }
 }

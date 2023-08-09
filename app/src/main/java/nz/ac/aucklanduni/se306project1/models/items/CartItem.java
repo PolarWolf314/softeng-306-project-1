@@ -1,5 +1,7 @@
 package nz.ac.aucklanduni.se306project1.models.items;
 
+import java.util.Objects;
+
 public class CartItem extends CartItemSpecifications {
     private Item item;
 
@@ -13,5 +15,19 @@ public class CartItem extends CartItemSpecifications {
 
     public Item getItem() {
         return this.item;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartItem)) return false;
+        if (!super.equals(o)) return false;
+        final CartItem cartItem = (CartItem) o;
+        return Objects.equals(this.item, cartItem.item);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), this.item);
     }
 }
