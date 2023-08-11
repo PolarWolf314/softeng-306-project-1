@@ -31,7 +31,7 @@ public abstract class CartItemSpecifications {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof CartItemSpecifications)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         final CartItemSpecifications that = (CartItemSpecifications) o;
         return this.quantity == that.quantity &&
                 Objects.equals(this.colour, that.colour) &&

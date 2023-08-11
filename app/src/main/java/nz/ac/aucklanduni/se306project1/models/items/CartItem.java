@@ -20,7 +20,7 @@ public class CartItem extends CartItemSpecifications {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof CartItem)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         final CartItem cartItem = (CartItem) o;
         return Objects.equals(this.item, cartItem.item);

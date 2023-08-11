@@ -20,7 +20,7 @@ public class SerializedCartItem extends CartItemSpecifications {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (!(o instanceof SerializedCartItem)) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         final SerializedCartItem that = (SerializedCartItem) o;
         return Objects.equals(this.itemId, that.itemId);
