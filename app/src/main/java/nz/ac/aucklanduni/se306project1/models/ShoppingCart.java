@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.models;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 
@@ -35,5 +36,19 @@ public class ShoppingCart {
 
     public List<CartItem> getCartItems() {
         return Collections.unmodifiableList(this.cartItems);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        final ShoppingCart that = (ShoppingCart) o;
+        return Objects.equals(this.userId, that.userId) &&
+                Objects.equals(this.cartItems, that.cartItems);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.userId, this.cartItems);
     }
 }
