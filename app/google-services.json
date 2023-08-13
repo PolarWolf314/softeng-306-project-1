@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "963697847702",
+    "project_id": "se-306-project-1-team-20",
+    "storage_bucket": "se-306-project-1-team-20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963697847702:android:0919c4e212b33b943701b7",
+        "android_client_info": {
+          "package_name": "nz.ac.aucklanduni.se306.project1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "963697847702-lnpr89np7f158esp020leuktlc06hjth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjLdhwlwZlP79mSBKwF6-ibqJ-vZfYUKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "963697847702-l88ct5kehsuphhm97aa51sapd5j551hu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
