@@ -2,70 +2,70 @@
 <resources>
     <style name="DisplayLarge" parent="">
         <item name="android:textSize">57sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="DisplayMedium" parent="">
         <item name="android:textSize">45sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="DisplaySmall" parent="">
         <item name="android:textSize">36sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
 
     <style name="HeadlineLarge" parent="">
         <item name="android:textSize">32sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="HeadlineMedium" parent="">
         <item name="android:textSize">28sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="HeadlineSmall" parent="">
         <item name="android:textSize">24sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
 
     <style name="TitleLarge" parent="">
         <item name="android:textSize">22sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="TitleMedium" parent="">
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="TitleSmall" parent="">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
 
     <style name="LabelProminent" parent="">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-SemiBold</item>
+        <item name="android:fontFamily">@font/pptelegraf_semibold</item>
     </style>
     <style name="LabelLarge" parent="">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="LabelMedium" parent="">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="LabelSmall" parent="">
         <item name="android:textSize">11sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
 
     <style name="BodyLarge" parent="">
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="BodyMedium" parent="">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
     <style name="BodySmall" parent="">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/PPTelegraf-Regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
 </resources>
