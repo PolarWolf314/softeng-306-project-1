@@ -14,10 +14,6 @@
         <item name="iconTint">@color/black</item>
     </style>
 
-    <style name="IconButton.Checkbox" parent="IconButton.Common">
-        <item name="buttonTint">@color/black</item>
-    </style>
-
     <style name="DisplayLarge" parent="">
         <item name="android:textSize">57sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
