@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#8BC34A"
-    android:paddingHorizontal="12dp"
-    android:paddingVertical="8dp">
+    card_view:cardBackgroundColor="#8BC34A"
+    card_view:cardCornerRadius="20dp">
 
-    <ImageView
-        android:id="@+id/item_card_image"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/ic_launcher_background" />
-
-    <TextView
-        android:id="@+id/item_card_name"
-        style="@style/LabelProminent"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_card_image"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Hello there, I am general kenobi!"
-        android:textColor="@color/black" />
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp">
 
-    <TextView
-        android:id="@+id/item_card_price"
-        style="@style/LabelSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/item_card_name"
-        android:layout_alignParentStart="true"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="$19.99"
-        android:textColor="@color/black" />
+        <ImageView
+            android:id="@+id/item_card_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_launcher_background" />
 
-    <CheckBox
-        android:id="@+id/item_card_favourite"
-        style="@style/IconButton.Checkbox"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:button="@drawable/favourite_outline_24dp" />
+        <TextView
+            android:id="@+id/item_card_name"
+            style="@style/LabelProminent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_card_image"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Hello there, I am general kenobi!"
+            android:textColor="@color/black" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/item_card_price"
+            style="@style/LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_card_name"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="$19.99"
+            android:textColor="@color/black" />
+
+        <CheckBox
+            android:id="@+id/item_card_favourite"
+            style="@style/IconButton.Checkbox"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/favourite_outline_24dp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
