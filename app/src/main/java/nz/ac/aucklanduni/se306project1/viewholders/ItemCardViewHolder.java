@@ -40,4 +40,19 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
 
         });
     }
+
+    public static class Builder implements ViewHolderBuilder<ItemCardViewHolder> {
+
+        public static final Builder INSTANCE = new Builder();
+
+        @Override
+        public int getLayoutId() {
+            return R.layout.item_card;
+        }
+
+        @Override
+        public ItemCardViewHolder createViewHolder(View view) {
+            return new ItemCardViewHolder(view);
+        }
+    }
 }
