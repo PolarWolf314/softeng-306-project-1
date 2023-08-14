@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#8BC34A"
     android:paddingHorizontal="12dp"
     android:paddingVertical="8dp">
 
@@ -41,10 +41,11 @@
         android:text="$19.99"
         android:textColor="@color/black" />
 
-    <Button
-        style="@style/IconButton"
+    <CheckBox
+        android:id="@+id/item_card_favourite"
+        style="@style/IconButton.Checkbox"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        app:icon="@drawable/favourite_outline_24dp" />
+        android:button="@drawable/favourite_outline_24dp" />
 
 </RelativeLayout>
