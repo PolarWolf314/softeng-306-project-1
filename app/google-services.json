@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:963697847702:android:0919c4e212b33b943701b7",
+        "mobilesdk_app_id": "1:963697847702:android:5a793b11970630f83701b7",
         "android_client_info": {
-          "package_name": "nz.ac.aucklanduni.se306.project1"
+          "package_name": "nz.ac.aucklanduni.se306project1"
         }
       },
       "oauth_client": [
