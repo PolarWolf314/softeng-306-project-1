@@ -49,9 +49,9 @@ public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
         });
     }
 
-    public static class Builder implements ViewHolderBuilder<ItemCardViewHolder> {
+    public static class Builder implements ViewHolderBuilder<FeaturedItemCardViewHolder> {
 
-        public static final ItemCardViewHolder.Builder INSTANCE = new ItemCardViewHolder.Builder();
+        public static final FeaturedItemCardViewHolder.Builder INSTANCE = new FeaturedItemCardViewHolder.Builder();
 
         @Override
         public int getLayoutId() {
@@ -59,8 +59,8 @@ public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
         }
 
         @Override
-        public ItemCardViewHolder createViewHolder(final View view) {
-            return new ItemCardViewHolder(view);
+        public FeaturedItemCardViewHolder createViewHolder(final View view) {
+            return new FeaturedItemCardViewHolder(view);
         }
     }
 }
