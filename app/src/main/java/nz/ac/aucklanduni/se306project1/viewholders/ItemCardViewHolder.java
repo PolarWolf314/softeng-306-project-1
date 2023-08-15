@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.Locale;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 
@@ -46,8 +47,10 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         }
 
         final ColouredItemInformation colourInformation = item.getColours().get(0);
+        final ImageInfo imageInfo = colourInformation.getImages().get(0);
 
-        Glide.with(this.context).load(colourInformation.getImages().get(0)).into(this.itemImage);
+        Glide.with(this.context).load(imageInfo.getUrl()).into(this.itemImage);
+        this.itemImage.setContentDescription(imageInfo.getDescription());
         this.cardView.setCardBackgroundColor(Color.parseColor(colourInformation.getColour()));
         this.itemName.setText(item.getDisplayName());
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
