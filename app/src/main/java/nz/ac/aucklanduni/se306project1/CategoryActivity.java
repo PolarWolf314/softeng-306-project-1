@@ -3,7 +3,6 @@ package nz.ac.aucklanduni.se306project1;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
@@ -18,18 +17,17 @@ public class CategoryActivity extends AppCompatActivity {
     private ActivityCategoryBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.binding = ActivityCategoryBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        this.binding = ActivityCategoryBinding.inflate(this.getLayoutInflater());
+        this.setContentView(this.binding.getRoot());
 
-        final RecyclerView recyclerView = binding.categoryListRecyclerView;
+        final RecyclerView recyclerView = this.binding.categoryListRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
                 this, MockData.ITEMS, ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(this, 2, 20));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 20);
     }
 }

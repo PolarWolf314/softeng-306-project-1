@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
@@ -15,6 +16,25 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     public GridSpacingItemDecoration(final Context context, final int spanCount, final int spacingDp) {
         this.numColumns = spanCount;
         this.spacingPx = Math.round(spacingDp * context.getResources().getDisplayMetrics().density);
+    }
+
+    /**
+     * Attaches an instance of {@link GridLayoutManager} and {@link GridSpacingItemDecoration} to
+     * the recycler view with the specified number of columns and spacing (In dp) between them.
+     *
+     * @param recyclerView The {@link RecyclerView} to attach the grid to
+     * @param context      The {@link Context}
+     * @param numColumns   The number of columns in the grid
+     * @param spacingDp    The spacing in dp between columns
+     */
+    public static void attachGrid(
+            final RecyclerView recyclerView,
+            final Context context,
+            final int numColumns,
+            final int spacingDp) {
+
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(context, numColumns, spacingDp));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, numColumns));
     }
 
     /**
@@ -29,13 +49,13 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
             final RecyclerView parent,
             @NonNull final RecyclerView.State state
     ) {
-        int position = parent.getChildAdapterPosition(view); // item position
-        int column = position % numColumns; // item column
+        final int position = parent.getChildAdapterPosition(view); // item position
+        final int column = position % this.numColumns; // item column
 
-        outRect.left = column * spacingPx / numColumns; // column * ((1f / spanCount) * spacing)
-        outRect.right = spacingPx - (column + 1) * spacingPx / numColumns; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-        if (position >= numColumns) {
-            outRect.top = spacingPx; // item top
+        outRect.left = column * this.spacingPx / this.numColumns; // column * ((1f / spanCount) * spacing)
+        outRect.right = this.spacingPx - (column + 1) * this.spacingPx / this.numColumns; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+        if (position >= this.numColumns) {
+            outRect.top = this.spacingPx; // item top
         }
     }
 }
