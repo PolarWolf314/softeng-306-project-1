@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     private Context appContext;
 
     @Override
-    public FirebaseUser registerUser(String email, String password, AppCompatActivity myActivity) {
+    public FirebaseUser registerUser(String email, String password, Activity myActivity) {
         this.mAuth = FirebaseAuth.getInstance();
         this.appContext = myActivity;
 
@@ -27,7 +28,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override
-    public FirebaseUser loginUser(String email, String password, AppCompatActivity myActivity) {
+    public FirebaseUser loginUser(String email, String password, Activity myActivity) {
         this.mAuth = FirebaseAuth.getInstance();
         this.appContext = myActivity;
 
