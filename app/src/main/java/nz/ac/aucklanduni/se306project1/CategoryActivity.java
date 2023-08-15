@@ -28,6 +28,6 @@ public class CategoryActivity extends AppCompatActivity {
                 this, MockData.ITEMS, ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
-        GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 20);
+        GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
     }
 }

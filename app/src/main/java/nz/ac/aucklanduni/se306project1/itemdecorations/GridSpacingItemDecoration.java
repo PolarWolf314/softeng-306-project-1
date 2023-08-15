@@ -11,29 +11,42 @@ import androidx.recyclerview.widget.RecyclerView;
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
     private final int numColumns;
-    private final int spacingPx;
+    private final int verticalSpacingPx;
+    private final int horizontalSpacingPx;
 
-    public GridSpacingItemDecoration(final Context context, final int spanCount, final int spacingDp) {
+    public GridSpacingItemDecoration(
+            final Context context,
+            final int spanCount,
+            final int verticalSpacingDp,
+            final int horizontalSpacingDp
+    ) {
+        final float pixelDensity = context.getResources().getDisplayMetrics().density;
+
         this.numColumns = spanCount;
-        this.spacingPx = Math.round(spacingDp * context.getResources().getDisplayMetrics().density);
+        this.verticalSpacingPx = Math.round(verticalSpacingDp * pixelDensity);
+        this.horizontalSpacingPx = Math.round(horizontalSpacingDp * pixelDensity);
     }
 
     /**
      * Attaches an instance of {@link GridLayoutManager} and {@link GridSpacingItemDecoration} to
      * the recycler view with the specified number of columns and spacing (In dp) between them.
      *
-     * @param recyclerView The {@link RecyclerView} to attach the grid to
-     * @param context      The {@link Context}
-     * @param numColumns   The number of columns in the grid
-     * @param spacingDp    The spacing in dp between columns
+     * @param recyclerView        The {@link RecyclerView} to attach the grid to
+     * @param context             The {@link Context}
+     * @param numColumns          The number of columns in the grid
+     * @param verticalSpacingDp   The spacing in dp between rows
+     * @param horizontalSpacingDp The spacing in dp between columns
      */
     public static void attachGrid(
             final RecyclerView recyclerView,
             final Context context,
             final int numColumns,
-            final int spacingDp) {
+            final int verticalSpacingDp,
+            final int horizontalSpacingDp
+    ) {
 
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(context, numColumns, spacingDp));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(
+                context, numColumns, verticalSpacingDp, horizontalSpacingDp));
         recyclerView.setLayoutManager(new GridLayoutManager(context, numColumns));
     }
 
@@ -52,10 +65,10 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
         final int position = parent.getChildAdapterPosition(view); // item position
         final int column = position % this.numColumns; // item column
 
-        outRect.left = column * this.spacingPx / this.numColumns; // column * ((1f / spanCount) * spacing)
-        outRect.right = this.spacingPx - (column + 1) * this.spacingPx / this.numColumns; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+        outRect.left = column * this.horizontalSpacingPx / this.numColumns; // column * ((1f / spanCount) * spacing)
+        outRect.right = this.horizontalSpacingPx - (column + 1) * this.horizontalSpacingPx / this.numColumns; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
         if (position >= this.numColumns) {
-            outRect.top = this.spacingPx; // item top
+            outRect.top = this.verticalSpacingPx; // item top
         }
     }
 }
