@@ -44,7 +44,7 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         // this.itemImage = ...
         this.itemName.setText(item.getDisplayName());
         // TODO: Look into NumberFormatter
-        this.itemPrice.setText(String.format(Locale.getDefault(), "$%02f", item.getPrice()));
+        this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
 
         });

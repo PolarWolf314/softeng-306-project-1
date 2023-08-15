@@ -12,7 +12,7 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 public class MockData {
     private static final String CIVIL_CATEGORY = "civil";
 
-    public static final List<Item> items = new ArrayList<>(List.of(
+    public static final List<Item> ITEMS = new ArrayList<>(List.of(
             new CivilItem(
                     "d2d6a453-8870-48ee-98de-49a596c9de7b",
                     "The Hard Helmet",
