@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.viewholders;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckBox;
@@ -9,22 +10,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Locale;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 
 public class ItemCardViewHolder extends BindableViewHolder<Item> {
 
+    private final Context context;
     private final CardView cardView;
     private final ImageView itemImage;
     private final TextView itemName;
     private final TextView itemPrice;
     private final CheckBox favouriteItemCheckbox;
 
-    public ItemCardViewHolder(@NonNull final View itemView) {
+    public ItemCardViewHolder(@NonNull final Context context, @NonNull final View itemView) {
         super(itemView);
 
+        this.context = context;
         this.cardView = itemView.findViewById(R.id.item_card);
         this.itemImage = itemView.findViewById(R.id.item_card_image);
         this.itemName = itemView.findViewById(R.id.item_card_name);
@@ -39,9 +45,10 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
                     String.format("The item %s (%s) has no colour information", item.getDisplayName(), item.getId()));
         }
 
-        this.cardView.setCardBackgroundColor(Color.parseColor(item.getColours().get(0).getColour()));
-        // TODO: Convert image URL to image
-        // this.itemImage = ...
+        final ColouredItemInformation colourInformation = item.getColours().get(0);
+
+        Glide.with(this.context).load(colourInformation.getImageUrls().get(0)).into(this.itemImage);
+        this.cardView.setCardBackgroundColor(Color.parseColor(colourInformation.getColour()));
         this.itemName.setText(item.getDisplayName());
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
@@ -59,8 +66,8 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         }
 
         @Override
-        public ItemCardViewHolder createViewHolder(final View view) {
-            return new ItemCardViewHolder(view);
+        public ItemCardViewHolder createViewHolder(final Context context, final View view) {
+            return new ItemCardViewHolder(context, view);
         }
     }
 }
