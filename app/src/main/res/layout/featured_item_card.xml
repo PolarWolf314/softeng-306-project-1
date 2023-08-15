@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/item_card_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="134dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/ic_launcher_background" />
@@ -24,8 +24,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_card_image"
             android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
