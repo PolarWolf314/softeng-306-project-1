@@ -12,17 +12,13 @@
         android:layout_height="wrap_content"
         android:text="Featured Products" />
 
-    <HorizontalScrollView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/featured_products_recycler_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/featured_products_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-
-    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
