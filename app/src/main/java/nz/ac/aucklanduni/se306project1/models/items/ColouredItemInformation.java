@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import nz.ac.aucklanduni.se306project1.models.ImageInfo;
+
 public class ColouredItemInformation {
     private String colour;
-    private List<String> imageUrls;
+    private List<ImageInfo> images;
     private Map<String, Integer> sizeQuantities;
 
     public ColouredItemInformation() {
@@ -15,11 +17,11 @@ public class ColouredItemInformation {
 
     public ColouredItemInformation(
             final String colour,
-            final List<String> imageUrls,
+            final List<ImageInfo> images,
             final Map<String, Integer> sizeQuantities
     ) {
         this.colour = colour;
-        this.imageUrls = imageUrls;
+        this.images = images;
         this.sizeQuantities = sizeQuantities;
     }
 
@@ -27,8 +29,8 @@ public class ColouredItemInformation {
         return this.colour;
     }
 
-    public List<String> getImageUrls() {
-        return this.imageUrls;
+    public List<ImageInfo> getImages() {
+        return this.images;
     }
 
     public Map<String, Integer> getSizeQuantities() {
@@ -41,12 +43,12 @@ public class ColouredItemInformation {
         if (o == null || this.getClass() != o.getClass()) return false;
         final ColouredItemInformation that = (ColouredItemInformation) o;
         return Objects.equals(this.colour, that.colour) &&
-                Objects.equals(this.imageUrls, that.imageUrls) &&
+                Objects.equals(this.images, that.images) &&
                 Objects.equals(this.sizeQuantities, that.sizeQuantities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.colour, this.imageUrls, this.sizeQuantities);
+        return Objects.hash(this.colour, this.images, this.sizeQuantities);
     }
 }

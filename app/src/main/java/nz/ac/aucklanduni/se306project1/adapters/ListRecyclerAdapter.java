@@ -36,7 +36,7 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view = inflater.inflate(this.viewHolderBuilder.getLayoutId(), parent, false);
 
-        return this.viewHolderBuilder.createViewHolder(view);
+        return this.viewHolderBuilder.createViewHolder(this.context, view);
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.enums.CivilSubcategory;
 import nz.ac.aucklanduni.se306project1.models.items.CivilItem;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
@@ -21,7 +22,9 @@ public class MockData {
                     39D,
                     List.of(new ColouredItemInformation(
                             "#F26F18",
-                            List.of("https://cdn.discordapp.com/attachments/713550649937231925/1140786088554799174/Hard_Hat.png"),
+                            List.of(new ImageInfo(
+                                    "https://cdn.discordapp.com/attachments/713550649937231925/1140786088554799174/Hard_Hat.png",
+                                    "An orange hard helmet")),
                             Map.of("s", 10, "m", 12, "l", 13))),
                     CivilSubcategory.PPE
             ),
@@ -33,7 +36,9 @@ public class MockData {
                     11.99D,
                     List.of(new ColouredItemInformation(
                             "#C0F147",
-                            List.of("https://cdn.discordapp.com/attachments/713550649937231925/1140787296124289065/Hi-Vis.png"),
+                            List.of(new ImageInfo(
+                                    "https://cdn.discordapp.com/attachments/713550649937231925/1140787296124289065/Hi-Vis.png",
+                                    "A hi-viz safety vest with reflective stripes")),
                             Map.of("s", 10, "m", 12, "l", 13))),
                     CivilSubcategory.PPE
             ),
@@ -45,7 +50,9 @@ public class MockData {
                     39D,
                     List.of(new ColouredItemInformation(
                             "#F26F18",
-                            List.of("https://cdn.discordapp.com/attachments/713550649937231925/1140786088554799174/Hard_Hat.png"),
+                            List.of(new ImageInfo(
+                                    "https://cdn.discordapp.com/attachments/713550649937231925/1140786088554799174/Hard_Hat.png",
+                                    "An orange hard helmet")),
                             Map.of("s", 10, "m", 12, "l", 13))),
                     CivilSubcategory.PPE
             ),
@@ -57,7 +64,9 @@ public class MockData {
                     11.99D,
                     List.of(new ColouredItemInformation(
                             "#C0F147",
-                            List.of("https://cdn.discordapp.com/attachments/713550649937231925/1140787296124289065/Hi-Vis.png"),
+                            List.of(new ImageInfo(
+                                    "https://cdn.discordapp.com/attachments/713550649937231925/1140787296124289065/Hi-Vis.png",
+                                    "A hi-viz safety vest with reflective stripes")),
                             Map.of("s", 10, "m", 12, "l", 13))),
                     CivilSubcategory.PPE
             )
