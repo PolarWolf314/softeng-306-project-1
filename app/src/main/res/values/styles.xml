@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <style name="IconButton.Common">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:background">@drawable/icon_button</item>
+    </style>
+
+    <style name="IconButton" parent="IconButton.Common">
+        <item name="iconSize">24dp</item>
+        <item name="iconTint">@color/black</item>
+    </style>
+
     <style name="DisplayLarge" parent="">
         <item name="android:textSize">57sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="DisplayMedium" parent="">
         <item name="android:textSize">45sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="DisplaySmall" parent="">
         <item name="android:textSize">36sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
@@ -17,10 +33,12 @@
         <item name="android:textSize">32sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="HeadlineMedium" parent="">
         <item name="android:textSize">28sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="HeadlineSmall" parent="">
         <item name="android:textSize">24sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
@@ -30,10 +48,12 @@
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="TitleMedium" parent="">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="TitleSmall" parent="">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
@@ -43,14 +63,17 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pptelegraf_semibold</item>
     </style>
+
     <style name="LabelLarge" parent="">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="LabelMedium" parent="">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="LabelSmall" parent="">
         <item name="android:textSize">11sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
@@ -60,10 +83,12 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="BodyMedium" parent="">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
     </style>
+
     <style name="BodySmall" parent="">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
