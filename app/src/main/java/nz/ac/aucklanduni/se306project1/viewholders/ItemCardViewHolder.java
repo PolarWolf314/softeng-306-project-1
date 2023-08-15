@@ -22,7 +22,7 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
     private final TextView itemPrice;
     private final CheckBox favouriteItemCheckbox;
 
-    public ItemCardViewHolder(@NonNull View itemView) {
+    public ItemCardViewHolder(@NonNull final View itemView) {
         super(itemView);
 
         this.cardView = itemView.findViewById(R.id.item_card);
@@ -43,10 +43,9 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         // TODO: Convert image URL to image
         // this.itemImage = ...
         this.itemName.setText(item.getDisplayName());
-        // TODO: Look into NumberFormatter
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
-
+            // TODO: Toggle whether the item is in the watchlist
         });
     }
 
@@ -60,7 +59,7 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         }
 
         @Override
-        public ItemCardViewHolder createViewHolder(View view) {
+        public ItemCardViewHolder createViewHolder(final View view) {
             return new ItemCardViewHolder(view);
         }
     }
