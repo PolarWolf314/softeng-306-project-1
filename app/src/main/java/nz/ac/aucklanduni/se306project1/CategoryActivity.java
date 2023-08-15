@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityCategoryBinding;
+import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 
@@ -28,6 +29,7 @@ public class CategoryActivity extends AppCompatActivity {
                 this, MockData.ITEMS, ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(this, 2, 20));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 }
