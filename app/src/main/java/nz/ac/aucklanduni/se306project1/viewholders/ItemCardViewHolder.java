@@ -47,7 +47,7 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
 
         final ColouredItemInformation colourInformation = item.getColours().get(0);
 
-        Glide.with(this.context).load(colourInformation.getImageUrls().get(0)).into(this.itemImage);
+        Glide.with(this.context).load(colourInformation.getImages().get(0)).into(this.itemImage);
         this.cardView.setCardBackgroundColor(Color.parseColor(colourInformation.getColour()));
         this.itemName.setText(item.getDisplayName());
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
