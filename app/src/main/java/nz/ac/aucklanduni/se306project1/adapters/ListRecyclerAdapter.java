@@ -10,8 +10,10 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import nz.ac.aucklanduni.se306project1.utils.ListDiff;
 import nz.ac.aucklanduni.se306project1.viewholders.BindableViewHolder;
@@ -21,18 +23,18 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         extends RecyclerView.Adapter<ViewHolder> {
 
     private final Context context;
-    private final LiveData<ListDiff<Item>> itemDiff;
+    private final List<Item> items;
     private final ViewHolderBuilder<ViewHolder> viewHolderBuilder;
 
     public ListRecyclerAdapter(
             final Context context,
-            final LiveData<ListDiff<Item>> itemDiff,
+            final LiveData<List<Item>> items,
             final ViewHolderBuilder<ViewHolder> viewHolderBuilder
     ) {
         this.context = context;
-        this.itemDiff = itemDiff;
+        this.items = new ArrayList<>(Objects.requireNonNullElse(items.getValue(), Collections.emptyList()));
         this.viewHolderBuilder = viewHolderBuilder;
-        this.itemDiff.observeForever(this::onListDiffChange);
+        items.observeForever(this::updateItems);
     }
 
     @NonNull
@@ -46,32 +48,21 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        final Item item = this.getItems().get(position);
+        final Item item = this.items.get(position);
         holder.bindFrom(item);
     }
 
     @Override
     public int getItemCount() {
-        return this.getItems().size();
+        return this.items.size();
     }
 
-    /**
-     * Get the list of displayed items. If there is none, an {@link Collections#emptyList()} is
-     * returned instead.
-     *
-     * @return The list of displayed items
-     */
-    private List<Item> getItems() {
-        final ListDiff<Item> itemDiff = this.itemDiff.getValue();
-        if (itemDiff == null) return Collections.emptyList();
-
-        return itemDiff.getNewList();
-    }
-
-    private void onListDiffChange(final ListDiff<Item> listDiff) {
+    public void updateItems(final List<Item> newItems) {
+        final ListDiff<Item> listDiff = new ListDiff<>(this.items, newItems);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(listDiff);
-        System.out.println(listDiff.getNewList().size());
-        System.out.println(this.itemDiff.getValue().getNewList().size());
+
+        this.items.clear();
+        this.items.addAll(newItems);
         diffResult.dispatchUpdatesTo(this);
     }
 }

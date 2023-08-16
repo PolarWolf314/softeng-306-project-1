@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItemDiff(), FeaturedItemCardViewHolder.Builder.INSTANCE);
+                this, this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
