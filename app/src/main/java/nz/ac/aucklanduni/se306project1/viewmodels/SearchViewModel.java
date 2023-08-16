@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import nz.ac.aucklanduni.se306project1.utils.ListDiff;
+
 public abstract class SearchViewModel<Item> extends ViewModel {
     private final MutableLiveData<List<Predicate<Item>>> filters = new MutableLiveData<>(new ArrayList<>());
-    private final MutableLiveData<List<Item>> filteredItems = new MutableLiveData<>();
+    private final MutableLiveData<ListDiff<Item>> filteredItems = new MutableLiveData<>();
     private List<Item> originalItems = Collections.emptyList();
 
     public SearchViewModel() {
@@ -58,11 +60,11 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Retrieve an observable list of the current filtered items.
+     * Retrieve an observable list of the current diff for the filtered items.
      *
-     * @return The {@link LiveData} wrapped list of items.
+     * @return The {@link LiveData} wrapped {@link ListDiff}.
      */
-    public LiveData<List<Item>> getFilteredItems() {
+    public LiveData<ListDiff<Item>> getFilteredItemDiff() {
         return this.filteredItems;
     }
 
@@ -70,11 +72,14 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * Updates the filtered items based on the current filters set.
      */
     private void applyFilters() {
-        final List<Item> filteredItems = this.originalItems.stream()
+        final ListDiff<Item> previousDiff = this.filteredItems.getValue();
+        final List<Item> oldFilteredItems = previousDiff == null ? this.originalItems : previousDiff.getOldList();
+
+        final List<Item> newFilteredItems = this.originalItems.stream()
                 .filter(this::matchesFilters)
                 .collect(Collectors.toList());
 
-        this.filteredItems.setValue(filteredItems);
+        this.filteredItems.setValue(new ListDiff<>(oldFilteredItems, newFilteredItems));
     }
 
     /**

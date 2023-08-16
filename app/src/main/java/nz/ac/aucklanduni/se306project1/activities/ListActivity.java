@@ -34,7 +34,7 @@ public class ListActivity extends AppCompatActivity {
         final RecyclerView recyclerView = this.binding.listRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
+                this, this.searchViewModel.getFilteredItemDiff(), ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);

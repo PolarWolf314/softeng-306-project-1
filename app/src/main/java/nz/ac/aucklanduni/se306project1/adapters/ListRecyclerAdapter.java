@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
+import nz.ac.aucklanduni.se306project1.utils.ListDiff;
 import nz.ac.aucklanduni.se306project1.viewholders.BindableViewHolder;
 import nz.ac.aucklanduni.se306project1.viewholders.ViewHolderBuilder;
 
@@ -19,18 +20,18 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         extends RecyclerView.Adapter<ViewHolder> {
 
     private final Context context;
-    private final LiveData<List<Item>> items;
+    private final LiveData<ListDiff<Item>> itemDiff;
     private final ViewHolderBuilder<ViewHolder> viewHolderBuilder;
 
     public ListRecyclerAdapter(
             final Context context,
-            final LiveData<List<Item>> items,
+            final LiveData<ListDiff<Item>> itemDiff,
             final ViewHolderBuilder<ViewHolder> viewHolderBuilder
     ) {
         this.context = context;
-        this.items = items;
+        this.itemDiff = itemDiff;
         this.viewHolderBuilder = viewHolderBuilder;
-        this.items.observeForever((newItems) -> this.notifyDataSetChanged());
+        this.itemDiff.observeForever((newDiff) -> this.notifyDataSetChanged());
     }
 
     @NonNull
@@ -60,9 +61,9 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
      * @return The list of displayed items
      */
     private List<Item> getItems() {
-        final List<Item> items = this.items.getValue();
-        if (items == null) return Collections.emptyList();
+        final ListDiff<Item> itemDiff = this.itemDiff.getValue();
+        if (itemDiff == null) return Collections.emptyList();
 
-        return items;
+        return itemDiff.getNewList();
     }
 }
