@@ -1,7 +1,5 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
-import android.util.Log;
-
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -13,10 +11,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
+import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
 public class AuthenticatedUserDataProvider implements UserDataProvider {
     private FirebaseUser user;
@@ -64,18 +65,69 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public void addToShoppingCart(CartItem cartItem) {
+    public void addToShoppingCart(final SerializedCartItem cartItem) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    shoppingCartRef.update("items", FieldValue.arrayUnion(cartItem));
+                } else {
+                    Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
+                    initialShoppingCart.put("itemIds", new ArrayList<>(Arrays.asList(cartItem)));
+                    db.collection("watchlists").document(this.user.getUid()).set(initialShoppingCart);
+                }
+            }
+        });
     }
 
     @Override
-    public void removeFromShoppingCart(CartItem cartItem) {
+    public void removeFromShoppingCart(final SerializedCartItem cartItem) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    shoppingCartRef.update("items", FieldValue.arrayRemove(cartItem));
+                }
+            }
+        });
     }
 
     @Override
-    public ShoppingCart getShoppingCart() {
-        return null;
+    public ShoppingCart getShoppingCart() throws ExecutionException, InterruptedException {
+        CompletableFuture<ShoppingCart> myShoppingCart = new CompletableFuture<>();
+
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                Map<String, Object> myObject = document.getData();
+                List<SerializedCartItem> firebaseCartItems = (List<SerializedCartItem>) myObject.get("items");
+                List<CartItem> cartItems = new ArrayList<>();
+                ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
+                for (SerializedCartItem firebaseCartItem : firebaseCartItems) {
+                    cartItems.add(new CartItem(firebaseCartItem.getQuantity(), firebaseCartItem.getColour(),
+                            firebaseCartItem.getSize(), myItemProvider.getItemById(firebaseCartItem.getItemId())));
+                }
+                myShoppingCart.complete(new ShoppingCart(document.getId(), cartItems));
+            } else {
+                // return empty shopping cart if user doesn't have one
+                myShoppingCart.complete(new ShoppingCart(this.user.getUid(), new ArrayList<>()));
+            }
+        });
+
+        return myShoppingCart.get();
     }
 
     @Override
