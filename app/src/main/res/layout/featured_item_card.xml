@@ -58,6 +58,7 @@
             style="@style/IconButton.Common"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="8dp"
             android:button="@drawable/favourite_24dp"
             app:buttonTint="@color/favourite_tint_selector" />
 
