@@ -41,6 +41,20 @@
                 app:layout_collapseParallaxMultiplier="0.3" />
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/category_item_count"
+                style="@style/LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24 Items" />
+        </FrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_recycler_view"
             android:layout_width="match_parent"
