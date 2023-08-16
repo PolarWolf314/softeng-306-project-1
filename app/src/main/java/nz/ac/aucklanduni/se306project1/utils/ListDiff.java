@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.utils;
 
 import androidx.recyclerview.widget.DiffUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ListDiff<Item> extends DiffUtil.Callback {
@@ -32,5 +33,13 @@ public class ListDiff<Item> extends DiffUtil.Callback {
     @Override
     public boolean areContentsTheSame(final int oldItemPosition, final int newItemPosition) {
         return this.oldList.get(oldItemPosition).equals(this.newList.get(newItemPosition));
+    }
+
+    public List<Item> getOldList() {
+        return Collections.unmodifiableList(this.oldList);
+    }
+
+    public List<Item> getNewList() {
+        return Collections.unmodifiableList(this.newList);
     }
 }
