@@ -57,6 +57,11 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         return this.items.size();
     }
 
+    /**
+     * Updates the displayed items to be the provided {@link List}.
+     *
+     * @param newItems The new items to display
+     */
     public void updateItems(final List<Item> newItems) {
         final ListDiff<Item> listDiff = new ListDiff<>(this.items, newItems);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(listDiff);
