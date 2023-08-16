@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         this.setContentView(this.binding.getRoot());
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItems(MockData.ITEMS);
+        this.searchViewModel.setOriginalItemsIfEmpty(MockData.ITEMS);
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(

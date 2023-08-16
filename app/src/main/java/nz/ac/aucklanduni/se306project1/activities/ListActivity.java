@@ -32,6 +32,7 @@ public class ListActivity extends AppCompatActivity {
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.searchViewModel.setOriginalItems(MockData.ITEMS);
         final RecyclerView recyclerView = this.binding.listRecyclerView;
+
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
                 this, this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
 
