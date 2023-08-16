@@ -1,8 +1,10 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,5 +36,32 @@ public class HomeActivity extends AppCompatActivity {
 
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new ItemSpacingDecoration(this, horizontalSpacingInPixels));
+
+        final Intent intent = new Intent(this, ListActivity.class);
+
+        final CardView civilCategoryCard = this.findViewById(R.id.civil_category);
+        civilCategoryCard.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        final CardView softwareCategoryCard = this.findViewById(R.id.software_category);
+        softwareCategoryCard.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        final CardView chemmatCategoryCard = this.findViewById(R.id.chemmat_category);
+        chemmatCategoryCard.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        final CardView mechanicalCategoryCard = this.findViewById(R.id.mechanical_category);
+        mechanicalCategoryCard.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
     }
 }
