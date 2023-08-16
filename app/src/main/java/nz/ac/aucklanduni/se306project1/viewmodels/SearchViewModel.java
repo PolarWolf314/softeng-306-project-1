@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 public abstract class SearchViewModel<Item> extends ViewModel {
     private final MutableLiveData<List<Predicate<Item>>> filters = new MutableLiveData<>(new ArrayList<>());
     private final MutableLiveData<List<Item>> filteredItems = new MutableLiveData<>();
-    private List<Item> originalItems = null;
+    private List<Item> originalItems = Collections.emptyList();
 
     public SearchViewModel() {
         // TODO: Check that I don't have to pass these filters into the function
@@ -44,17 +45,6 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
-     * using the current filters.
-     *
-     * @param items The {@link List} of unfiltered items to use
-     */
-    public void setOriginalItems(final List<Item> items) {
-        this.originalItems = items;
-        this.applyFilters();
-    }
-
-    /**
      * Updates the list of unfiltered items only if they have not been previously set. If updated,
      * this will cause the filtered items to be recalculated using the current filters. Otherwise,
      * nothing is changed.
@@ -62,7 +52,7 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * @param items The {@link List} of unfiltered items to use
      */
     public void setOriginalItemsIfEmpty(final List<Item> items) {
-        if (this.originalItems == null) {
+        if (this.originalItems == Collections.EMPTY_LIST) {
             this.setOriginalItems(items);
         }
     }
@@ -108,5 +98,16 @@ public abstract class SearchViewModel<Item> extends ViewModel {
         // This is required as the returned value is marked as nullable
         if (filters == null) return new ArrayList<>();
         return filters;
+    }
+
+    /**
+     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
+     * using the current filters.
+     *
+     * @param items The {@link List} of unfiltered items to use
+     */
+    public void setOriginalItems(final List<Item> items) {
+        this.originalItems = items;
+        this.applyFilters();
     }
 }
