@@ -11,7 +11,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     private Context appContext;
 
     @Override
-    public FirebaseUser registerUser(String email, String password, Activity myActivity) {
+    public UserDataProvider registerUser(String email, String password, Activity myActivity) {
         this.mAuth = FirebaseAuth.getInstance();
         this.appContext = myActivity;
 
@@ -22,11 +22,11 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
                     }
                 });
 
-        return this.mAuth.getCurrentUser();
+        return new AuthenticatedUserDataProvider(this.mAuth.getCurrentUser());
     }
 
     @Override
-    public FirebaseUser loginUser(String email, String password, Activity myActivity) {
+    public UserDataProvider loginUser(String email, String password, Activity myActivity) {
         this.mAuth = FirebaseAuth.getInstance();
         this.appContext = myActivity;
 
@@ -37,22 +37,11 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
                     }
                 });
 
-        return this.mAuth.getCurrentUser();
+        return new AuthenticatedUserDataProvider(this.mAuth.getCurrentUser());
     }
 
     @Override
     public void logoutUser() {
         this.mAuth.signOut();
-    }
-
-    @Override
-    public void loginAsGuest() {
-
-    }
-
-    @Override
-    public FirebaseUser getUser() {
-        this.mAuth = FirebaseAuth.getInstance();
-        return this.mAuth.getCurrentUser();
     }
 }

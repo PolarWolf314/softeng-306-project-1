@@ -6,11 +6,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public interface AuthenticationProvider {
 
-    FirebaseUser registerUser(String email, String password, Activity myActivity);
+    UserDataProvider registerUser(String email, String password, Activity myActivity);
 
-    FirebaseUser loginUser(String email, String password, Activity myActivity);
+    UserDataProvider loginUser(String email, String password, Activity myActivity);
     void logoutUser();
-    void loginAsGuest();
-
-    FirebaseUser getUser();
 }
