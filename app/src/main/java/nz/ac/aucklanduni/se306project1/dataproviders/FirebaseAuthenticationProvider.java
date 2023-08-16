@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.dataproviders;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -38,7 +39,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
                         throw new RuntimeException("Error in user login");
                     }
                 });
-
+        Log.i("test", this.mAuth.getUid());
         return new AuthenticatedUserDataProvider(this.mAuth.getCurrentUser());
     }
 

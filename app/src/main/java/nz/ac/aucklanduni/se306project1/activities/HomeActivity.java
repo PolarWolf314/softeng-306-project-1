@@ -14,6 +14,8 @@ import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
+import nz.ac.aucklanduni.se306project1.dataproviders.AuthenticationProvider;
+import nz.ac.aucklanduni.se306project1.dataproviders.FirebaseAuthenticationProvider;
 import nz.ac.aucklanduni.se306project1.itemdecorations.ItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
@@ -28,6 +30,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AuthenticationProvider myProvider = new FirebaseAuthenticationProvider();
+        myProvider.loginUser("aguh258@aucklanduni.ac.nz", "password", this);
 
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
