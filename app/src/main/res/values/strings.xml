@@ -43,4 +43,10 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="featured_products">Featured Products</string>
+    <string name="shop_by_category">Shop by Category</string>
+    <string name="civil_engineers">Civil Engineers</string>
+    <string name="software_engineers">Software Engineers</string>
+    <string name="chemmat_engineers">Chemmat Engineers</string>
+    <string name="mechanical_engineers">Mechanical Engineers</string>
 </resources>
