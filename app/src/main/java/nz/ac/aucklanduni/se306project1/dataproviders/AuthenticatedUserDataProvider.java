@@ -131,7 +131,28 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public Watchlist getWatchlist() {
-        return null;
+    public Watchlist getWatchlist() throws ExecutionException, InterruptedException {
+        CompletableFuture<Watchlist> myWatchlist = new CompletableFuture<>();
+
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
+
+        watchlistRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                Map<String, Object> myObject = document.getData();
+                List<String> itemIds = (List<String>) myObject.get("itemIds");
+                myWatchlist.complete(new Watchlist(document.getId(), itemIds));
+            } else {
+                // return empty watchlist if user doesn't have one
+                myWatchlist.complete(new Watchlist(this.user.getUid(), new ArrayList<>()));
+            }
+        });
+
+        return myWatchlist.get();
     }
 }

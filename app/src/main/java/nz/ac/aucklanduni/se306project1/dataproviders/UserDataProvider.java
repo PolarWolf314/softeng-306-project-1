@@ -18,5 +18,5 @@ public interface UserDataProvider {
 
     ShoppingCart getShoppingCart() throws ExecutionException, InterruptedException;
 
-    Watchlist getWatchlist();
+    Watchlist getWatchlist() throws ExecutionException, InterruptedException;
 }
