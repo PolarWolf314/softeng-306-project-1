@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         this.context = context;
         this.itemDiff = itemDiff;
         this.viewHolderBuilder = viewHolderBuilder;
-        this.itemDiff.observeForever((newDiff) -> this.notifyDataSetChanged());
+        this.itemDiff.observeForever(this::onListDiffChange);
     }
 
     @NonNull
@@ -65,5 +66,12 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         if (itemDiff == null) return Collections.emptyList();
 
         return itemDiff.getNewList();
+    }
+
+    private void onListDiffChange(final ListDiff<Item> listDiff) {
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(listDiff);
+        System.out.println(listDiff.getNewList().size());
+        System.out.println(this.itemDiff.getValue().getNewList().size());
+        diffResult.dispatchUpdatesTo(this);
     }
 }

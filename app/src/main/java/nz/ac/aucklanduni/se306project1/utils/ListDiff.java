@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.utils;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.Collections;
@@ -33,6 +34,13 @@ public class ListDiff<Item> extends DiffUtil.Callback {
     @Override
     public boolean areContentsTheSame(final int oldItemPosition, final int newItemPosition) {
         return this.oldList.get(oldItemPosition).equals(this.newList.get(newItemPosition));
+    }
+
+    @Nullable
+    @Override
+    public Object getChangePayload(final int oldItemPosition, final int newItemPosition) {
+        // TODO: Implement this when we get to adding animations (ItemAnimator)
+        return super.getChangePayload(oldItemPosition, newItemPosition);
     }
 
     public List<Item> getOldList() {
