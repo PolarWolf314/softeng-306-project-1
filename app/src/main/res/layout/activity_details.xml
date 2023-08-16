@@ -1,15 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F26F18"
     tools:context=".activities.DetailsActivity">
 
-    <TextView
-        android:id="@+id/details_item_name"
-        style="@style/HeadlineSmall"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/details_item_name_container"
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <TextView
+            android:id="@+id/details_item_name"
+            style="@style/HeadlineSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:text="The Hard Helmet"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/details_scroll_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The Hard Helmet"
-        android:textStyle="bold" />
+        android:layout_below="@id/details_item_name_container">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="370dp">
+
+                <ImageView
+                    android:id="@+id/details_item_image"
+                    android:layout_width="320dp"
+                    android:layout_height="320dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="item image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/orange_hard_helmet" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="48dp"
+                    android:layout_height="144dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/details_item_color_selector_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
