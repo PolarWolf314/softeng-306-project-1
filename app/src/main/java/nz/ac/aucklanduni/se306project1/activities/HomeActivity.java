@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,5 +35,28 @@ public class HomeActivity extends AppCompatActivity {
 
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new ItemSpacingDecoration(this, horizontalSpacingInPixels));
+
+        final Intent intent = new Intent(this, ListActivity.class);
+
+        this.binding.civilCategory.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        this.binding.softwareCategory.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        this.binding.chemmatCategory.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
+        this.binding.mechanicalCategory.setOnClickListener(v -> {
+            // Create intent and navigate to ListActivity
+            this.startActivity(intent);
+        });
+
     }
 }
