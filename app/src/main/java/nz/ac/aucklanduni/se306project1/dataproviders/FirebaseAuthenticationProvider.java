@@ -3,8 +3,6 @@ package nz.ac.aucklanduni.se306project1.dataproviders;
 import android.app.Activity;
 import android.content.Context;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -50,5 +48,11 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     @Override
     public void loginAsGuest() {
 
+    }
+
+    @Override
+    public FirebaseUser getUser() {
+        this.mAuth = FirebaseAuth.getInstance();
+        return this.mAuth.getCurrentUser();
     }
 }

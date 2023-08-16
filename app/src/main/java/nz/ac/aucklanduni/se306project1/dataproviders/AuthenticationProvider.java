@@ -11,4 +11,6 @@ public interface AuthenticationProvider {
     FirebaseUser loginUser(String email, String password, Activity myActivity);
     void logoutUser();
     void loginAsGuest();
+
+    FirebaseUser getUser();
 }
