@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.function.Predicate;
+
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
@@ -21,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;
     private ItemSearchViewModel searchViewModel;
+    private boolean hasFilter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,5 +67,20 @@ public class HomeActivity extends AppCompatActivity {
             this.startActivity(intent);
         });
 
+        // We have to keep a reference to the specific filter we're adding.
+        final Predicate<Item> filter = this::isPriceGreaterThan20Dollars;
+
+        this.binding.toggleFilterButton.setOnClickListener(view -> {
+            if (this.hasFilter) {
+                this.searchViewModel.removeFilter(filter);
+            } else {
+                this.searchViewModel.addFilter(filter);
+            }
+            this.hasFilter = !this.hasFilter;
+        });
+    }
+
+    public boolean isPriceGreaterThan20Dollars(final Item item) {
+        return item.getPrice() > 20D;
     }
 }

@@ -30,6 +30,7 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         this.context = context;
         this.items = items;
         this.viewHolderBuilder = viewHolderBuilder;
+        this.items.observeForever((newItems) -> this.notifyDataSetChanged());
     }
 
     @NonNull
