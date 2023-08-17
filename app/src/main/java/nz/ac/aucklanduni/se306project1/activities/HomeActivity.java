@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.function.Predicate;
+import com.google.firebase.auth.FirebaseAuth;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
@@ -31,9 +33,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AuthenticationProvider myProvider = new FirebaseAuthenticationProvider();
-        myProvider.loginUser("aguh258@aucklanduni.ac.nz", "password", this);
-
+        final AuthenticationProvider myProvider = new FirebaseAuthenticationProvider(FirebaseAuth.getInstance());
+        myProvider.loginUser("jjef595@aucklanduni.ac.nz", "password")
+                .thenAccept(provider -> {
+                    if (provider.isPresent()) Log.i("test", "Logged in successfully!");
+                    else Log.i("test", "Failed to login");
+                });
+        
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 

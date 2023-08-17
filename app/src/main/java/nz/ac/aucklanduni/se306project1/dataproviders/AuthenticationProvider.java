@@ -1,13 +1,13 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
-import android.app.Activity;
-
-import com.google.firebase.auth.FirebaseUser;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public interface AuthenticationProvider {
 
-    UserDataProvider registerUser(String email, String password, Activity myActivity);
+    CompletableFuture<Optional<UserDataProvider>> registerUser(String email, String password);
 
-    UserDataProvider loginUser(String email, String password, Activity myActivity);
+    CompletableFuture<Optional<UserDataProvider>> loginUser(String email, String password);
+
     void logoutUser();
 }

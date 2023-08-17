@@ -1,50 +1,35 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
+
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
-    private FirebaseAuth mAuth;
-    @Nullable
-    private Context context;
+    private final FirebaseAuth auth;
 
-    @Override
-    public UserDataProvider registerUser(String email, String password, Activity myActivity) {
-        this.mAuth = FirebaseAuth.getInstance();
-        this.context = myActivity;
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(myActivity, task -> {
-                    if (!task.isSuccessful()) {
-                        throw new RuntimeException("Error in user registration");
-                    }
-                });
-
-        return new AuthenticatedUserDataProvider(this.mAuth.getCurrentUser());
+    public FirebaseAuthenticationProvider(final FirebaseAuth auth) {
+        this.auth = auth;
     }
 
     @Override
-    public UserDataProvider loginUser(String email, String password, Activity myActivity) {
-        this.mAuth = FirebaseAuth.getInstance();
-        this.context = myActivity;
+    public CompletableFuture<Optional<UserDataProvider>> registerUser(final String email, final String password) {
+        return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password))
+                .thenApply(optional -> optional.map(
+                        authResult -> new AuthenticatedUserDataProvider(authResult.getUser())));
+    }
 
-        this.mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(myActivity, task -> {
-                    if (!task.isSuccessful()) {
-                        throw new RuntimeException("Error in user login");
-                    }
-                });
-        Log.i("test", this.mAuth.getUid());
-        return new AuthenticatedUserDataProvider(this.mAuth.getCurrentUser());
+    @Override
+    public CompletableFuture<Optional<UserDataProvider>> loginUser(final String email, final String password) {
+        return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password))
+                .thenApply(optional -> optional.map(
+                        authResult -> new AuthenticatedUserDataProvider(authResult.getUser())));
     }
 
     @Override
     public void logoutUser() {
-        this.mAuth.signOut();
+        this.auth.signOut();
     }
 }
