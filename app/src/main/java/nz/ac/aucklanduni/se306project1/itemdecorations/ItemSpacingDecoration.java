@@ -16,14 +16,15 @@ public class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(@NonNull final Rect outRect, @NonNull final View view, @NonNull final RecyclerView parent, @NonNull final RecyclerView.State state) {
-        outRect.left = this.horizontalSpacing;
-        outRect.right = this.horizontalSpacing;
+        final int position = parent.getChildAdapterPosition(view);
+
+        if (position != 0) {
+            outRect.left = 2 * this.horizontalSpacing;
+        }
 
         // No vertical spacing
         outRect.bottom = 0;
         outRect.top = 0;
-
-        // Apply spacing to all items, including the first one
     }
 }
 

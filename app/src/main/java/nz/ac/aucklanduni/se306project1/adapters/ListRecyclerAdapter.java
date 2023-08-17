@@ -6,10 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
+import nz.ac.aucklanduni.se306project1.utils.ListDiff;
 import nz.ac.aucklanduni.se306project1.viewholders.BindableViewHolder;
 import nz.ac.aucklanduni.se306project1.viewholders.ViewHolderBuilder;
 
@@ -22,12 +28,13 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
 
     public ListRecyclerAdapter(
             final Context context,
-            final List<Item> items,
+            final LiveData<List<Item>> items,
             final ViewHolderBuilder<ViewHolder> viewHolderBuilder
     ) {
         this.context = context;
-        this.items = items;
+        this.items = new ArrayList<>(Objects.requireNonNullElse(items.getValue(), Collections.emptyList()));
         this.viewHolderBuilder = viewHolderBuilder;
+        items.observeForever(this::updateItems);
     }
 
     @NonNull
@@ -48,5 +55,19 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
     @Override
     public int getItemCount() {
         return this.items.size();
+    }
+
+    /**
+     * Updates the displayed items to be the provided {@link List}.
+     *
+     * @param newItems The new items to display
+     */
+    public void updateItems(final List<Item> newItems) {
+        final ListDiff<Item> listDiff = new ListDiff<>(this.items, newItems);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(listDiff);
+
+        this.items.clear();
+        this.items.addAll(newItems);
+        diffResult.dispatchUpdatesTo(this);
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.R;
@@ -13,10 +14,12 @@ import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
+import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class ListActivity extends AppCompatActivity {
 
     private @NonNull ActivityListBinding binding;
+    private ItemSearchViewModel searchViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -26,9 +29,12 @@ public class ListActivity extends AppCompatActivity {
         this.binding = ActivityListBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
+        this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
+        this.searchViewModel.setOriginalItems(MockData.ITEMS);
         final RecyclerView recyclerView = this.binding.listRecyclerView;
+
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, MockData.ITEMS, ItemCardViewHolder.Builder.INSTANCE);
+                this, this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
