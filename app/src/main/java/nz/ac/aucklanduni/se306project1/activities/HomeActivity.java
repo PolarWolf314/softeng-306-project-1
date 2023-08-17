@@ -1,9 +1,15 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,26 +52,10 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
         final Intent intent = new Intent(this, ListActivity.class);
-
-        this.binding.civilCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.softwareCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.chemmatCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.mechanicalCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
+        this.binding.civilCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.softwareCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.chemmatCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.mechanicalCategory.setOnClickListener(v -> this.startActivity(intent));
 
         // We have to keep a reference to the specific filter we're adding.
         final Predicate<Item> filter = this::isPriceGreaterThan20Dollars;
@@ -78,6 +68,23 @@ public class HomeActivity extends AppCompatActivity {
             }
             this.hasFilter = !this.hasFilter;
         });
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(final MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            final View v = this.getCurrentFocus();
+            if (v instanceof SearchView.SearchAutoComplete) {
+                final Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    final InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     public boolean isPriceGreaterThan20Dollars(final Item item) {

@@ -30,14 +30,22 @@ public class TopBarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.binding.endIconButton.setOnClickListener(v -> this.showSearchBar());
+//        this.binding.searchView.setOnTouchListener((v, event) -> {
+//            System.out.println("Touch");
+//            return false;
+//        });
+
+        this.binding.searchView.setOnFocusChangeListener((v, hasFocus) -> {
+            System.out.println("Focus change: " + hasFocus);
+        });
     }
 
     private void showSearchBar() {
         this.binding.startIconButton.setVisibility(View.GONE);
         this.binding.topBarTitle.setVisibility(View.GONE);
         this.binding.endIconButton.setVisibility(View.GONE);
-        this.binding.searchView.setVisibility(View.VISIBLE);
         this.binding.searchView.onActionViewExpanded();
+        this.binding.searchView.setVisibility(View.VISIBLE);
     }
 
     private void hideSearchBar() {
