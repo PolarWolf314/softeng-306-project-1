@@ -6,4 +6,6 @@
     <color name="primary">#EF4444</color>
     <color name="primary_variant">#FCA5A5</color>
     <color name="background_light_gray">#F6F6F6</color>
+    <color name="black_60_opacity">#99000000</color>
+    <color name="white_60_opacity">#99FFFFFF</color>
 </resources>
