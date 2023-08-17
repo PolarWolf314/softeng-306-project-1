@@ -12,8 +12,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/background_light_gray"
-        app:itemIconTint="@color/light_gray"
-        app:itemTextColor="@color/light_gray"
+        app:itemActiveIndicatorStyle="@color/fui_transparent"
+        app:itemIconTint="@drawable/bottom_nav_icon_color_selector"
+        app:itemRippleColor="@color/fui_transparent"
+        app:itemTextAppearanceActive="@style/BottomNavigationTextViewStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationTextViewStyle"
+        app:itemTextColor="@drawable/bottom_nav_icon_color_selector"
         app:menu="@menu/bottom_navigation_menu" />
 
 </FrameLayout>
