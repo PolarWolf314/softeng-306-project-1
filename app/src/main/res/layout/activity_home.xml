@@ -263,4 +263,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Toggle filter :)" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottom_navigation_fragment_container_view"
+        android:name="nz.ac.aucklanduni.se306project1.fragments.BottomNavigationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
