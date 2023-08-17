@@ -24,8 +24,9 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public CompletableFuture<UserDataProvider> registerUser(final String email, final String password) {
-        return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password))
-                .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
+        return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password),
+                () -> new RuntimeException("Error in user registration"))
+                        .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
     }
 
     /**
@@ -39,8 +40,9 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public CompletableFuture<UserDataProvider> loginUser(final String email, final String password) {
-        return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password))
-                .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
+        return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password),
+                        () -> new RuntimeException("Error in user login"))
+                            .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
     }
 
     @Override
