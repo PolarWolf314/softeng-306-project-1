@@ -24,11 +24,12 @@
             android:textStyle="bold" />
     </FrameLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/details_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/details_item_name_container">
+        android:layout_height="match_parent"
+        android:layout_below="@id/details_item_name_container"
+        android:layout_marginBottom="220dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,12 +96,13 @@
                 style="@style/BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:lineHeight="18dp"
                 android:paddingHorizontal="30dp"
                 android:paddingVertical="16dp"
-                android:text="No Civil Engineer can be caught without their hard helmet. Designed to protect your precious head against the variety of head injuries that can be sustained at work, it’s a must have for any prospective Civil Engineer."
+                android:text="@string/lorem_ipsum"
                 android:textColor="@color/white" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -108,6 +110,45 @@
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/LabelProminent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="SIZE"
+                android:textFontWeight="900" />
+
+            <LinearLayout
+                android:id="@+id/size_selector"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                app:cardBackgroundColor="@color/black">
+
+                <TextView
+                    android:id="@+id/add_to_cart_text"
+                    style="@style/LabelProminent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="+ ADD TO CART $39.99NZD"
+                    android:textColor="#F26F18"
+                    android:textFontWeight="900" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>
