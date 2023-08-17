@@ -32,13 +32,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final AuthenticationProvider myProvider = new FirebaseAuthenticationProvider(FirebaseAuth.getInstance());
-        myProvider.loginUser("jjef595@aucklanduni.ac.nz", "password")
-                .thenAccept(provider -> {
-                    if (provider.isPresent()) Log.i("test", "Logged in successfully!");
-                    else Log.i("test", "Failed to login");
-                });
         
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
