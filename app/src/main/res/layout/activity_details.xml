@@ -48,22 +48,66 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/orange_hard_helmet" />
 
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="48dp"
                     android:layout_height="144dp"
+                    app:cardBackgroundColor="@color/black_60_opacity"
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
                         android:id="@+id/details_item_color_selector_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/black"
                         android:orientation="vertical">
 
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="24dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="90dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardBackgroundColor="@color/white_60_opacity"
+                    app:cardCornerRadius="90dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    app:cardBackgroundColor="@color/white_60_opacity"
+                    app:cardCornerRadius="90dp" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/BodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="16dp"
+                android:text="No Civil Engineer can be caught without their hard helmet. Designed to protect your precious head against the variety of head injuries that can be sustained at work, it’s a must have for any prospective Civil Engineer."
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp">
+
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>
