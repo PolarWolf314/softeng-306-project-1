@@ -39,7 +39,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 } else {
                     Map<String, List<String>> initialWatchlist = new HashMap<>();
                     initialWatchlist.put("itemIds", new ArrayList<>(Arrays.asList(itemId)));
-                    db.collection("watchlists").document(this.user.getUid()).set(initialWatchlist);
+                    watchlistRef.set(initialWatchlist);
                 }
             } else {
                 throw new RuntimeException("Error occurred while writing to Firestore watchlist");
@@ -75,7 +75,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 } else {
                     Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
                     initialShoppingCart.put("items", new ArrayList<>(Arrays.asList(cartItem)));
-                    db.collection("shoppingCarts").document(this.user.getUid()).set(initialShoppingCart);
+                    shoppingCartRef.set(initialShoppingCart);
                 }
             }
         });
@@ -109,13 +109,14 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
         FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenAccept(
                 document -> {
-                    Map<String, Object> myObject = document.getData();
-                    List<SerializedCartItem> firebaseCartItems = (List<SerializedCartItem>) myObject.get("items");
+                    List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
                     List<CartItem> cartItems = new ArrayList<>();
                     ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
-                    for (SerializedCartItem firebaseCartItem : firebaseCartItems) {
-                        cartItems.add(new CartItem(firebaseCartItem.getQuantity(), firebaseCartItem.getColour(),
-                                firebaseCartItem.getSize(), myItemProvider.getItemById(firebaseCartItem.getItemId())));
+                    Long quantity;
+                    for (Map<String, Object> firebaseCartItem : firebaseCartItems) {
+                        quantity = (Long) firebaseCartItem.get("quantity");
+                        cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
+                                firebaseCartItem.get("size").toString(), myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())));
                     }
                     myShoppingCart.complete(new ShoppingCart(document.getId(), cartItems));
                 }
