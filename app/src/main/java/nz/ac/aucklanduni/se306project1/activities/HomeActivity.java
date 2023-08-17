@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,11 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.function.Predicate;
+import com.google.firebase.auth.FirebaseAuth;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
+import nz.ac.aucklanduni.se306project1.dataproviders.AuthenticationProvider;
+import nz.ac.aucklanduni.se306project1.dataproviders.FirebaseAuthenticationProvider;
 import nz.ac.aucklanduni.se306project1.itemdecorations.ItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
@@ -28,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
