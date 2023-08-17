@@ -50,4 +50,5 @@
     <string name="chemmat_engineers">Chemmat Engineers</string>
     <string name="mechanical_engineers">Mechanical Engineers</string>
     <string name="hard_helmet_description">No Civil Engineer can be caught without their hard helmet. Designed to protect your precious head against the variety of head injuries that can be sustained at work, it’s a must have for any prospective Civil Engineer.</string>
+    <string name="size">SIZE</string>
 </resources>

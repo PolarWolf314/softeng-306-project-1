@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineHeight="18dp"
-                android:paddingHorizontal="30dp"
+                android:paddingHorizontal="32dp"
                 android:paddingVertical="16dp"
                 android:text="@string/lorem_ipsum"
                 android:textColor="@color/white" />
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="SIZE"
+                android:text="@string/size"
                 android:textFontWeight="900" />
 
             <LinearLayout
@@ -134,21 +134,14 @@
                 android:layout_marginBottom="30dp"
                 android:orientation="horizontal" />
 
-            <com.google.android.material.card.MaterialCardView
+            <Button
+                android:id="@+id/add_to_cart_button"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                app:cardBackgroundColor="@color/black">
-
-                <TextView
-                    android:id="@+id/add_to_cart_text"
-                    style="@style/LabelProminent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="+ ADD TO CART $39.99NZD"
-                    android:textColor="#F26F18"
-                    android:textFontWeight="900" />
-            </com.google.android.material.card.MaterialCardView>
+                android:backgroundTint="@color/black"
+                android:text="+ ADD TO CART $39.99NZD"
+                android:textColor="#F26F18"
+                android:textFontWeight="900" />
         </LinearLayout>
 
 
