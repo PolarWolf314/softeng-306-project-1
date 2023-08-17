@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="IconButton.Common">
         <item name="android:layout_width">48dp</item>
@@ -92,5 +92,9 @@
     <style name="BodySmall" parent="">
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/pptelegraf_regular</item>
+    </style>
+
+    <style name="BottomNavigationTextViewStyle">
+        <item name="fontFamily">@font/pptelegraf_medium</item>
     </style>
 </resources>
