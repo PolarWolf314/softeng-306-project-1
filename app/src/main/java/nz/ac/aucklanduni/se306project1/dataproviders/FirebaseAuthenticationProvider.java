@@ -56,6 +56,6 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public void logoutUser() {
-        if (this.auth != null) this.auth.signOut();
+        this.auth.signOut();
     }
 }
