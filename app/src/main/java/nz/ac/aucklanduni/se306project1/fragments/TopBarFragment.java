@@ -36,13 +36,14 @@ public class TopBarFragment extends Fragment {
         this.binding.startIconButton.setVisibility(View.GONE);
         this.binding.topBarTitle.setVisibility(View.GONE);
         this.binding.endIconButton.setVisibility(View.GONE);
-        this.binding.searchBar.setVisibility(View.VISIBLE);
+        this.binding.searchView.setVisibility(View.VISIBLE);
+        this.binding.searchView.onActionViewExpanded();
     }
 
     private void hideSearchBar() {
         this.binding.startIconButton.setVisibility(View.VISIBLE);
         this.binding.topBarTitle.setVisibility(View.VISIBLE);
         this.binding.endIconButton.setVisibility(View.VISIBLE);
-        this.binding.searchBar.setVisibility(View.GONE);
+        this.binding.searchView.setVisibility(View.GONE);
     }
 }
