@@ -1,10 +1,9 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
-import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
 public interface UserDataProvider {
@@ -16,7 +15,7 @@ public interface UserDataProvider {
 
     void removeFromShoppingCart(final SerializedCartItem cartItem);
 
-    ShoppingCart getShoppingCart() throws ExecutionException, InterruptedException;
+    CompletableFuture<ShoppingCart> getShoppingCart();
 
-    Watchlist getWatchlist() throws ExecutionException, InterruptedException;
+    CompletableFuture<Watchlist> getWatchlist();
 }

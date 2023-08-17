@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
+import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 
 public class AuthenticatedUserDataProvider implements UserDataProvider {
     private FirebaseUser user;
@@ -58,8 +58,6 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 if (document.exists()) {
                     watchlistRef.update("itemIds", FieldValue.arrayRemove(itemId));
                 }
-            } else {
-                throw new RuntimeException("Error occurred while writing to Firestore watchlist");
             }
         });
     }
@@ -76,8 +74,8 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                     shoppingCartRef.update("items", FieldValue.arrayUnion(cartItem));
                 } else {
                     Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
-                    initialShoppingCart.put("itemIds", new ArrayList<>(Arrays.asList(cartItem)));
-                    db.collection("watchlists").document(this.user.getUid()).set(initialShoppingCart);
+                    initialShoppingCart.put("items", new ArrayList<>(Arrays.asList(cartItem)));
+                    db.collection("shoppingCarts").document(this.user.getUid()).set(initialShoppingCart);
                 }
             }
         });
@@ -99,7 +97,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public ShoppingCart getShoppingCart() throws ExecutionException, InterruptedException {
+    public CompletableFuture<ShoppingCart> getShoppingCart() {
         CompletableFuture<ShoppingCart> myShoppingCart = new CompletableFuture<>();
 
         if (this.user == null) {
@@ -109,29 +107,29 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
-        shoppingCartRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                Map<String, Object> myObject = document.getData();
-                List<SerializedCartItem> firebaseCartItems = (List<SerializedCartItem>) myObject.get("items");
-                List<CartItem> cartItems = new ArrayList<>();
-                ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
-                for (SerializedCartItem firebaseCartItem : firebaseCartItems) {
-                    cartItems.add(new CartItem(firebaseCartItem.getQuantity(), firebaseCartItem.getColour(),
-                            firebaseCartItem.getSize(), myItemProvider.getItemById(firebaseCartItem.getItemId())));
+        FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenAccept(
+                document -> {
+                    Map<String, Object> myObject = document.getData();
+                    List<SerializedCartItem> firebaseCartItems = (List<SerializedCartItem>) myObject.get("items");
+                    List<CartItem> cartItems = new ArrayList<>();
+                    ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
+                    for (SerializedCartItem firebaseCartItem : firebaseCartItems) {
+                        cartItems.add(new CartItem(firebaseCartItem.getQuantity(), firebaseCartItem.getColour(),
+                                firebaseCartItem.getSize(), myItemProvider.getItemById(firebaseCartItem.getItemId())));
+                    }
+                    myShoppingCart.complete(new ShoppingCart(document.getId(), cartItems));
                 }
-                myShoppingCart.complete(new ShoppingCart(document.getId(), cartItems));
-            } else {
-                // return empty shopping cart if user doesn't have one
-                myShoppingCart.complete(new ShoppingCart(this.user.getUid(), new ArrayList<>()));
-            }
+        ).exceptionally(exception -> {
+            // return empty shopping cart if the user doesn't have one
+            myShoppingCart.complete(new ShoppingCart(this.user.getUid(), new ArrayList<>()));
+            return null;
         });
 
-        return myShoppingCart.get();
+        return myShoppingCart;
     }
 
     @Override
-    public Watchlist getWatchlist() throws ExecutionException, InterruptedException {
+    public CompletableFuture<Watchlist> getWatchlist() {
         CompletableFuture<Watchlist> myWatchlist = new CompletableFuture<>();
 
         if (this.user == null) {
@@ -141,18 +139,20 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
-        watchlistRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                Map<String, Object> myObject = document.getData();
-                List<String> itemIds = (List<String>) myObject.get("itemIds");
-                myWatchlist.complete(new Watchlist(document.getId(), itemIds));
-            } else {
-                // return empty watchlist if user doesn't have one
-                myWatchlist.complete(new Watchlist(this.user.getUid(), new ArrayList<>()));
-            }
-        });
+        FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist")).thenAccept(
+                document -> {
+                    Map<String, Object> myObject = document.getData();
+                    List<String> itemIds = (List<String>) myObject.get("itemIds");
+                    myWatchlist.complete(new Watchlist(document.getId(), itemIds));
+                }
+        ).exceptionally(
+                exception -> {
+                    // return empty watchlist if user doesn't have one
+                    myWatchlist.complete(new Watchlist(this.user.getUid(), new ArrayList<>()));
+                    return null;
+                }
+        );
 
-        return myWatchlist.get();
+        return myWatchlist;
     }
 }
