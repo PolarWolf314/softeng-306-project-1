@@ -23,6 +23,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
     private final ImageView itemImage;
     private final TextView itemName;
     private final TextView itemPrice;
+    private final TextView itemQuantity;
 
     public CartItemCardViewHolder(@NonNull final Context context, @NonNull final View itemView) {
         super(itemView);
@@ -31,6 +32,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         this.itemImage = itemView.findViewById(R.id.item_card_image);
         this.itemName = itemView.findViewById(R.id.item_card_name);
         this.itemPrice = itemView.findViewById(R.id.item_card_price);
+        this.itemQuantity = itemView.findViewById(R.id.item_card_quantity);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         Glide.with(this.context).load(imageInfo.getUrl()).into(this.itemImage);
         this.itemImage.setContentDescription(imageInfo.getDescription());
         this.itemName.setText(item.getDisplayName());
+        this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
     }
 

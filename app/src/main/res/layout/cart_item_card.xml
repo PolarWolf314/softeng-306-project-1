@@ -73,6 +73,7 @@
                     app:iconTint="@color/black" />
 
                 <TextView
+                    android:id="@+id/item_card_quantity"
                     style="@style/LabelLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
