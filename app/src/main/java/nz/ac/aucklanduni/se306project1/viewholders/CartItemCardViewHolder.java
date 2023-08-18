@@ -13,11 +13,11 @@ import java.util.Locale;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.models.ImageInfo;
+import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 
-public class CartItemCardViewHolder extends BindableViewHolder<Item> {
-
+public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
 
     private final Context context;
     private final ImageView itemImage;
@@ -28,13 +28,15 @@ public class CartItemCardViewHolder extends BindableViewHolder<Item> {
         super(itemView);
 
         this.context = context;
-        this.itemImage = itemView.findViewById(R.id.image_position);
+        this.itemImage = itemView.findViewById(R.id.item_card_image);
         this.itemName = itemView.findViewById(R.id.item_card_name);
         this.itemPrice = itemView.findViewById(R.id.item_card_price);
     }
 
     @Override
-    public void bindFrom(final Item item) {
+    public void bindFrom(final CartItem cartItem) {
+        final Item item = cartItem.getItem();
+
         if (item.getColours().size() == 0) {
             throw new IllegalArgumentException(
                     String.format("The item %s (%s) has no colour information", item.getDisplayName(), item.getId()));
