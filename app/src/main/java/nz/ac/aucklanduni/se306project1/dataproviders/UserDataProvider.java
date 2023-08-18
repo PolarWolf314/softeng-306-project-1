@@ -21,6 +21,8 @@ public interface UserDataProvider {
 
     void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, int quantity);
 
+    void clearShoppingCart();
+
     CompletableFuture<ShoppingCart> getShoppingCart();
 
     CompletableFuture<Watchlist> getWatchlist();

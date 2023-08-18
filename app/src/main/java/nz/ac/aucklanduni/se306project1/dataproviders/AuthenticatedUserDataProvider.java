@@ -153,7 +153,28 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                         }
                     }
                 }
-            }else {
+            } else {
+                throw new RuntimeException("Error occurred while writing to Firestore shopping cart");
+            }
+        });
+    }
+
+    @Override
+    public void clearShoppingCart() {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    shoppingCartRef.update("items", new ArrayList<>());
+                }
+            } else {
                 throw new RuntimeException("Error occurred while writing to Firestore shopping cart");
             }
         });
