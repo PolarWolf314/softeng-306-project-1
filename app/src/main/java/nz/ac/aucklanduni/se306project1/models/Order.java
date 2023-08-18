@@ -9,7 +9,6 @@ import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
 public class Order {
     private String id;
-    private String userId;
     private LocalDateTime orderDate;
     private List<SerializedCartItem> items;
 
@@ -23,17 +22,12 @@ public class Order {
             final List<SerializedCartItem> items
     ) {
         this.id = id;
-        this.userId = userId;
         this.orderDate = orderDate;
         this.items = items;
     }
 
     public String getId() {
         return this.id;
-    }
-
-    public String getUserId() {
-        return this.userId;
     }
 
     public LocalDateTime getOrderDate() {

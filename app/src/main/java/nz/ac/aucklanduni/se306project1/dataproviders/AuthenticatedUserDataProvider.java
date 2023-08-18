@@ -41,9 +41,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 if (document.exists()) {
                     watchlistRef.update("itemIds", FieldValue.arrayUnion(itemId));
                 } else {
-                    Map<String, List<String>> initialWatchlist = new HashMap<>();
-                    initialWatchlist.put("itemIds", new ArrayList<>(Arrays.asList(itemId)));
-                    watchlistRef.set(initialWatchlist);
+                    watchlistRef.set(new Watchlist(new ArrayList<>(Arrays.asList(itemId))));
                 }
             } else {
                 throw new RuntimeException("Error occurred while writing to Firestore watchlist");
@@ -163,8 +161,6 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public CompletableFuture<ShoppingCart> getShoppingCart() {
-        CompletableFuture<ShoppingCart> myShoppingCart = new CompletableFuture<>();
-
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -172,7 +168,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
-        FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenAccept(
+        return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenApply(
                 document -> {
                     List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
                     List<CartItem> cartItems = new ArrayList<>();
@@ -183,21 +179,13 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                         cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
                                 firebaseCartItem.get("size").toString(), myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())));
                     }
-                    myShoppingCart.complete(new ShoppingCart(document.getId(), cartItems));
+                    return new ShoppingCart(cartItems);
                 }
-        ).exceptionally(exception -> {
-            // return empty shopping cart if the user doesn't have one
-            myShoppingCart.complete(new ShoppingCart(this.user.getUid(), new ArrayList<>()));
-            return null;
-        });
-
-        return myShoppingCart;
+        ).exceptionally(exception -> new ShoppingCart(new ArrayList<>()));
     }
 
     @Override
     public CompletableFuture<Watchlist> getWatchlist() {
-        CompletableFuture<Watchlist> myWatchlist = new CompletableFuture<>();
-
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -205,21 +193,11 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
-        FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist")).thenAccept(
-                document -> {
-                    Map<String, Object> myObject = document.getData();
-                    List<String> itemIds = (List<String>) myObject.get("itemIds");
-                    myWatchlist.complete(new Watchlist(document.getId(), itemIds));
-                }
+        return FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist")).thenApply(
+                document -> document.toObject(Watchlist.class)
         ).exceptionally(
-                exception -> {
-                    // return empty watchlist if user doesn't have one
-                    myWatchlist.complete(new Watchlist(this.user.getUid(), new ArrayList<>()));
-                    return null;
-                }
+                exception -> new Watchlist(new ArrayList<>())
         );
-
-        return myWatchlist;
     }
 
     @Override
