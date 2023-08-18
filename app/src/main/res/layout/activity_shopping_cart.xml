@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="160dp">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -51,8 +51,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@id/nested_scroll_view">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:paddingHorizontal="20dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/LabelLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textColor="@color/light_gray"
+                android:textFontWeight="900" />
+
+            <TextView
+                style="@style/TitleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$117.00 NZD"
+                android:textFontWeight="900" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/LabelLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:backgroundTint="@color/primary"
+            android:text="Checkout"
+            app:cornerRadius="10dp" />
     </RelativeLayout>
 
     <androidx.fragment.app.FragmentContainerView
