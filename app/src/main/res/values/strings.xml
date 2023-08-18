@@ -54,4 +54,6 @@
     <string name="home">Home</string>
     <string name="watchlist">Watchlist</string>
     <string name="cart">Cart</string>
+    <string name="clear_watchlist">Clear Watchlist</string>
+    <string name="_1_item_in_watchlist">1 Item in Watchlist</string>
 </resources>
