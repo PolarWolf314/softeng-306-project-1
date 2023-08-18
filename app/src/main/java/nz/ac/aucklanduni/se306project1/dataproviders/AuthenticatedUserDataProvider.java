@@ -58,6 +58,8 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 if (document.exists()) {
                     watchlistRef.update("itemIds", FieldValue.arrayRemove(itemId));
                 }
+            } else {
+                throw new RuntimeException("Error occurred while writing to Firestore watchlist");
             }
         });
     }
@@ -77,6 +79,8 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                     initialShoppingCart.put("items", new ArrayList<>(Arrays.asList(cartItem)));
                     shoppingCartRef.set(initialShoppingCart);
                 }
+            } else {
+                throw new RuntimeException("Error occurred while writing to Firestore shopping cart");
             }
         });
     }
@@ -92,6 +96,47 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 if (document.exists()) {
                     shoppingCartRef.update("items", FieldValue.arrayRemove(cartItem));
                 }
+            } else {
+                throw new RuntimeException("Error occurred while writing to Firestore shopping cart");
+            }
+        });
+    }
+
+    @Override
+    public void incrementShoppingCartItemQuantity(final SerializedCartItem cartItem) {
+        this.changeShoppingCartItemQuantity(cartItem, cartItem.getQuantity() + 1);
+    }
+
+    @Override
+    public void decrementShoppingCartItemQuantity(final SerializedCartItem cartItem) {
+        this.changeShoppingCartItemQuantity(cartItem, cartItem.getQuantity() - 1);
+    }
+
+    @Override
+    public void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, int newQuantity) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    List<Object> shoppingCart = (List<Object>) document.get("items");
+                    Map<String, Object> currentItem;
+                    SerializedCartItem newCartItem;
+                    for (Object shoppingCartItem : shoppingCart) {
+                        currentItem = (Map<String, Object>) shoppingCartItem;
+                        if (currentItem.get("itemId").equals(cartItem.getItemId())) {
+                            newCartItem = new SerializedCartItem(newQuantity, currentItem.get("colour").toString(),
+                                    currentItem.get("size").toString(), currentItem.get("itemId").toString());
+                            shoppingCartRef.update("items", FieldValue.arrayRemove(cartItem));
+                            shoppingCartRef.update("items", FieldValue.arrayUnion(newCartItem));
+                            break;
+                        }
+                    }
+                }
+            }else {
+                throw new RuntimeException("Error occurred while writing to Firestore shopping cart");
             }
         });
     }

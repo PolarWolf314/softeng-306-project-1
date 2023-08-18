@@ -15,6 +15,12 @@ public interface UserDataProvider {
 
     void removeFromShoppingCart(final SerializedCartItem cartItem);
 
+    void incrementShoppingCartItemQuantity(final SerializedCartItem cartItem);
+
+    void decrementShoppingCartItemQuantity(final SerializedCartItem cartItem);
+
+    void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, int quantity);
+
     CompletableFuture<ShoppingCart> getShoppingCart();
 
     CompletableFuture<Watchlist> getWatchlist();
