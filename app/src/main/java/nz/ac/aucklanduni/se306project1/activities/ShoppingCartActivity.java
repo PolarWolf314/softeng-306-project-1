@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
@@ -28,7 +27,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_shopping_cart);
 
         this.binding = ActivityShoppingCartBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
