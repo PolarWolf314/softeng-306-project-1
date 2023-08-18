@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
+import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.viewholders.CartItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -44,6 +45,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new VerticalItemSpacingDecoration(this, 12));
 
     }
 }
