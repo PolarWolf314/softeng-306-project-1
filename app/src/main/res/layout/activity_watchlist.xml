@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.WatchlistActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/watchlist_fragment_container"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/LabelLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:text="@string/_1_item_in_watchlist" />
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/clear_cart_text"-->
+                <!--                    style="@style/LabelLarge"-->
+                <!--                    android:layout_width="125dp"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    android:layout_alignParentEnd="true"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:text="@string/clear_watchlist"-->
+                <!--                    android:textColor="@color/primary" />-->
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ButtonTextCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/pptelegraf_medium"
+                    android:text="@string/clear_watchlist"
+                    android:textColor="@color/primary" />
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/watchlist_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/watchlist_fragment_container"
+        android:name="nz.ac.aucklanduni.se306project1.fragments.BottomNavigationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_bottom_navigation" />
+
+</RelativeLayout>
