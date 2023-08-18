@@ -7,7 +7,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@id/watchlist_fragment_container"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +52,7 @@
         android:id="@+id/watchlist_fragment_container"
         android:name="nz.ac.aucklanduni.se306project1.fragments.BottomNavigationFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         tools:layout="@layout/fragment_bottom_navigation" />
 
