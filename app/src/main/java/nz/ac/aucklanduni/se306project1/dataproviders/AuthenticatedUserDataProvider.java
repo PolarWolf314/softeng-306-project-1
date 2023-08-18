@@ -28,6 +28,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public void addToWatchlist(final String itemId) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
@@ -49,6 +53,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public void removeFromWatchlist(final String itemId) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
@@ -66,6 +74,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public void addToShoppingCart(final SerializedCartItem cartItem) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
@@ -87,6 +99,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public void removeFromShoppingCart(final SerializedCartItem cartItem) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
@@ -114,6 +130,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     @Override
     public void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, int newQuantity) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
@@ -200,5 +220,10 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         );
 
         return myWatchlist;
+    }
+
+    @Override
+    public void removeUser() {
+        this.user = null;
     }
 }

@@ -9,6 +9,8 @@ import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     private final FirebaseAuth auth;
 
+    private UserDataProvider userDataProvider;
+
     public FirebaseAuthenticationProvider() {
         this.auth = FirebaseAuth.getInstance();
     }
@@ -26,7 +28,10 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     public CompletableFuture<UserDataProvider> registerUser(final String email, final String password) {
         return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password),
                 () -> new RuntimeException("Error in user registration"))
-                        .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
+                        .thenApply(authResult -> {
+                            this.userDataProvider = new AuthenticatedUserDataProvider(authResult.getUser());
+                            return this.userDataProvider;
+                        });
     }
 
     /**
@@ -41,14 +46,18 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     @Override
     public CompletableFuture<UserDataProvider> loginUser(final String email, final String password) {
         return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password),
-                        () -> new RuntimeException("Error in user login"))
-                            .thenApply(authResult -> new AuthenticatedUserDataProvider(authResult.getUser()));
+                () -> new RuntimeException("Error in user registration"))
+                        .thenApply(authResult -> {
+                            this.userDataProvider = new AuthenticatedUserDataProvider(authResult.getUser());
+                            return this.userDataProvider;
+                        });
     }
 
     @Override
     public UserDataProvider getCurrentUserDataProvider() {
         if (this.auth.getCurrentUser() != null) {
-            return new AuthenticatedUserDataProvider(this.auth.getCurrentUser());
+            this.userDataProvider = new AuthenticatedUserDataProvider(this.auth.getCurrentUser());
+            return this.userDataProvider;
         } else {
             throw new RuntimeException("No user logged in");
         }
@@ -57,5 +66,6 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     @Override
     public void logoutUser() {
         this.auth.signOut();
+        this.userDataProvider.removeUser();
     }
 }
