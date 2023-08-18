@@ -85,7 +85,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:backgroundTint="@color/primary"
-            android:text="Checkout"
+            android:text="@string/checkout"
             app:cornerRadius="10dp" />
     </RelativeLayout>
 

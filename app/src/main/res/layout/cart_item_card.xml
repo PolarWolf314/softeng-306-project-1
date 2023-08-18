@@ -23,7 +23,7 @@
                 android:id="@+id/item_card_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="Item Image"
+                android:contentDescription="@string/item_image"
                 android:padding="8dp"
                 android:src="@drawable/orange_hard_helmet" />
         </androidx.cardview.widget.CardView>
