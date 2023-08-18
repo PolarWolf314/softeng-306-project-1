@@ -15,7 +15,7 @@
         android:paddingVertical="8dp">
 
         <ImageView
-            android:id="@+id/item_card_image"
+            android:id="@+id/image_position"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentStart="true"
@@ -27,7 +27,7 @@
             style="@style/LabelProminent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_card_image"
+            android:layout_below="@id/image_position"
             android:layout_alignParentStart="true"
             android:layout_marginTop="4dp"
             android:ellipsize="end"

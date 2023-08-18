@@ -1,14 +1,11 @@
 package nz.ac.aucklanduni.se306project1.viewholders;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 
@@ -19,24 +16,21 @@ import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 
-public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
+public class CartItemCardViewHolder extends BindableViewHolder<Item> {
+
 
     private final Context context;
-    private final CardView cardView;
     private final ImageView itemImage;
     private final TextView itemName;
     private final TextView itemPrice;
-    private final CheckBox favouriteItemCheckbox;
 
-    public FeaturedItemCardViewHolder(@NonNull final Context context, @NonNull final View itemView) {
+    public CartItemCardViewHolder(@NonNull final Context context, @NonNull final View itemView) {
         super(itemView);
 
         this.context = context;
-        this.cardView = itemView.findViewById(R.id.item_card);
         this.itemImage = itemView.findViewById(R.id.image_position);
         this.itemName = itemView.findViewById(R.id.item_card_name);
         this.itemPrice = itemView.findViewById(R.id.item_card_price);
-        this.favouriteItemCheckbox = itemView.findViewById(R.id.item_card_favourite);
     }
 
     @Override
@@ -51,26 +45,22 @@ public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
 
         Glide.with(this.context).load(imageInfo.getUrl()).into(this.itemImage);
         this.itemImage.setContentDescription(imageInfo.getDescription());
-        this.cardView.setCardBackgroundColor(Color.parseColor(colourInformation.getColour()));
         this.itemName.setText(item.getDisplayName());
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
-        this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
-            // TODO: Toggle whether the item is in the watchlist
-        });
     }
 
-    public static class Builder implements ViewHolderBuilder<FeaturedItemCardViewHolder> {
+    public static class Builder implements ViewHolderBuilder<CartItemCardViewHolder> {
 
-        public static final Builder INSTANCE = new Builder();
+        public static final CartItemCardViewHolder.Builder INSTANCE = new CartItemCardViewHolder.Builder();
 
         @Override
         public int getLayoutId() {
-            return R.layout.featured_item_card;
+            return R.layout.cart_item_card;
         }
 
         @Override
-        public FeaturedItemCardViewHolder createViewHolder(final Context context, final View view) {
-            return new FeaturedItemCardViewHolder(context, view);
+        public CartItemCardViewHolder createViewHolder(final Context context, final View view) {
+            return new CartItemCardViewHolder(context, view);
         }
     }
 }
