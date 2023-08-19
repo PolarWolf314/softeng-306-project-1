@@ -221,7 +221,6 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         );
     }
 
-    @Override
     public void removeUser() {
         this.user = null;
     }
