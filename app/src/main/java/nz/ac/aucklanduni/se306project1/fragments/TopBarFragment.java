@@ -13,20 +13,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.util.function.Predicate;
-
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
-import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public class TopBarFragment extends Fragment {
 
+    private static final String SEARCH_QUERY_KEY = "SearchQueryFilter";
+
     private FragmentTopBarBinding binding;
     private TopBarViewModel viewModel;
     private ItemSearchViewModel searchViewModel;
-    private Predicate<Item> searchFilter;
 
     @Override
     public View onCreateView(
@@ -59,12 +57,11 @@ public class TopBarFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if (TopBarFragment.this.searchFilter != null) {
-                    TopBarFragment.this.searchViewModel.removeFilter(TopBarFragment.this.searchFilter);
-                }
+                TopBarFragment.this.searchViewModel.removeFilter(SEARCH_QUERY_KEY);
+
                 final String loweredQuery = newText.toLowerCase();
-                TopBarFragment.this.searchFilter = (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery);
-                TopBarFragment.this.searchViewModel.addFilter(TopBarFragment.this.searchFilter);
+                TopBarFragment.this.searchViewModel
+                        .addFilter(SEARCH_QUERY_KEY, (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery));
 
                 return true;
             }
