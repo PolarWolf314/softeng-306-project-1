@@ -21,8 +21,8 @@ public class VerticalItemSpacingDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(@NonNull final Rect outRect, @NonNull final View view, @NonNull final RecyclerView parent, @NonNull final RecyclerView.State state) {
         final int position = parent.getChildAdapterPosition(view);
 
-        if (position >= 0) {
-            outRect.bottom = 2 * this.verticalSpacingPx;
+        if (position > 0) {
+            outRect.top = this.verticalSpacingPx; // After you've converted the input from dp to px
         }
     }
 }
