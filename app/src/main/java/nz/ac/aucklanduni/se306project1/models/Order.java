@@ -25,7 +25,7 @@ public class Order {
         this.items = items;
     }
 
-    public String getuserId() {
+    public String getUserId() {
         return this.userId;
     }
 
@@ -42,12 +42,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         final Order order = (Order) o;
-        return Objects.equals(this.userId, ((Order) o).getuserId()) && Objects.equals(this.orderDate, ((Order) o).getOrderDate())
+        return Objects.equals(this.userId, ((Order) o).getUserId()) && Objects.equals(this.orderDate, ((Order) o).getOrderDate())
                 && Objects.equals(this.items, ((Order) o).getItems());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId) + Objects.hash(this.orderDate) + Objects.hash(this.items);
+        return Objects.hash(this.userId, this.orderDate, this.items);
     }
 }
