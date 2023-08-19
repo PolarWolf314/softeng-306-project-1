@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class VerticalItemSpacingDecoration extends RecyclerView.ItemDecoration {
 
-    private final int verticalSpacing;
+    private final int verticalSpacingPx;
 
-    public VerticalItemSpacingDecoration(final Context context, final int verticalSpacing) {
-        this.verticalSpacing = verticalSpacing;
+    public VerticalItemSpacingDecoration(final Context context, final int verticalSpacingDp) {
+
+        final float pixelDensity = context.getResources().getDisplayMetrics().density;
+        this.verticalSpacingPx = Math.round(verticalSpacingDp * pixelDensity);
     }
 
     @Override
@@ -20,7 +22,7 @@ public class VerticalItemSpacingDecoration extends RecyclerView.ItemDecoration {
         final int position = parent.getChildAdapterPosition(view);
 
         if (position >= 0) {
-            outRect.bottom = 2 * this.verticalSpacing;
+            outRect.bottom = 2 * this.verticalSpacingPx;
         }
     }
 }
