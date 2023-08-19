@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
+import nz.ac.aucklanduni.se306project1.iconbuttons.SearchIcon;
 
 public class TopBarViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isSearchBarExpanded = new MutableLiveData<>();
@@ -13,7 +14,7 @@ public class TopBarViewModel extends ViewModel {
     private IconButton startIconButton = null;
 
     @Nullable
-    private IconButton endIconButton = null;
+    private IconButton endIconButton = SearchIcon.INSTANCE;
 
     public void setSearchBarExpanded(final boolean isExpanded) {
         this.isSearchBarExpanded.setValue(isExpanded);

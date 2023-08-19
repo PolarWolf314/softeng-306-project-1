@@ -13,7 +13,6 @@ import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
-import nz.ac.aucklanduni.se306project1.iconbuttons.SearchIcon;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
@@ -50,8 +49,6 @@ public class HomeActivity extends TopBarActivity {
         this.binding.softwareCategory.setOnClickListener(v -> this.startActivity(intent));
         this.binding.chemmatCategory.setOnClickListener(v -> this.startActivity(intent));
         this.binding.mechanicalCategory.setOnClickListener(v -> this.startActivity(intent));
-
-        this.getTopBarViewModel().setEndIconButton(SearchIcon.INSTANCE);
 
         // We have to keep a reference to the specific filter we're adding.
         final Predicate<Item> filter = this::isPriceGreaterThan20Dollars;
