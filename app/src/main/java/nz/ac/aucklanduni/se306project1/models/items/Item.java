@@ -4,7 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Item {
+import nz.ac.aucklanduni.se306project1.models.SearchFilterable;
+
+public abstract class Item implements SearchFilterable {
     private String id;
     private String displayName;
     private String categoryId;
@@ -22,6 +24,11 @@ public abstract class Item {
         this.description = description;
         this.price = price;
         this.colours = colours;
+    }
+
+    @Override
+    public boolean matches(final String query) {
+        return this.displayName.toLowerCase().contains(query);
     }
 
     public String getId() {
