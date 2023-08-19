@@ -40,9 +40,10 @@ public class TopBarFragment extends Fragment {
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
 
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
+        this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
     }
 
-    private void bindIconButton(final MaterialButton button, final IconButton iconButton) {
+    private void bindIconButton(final MaterialButton button, @Nullable final IconButton iconButton) {
         if (iconButton == null) {
             button.setVisibility(View.GONE);
         } else {
@@ -74,7 +75,7 @@ public class TopBarFragment extends Fragment {
         this.binding.topBarSearchView.setVisibility(View.GONE);
     }
 
-    private int getVisibility(final IconButton iconButton) {
+    private int getVisibility(@Nullable final IconButton iconButton) {
         return iconButton == null ? View.GONE : View.VISIBLE;
     }
 }

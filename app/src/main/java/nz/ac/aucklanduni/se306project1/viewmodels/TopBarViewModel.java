@@ -1,18 +1,19 @@
 package nz.ac.aucklanduni.se306project1.viewmodels;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.Collections;
-import java.util.List;
 
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
 
 public class TopBarViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isSearchBarExpanded = new MutableLiveData<>();
+    @Nullable
     private IconButton startIconButton = null;
-    private List<IconButton> endIconButtons = Collections.emptyList();
+
+    @Nullable
+    private IconButton endIconButton = null;
 
     public void setSearchBarExpanded(final boolean isExpanded) {
         this.isSearchBarExpanded.setValue(isExpanded);
@@ -22,19 +23,21 @@ public class TopBarViewModel extends ViewModel {
         return this.isSearchBarExpanded;
     }
 
+    @Nullable
     public IconButton getStartIconButton() {
         return this.startIconButton;
     }
 
-    public void setStartIconButton(final IconButton iconButton) {
+    public void setStartIconButton(@Nullable final IconButton iconButton) {
         this.startIconButton = iconButton;
     }
 
-    public List<IconButton> getEndIconButtons() {
-        return this.endIconButtons;
+    @Nullable
+    public IconButton getEndIconButton() {
+        return this.endIconButton;
     }
 
-    public void setEndIconButtons(final IconButton... iconButtons) {
-        this.endIconButtons = List.of(iconButtons);
+    public void setEndIconButton(@Nullable final IconButton iconButton) {
+        this.endIconButton = iconButton;
     }
 }
