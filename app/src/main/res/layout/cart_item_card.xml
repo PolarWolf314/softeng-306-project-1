@@ -64,6 +64,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cart_item_card_decrement_button"
                     style="@style/ButtonIconCustomStyle"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -84,6 +85,7 @@
                     android:textFontWeight="900" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cart_item_card_increment_button"
                     style="@style/ButtonIconCustomStyle"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -95,6 +97,7 @@
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/cart_item_card_delete_button"
                 style="@style/ButtonIconCustomStyle"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
