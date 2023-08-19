@@ -60,4 +60,5 @@
     <string name="_4_items_in_cart">4 Items in cart</string>
     <string name="checkout">Checkout</string>
     <string name="item_image">Item Image</string>
+    <string name="total">Total</string>
 </resources>
