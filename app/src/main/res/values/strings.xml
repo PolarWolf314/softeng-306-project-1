@@ -62,4 +62,10 @@
     <string name="item_image">Item Image</string>
     <string name="total">Total</string>
     <string name="background_image">background_image</string>
+    <string name="welcome_to_engiwear">Welcome to EngiWear!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Log in</string>
+    <string name="or_continue_as_guest">Or continue as guest</string>
+    <string name="sign_up">Sign up.</string>
 </resources>
