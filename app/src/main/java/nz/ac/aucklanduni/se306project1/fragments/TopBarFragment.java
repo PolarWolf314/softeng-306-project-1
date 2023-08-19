@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,6 +14,7 @@ import com.google.android.material.button.MaterialButton;
 
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
+import nz.ac.aucklanduni.se306project1.utils.QueryUtils;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
@@ -49,23 +49,17 @@ public class TopBarFragment extends Fragment {
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
 
-        this.binding.topBarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(final String query) {
-                return false;
-            }
+        this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
+                (newQuery) -> {
+                    this.searchViewModel.removeFilter(SEARCH_QUERY_KEY);
+                    final String loweredQuery = newQuery.trim().toLowerCase();
 
-            @Override
-            public boolean onQueryTextChange(final String newText) {
-                TopBarFragment.this.searchViewModel.removeFilter(SEARCH_QUERY_KEY);
-
-                final String loweredQuery = newText.toLowerCase();
-                TopBarFragment.this.searchViewModel
-                        .addFilter(SEARCH_QUERY_KEY, (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery));
-
-                return true;
-            }
-        });
+                    if (loweredQuery.length() != 0) {
+                        this.searchViewModel.addFilter(SEARCH_QUERY_KEY,
+                                (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery));
+                    }
+                }
+        ));
     }
 
     private void bindIconButton(final MaterialButton button, @Nullable final IconButton iconButton) {
