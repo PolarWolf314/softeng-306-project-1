@@ -39,6 +39,7 @@ public class TopBarFragment extends Fragment {
         this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
 
+
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
     }
