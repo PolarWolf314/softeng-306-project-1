@@ -33,7 +33,7 @@ public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
 
         this.context = context;
         this.cardView = itemView.findViewById(R.id.item_card);
-        this.itemImage = itemView.findViewById(R.id.image_position);
+        this.itemImage = itemView.findViewById(R.id.item_card_image);
         this.itemName = itemView.findViewById(R.id.item_card_name);
         this.itemPrice = itemView.findViewById(R.id.item_card_price);
         this.favouriteItemCheckbox = itemView.findViewById(R.id.item_card_favourite);
