@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
@@ -24,6 +25,21 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
 
     public AuthenticatedUserDataProvider(FirebaseUser appUser) {
         this.user = appUser;
+    }
+
+    @Override
+    public void placeOrder(Order order) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("orders").add(order).addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                throw new RuntimeException("Error processing order");
+            }
+        });
     }
 
     @Override
