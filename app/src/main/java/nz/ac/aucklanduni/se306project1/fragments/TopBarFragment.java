@@ -10,13 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
+
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
+import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public class TopBarFragment extends Fragment {
 
     private FragmentTopBarBinding binding;
-    private TopBarViewModel topBarViewModel;
+    private TopBarViewModel viewModel;
 
     @Override
     public View onCreateView(
@@ -32,18 +35,22 @@ public class TopBarFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.topBarViewModel = new ViewModelProvider(this.requireActivity()).get(TopBarViewModel.class);
-        this.binding.endIconButton.setOnClickListener(v -> this.topBarViewModel.setSearchBarExpanded(true));
-        this.topBarViewModel.getIsSearchBarExpanded()
+        this.viewModel = new ViewModelProvider(this.requireActivity()).get(TopBarViewModel.class);
+        this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
 
-        this.binding.topBarSearchView.getRootView().setOnFocusChangeListener((v, isFocused) -> {
-            System.out.println("Is focused root: " + isFocused);
-        });
+        this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
+    }
 
-        this.binding.topBarSearchView.setOnFocusChangeListener((v, isFocused) -> {
-            System.out.println("Is focused: " + isFocused);
-        });
+    private void bindIconButton(final MaterialButton button, final IconButton iconButton) {
+        if (iconButton == null) {
+            button.setVisibility(View.GONE);
+        } else {
+            button.setVisibility(View.VISIBLE);
+            button.setIconResource(iconButton.getIconId());
+            button.setOnClickListener((v) ->
+                    iconButton.getOnClickListener().accept(this.getContext(), this.viewModel));
+        }
     }
 
     private void setIsSearchBarExpanded(final boolean isExpanded) {
@@ -61,9 +68,13 @@ public class TopBarFragment extends Fragment {
     }
 
     private void hideSearchBar() {
-        this.binding.startIconButton.setVisibility(View.VISIBLE);
+        this.binding.startIconButton.setVisibility(this.getVisibility(this.viewModel.getStartIconButton()));
         this.binding.topBarTitle.setVisibility(View.VISIBLE);
         this.binding.endIconButton.setVisibility(View.VISIBLE);
         this.binding.topBarSearchView.setVisibility(View.GONE);
+    }
+
+    private int getVisibility(final IconButton iconButton) {
+        return iconButton == null ? View.GONE : View.VISIBLE;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="IconButton.Common">
+    <style name="IconButtonCommon">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:padding">12dp</item>
@@ -9,7 +9,7 @@
         <item name="android:background">@drawable/icon_button</item>
     </style>
 
-    <style name="IconButton" parent="IconButton.Common">
+    <style name="IconButton" parent="IconButtonCommon">
         <item name="iconSize">24dp</item>
         <item name="iconTint">@color/black</item>
     </style>

@@ -19,7 +19,6 @@ public abstract class TopBarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.topBarViewModel = new ViewModelProvider(this).get(TopBarViewModel.class);
     }
 
@@ -39,5 +38,9 @@ public abstract class TopBarActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+
+    public TopBarViewModel getTopBarViewModel() {
+        return this.topBarViewModel;
     }
 }
