@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_card"
+    android:id="@+id/cart_item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="0dp">
@@ -11,7 +11,7 @@
         android:layout_height="92dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/image_position"
+            android:id="@+id/cart_image_position"
             android:layout_width="92dp"
             android:layout_height="92dp"
             android:layout_alignParentStart="true"
@@ -20,7 +20,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/item_card_image"
+                android:id="@+id/cart_item_card_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/item_image"
@@ -32,11 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_toEndOf="@id/image_position"
+            android:layout_toEndOf="@id/cart_image_position"
             android:paddingHorizontal="8dp">
 
             <TextView
-                android:id="@+id/item_card_name"
+                android:id="@+id/cart_item_card_name"
                 style="@style/LabelLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,11 +46,11 @@
                 android:textFontWeight="900" />
 
             <TextView
-                android:id="@+id/item_card_price"
+                android:id="@+id/cart_item_card_price"
                 style="@style/LabelSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/item_card_name"
+                android:layout_below="@id/cart_item_card_name"
                 android:paddingTop="2dp"
                 android:text="$39.00"
                 android:textColor="@color/light_gray"
@@ -73,7 +73,7 @@
                     app:iconTint="@color/black" />
 
                 <TextView
-                    android:id="@+id/item_card_quantity"
+                    android:id="@+id/cart_item_card_quantity"
                     style="@style/LabelLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

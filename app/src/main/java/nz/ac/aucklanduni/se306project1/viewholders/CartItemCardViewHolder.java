@@ -29,10 +29,10 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         super(itemView);
 
         this.context = context;
-        this.itemImage = itemView.findViewById(R.id.item_card_image);
-        this.itemName = itemView.findViewById(R.id.item_card_name);
-        this.itemPrice = itemView.findViewById(R.id.item_card_price);
-        this.itemQuantity = itemView.findViewById(R.id.item_card_quantity);
+        this.itemImage = itemView.findViewById(R.id.cart_item_card_image);
+        this.itemName = itemView.findViewById(R.id.cart_item_card_name);
+        this.itemPrice = itemView.findViewById(R.id.cart_item_card_price);
+        this.itemQuantity = itemView.findViewById(R.id.cart_item_card_quantity);
     }
 
     @Override
