@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,7 +39,18 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
 
     @Override
     public CompletableFuture<Item> getItemById(String itemId) {
-        return null;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference itemRef = db.collection("items").document(itemId);
+
+        return FutureUtils.fromTask(itemRef.get(), () -> new RuntimeException("Error reading item from Firestore")).thenApply(
+                document -> {
+                    if (document.exists()) {
+                        return this.parseDocumentForItem(document, document.get("categoryId").toString());
+                    } else {
+                        throw new RuntimeException("Invalid item ID");
+                    }
+                }
+        );
     }
 
     @Override
