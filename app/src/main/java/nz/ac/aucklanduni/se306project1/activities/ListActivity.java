@@ -45,6 +45,7 @@ public class ListActivity extends TopBarActivity {
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
 
-        this.getTopBarViewModel().setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
+        this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
+        this.topBarViewModel.setTitle("Civil");
     }
 }

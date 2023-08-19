@@ -14,7 +14,7 @@ import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public abstract class TopBarActivity extends AppCompatActivity {
 
-    private TopBarViewModel topBarViewModel;
+    protected TopBarViewModel topBarViewModel;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -40,9 +40,5 @@ public abstract class TopBarActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(event);
-    }
-
-    public TopBarViewModel getTopBarViewModel() {
-        return this.topBarViewModel;
     }
 }

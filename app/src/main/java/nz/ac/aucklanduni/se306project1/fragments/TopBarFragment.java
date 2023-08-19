@@ -14,8 +14,9 @@ import com.google.android.material.button.MaterialButton;
 
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
+import nz.ac.aucklanduni.se306project1.models.SearchFilterable;
 import nz.ac.aucklanduni.se306project1.utils.QueryUtils;
-import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.SearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public class TopBarFragment extends Fragment {
@@ -24,7 +25,7 @@ public class TopBarFragment extends Fragment {
 
     private FragmentTopBarBinding binding;
     private TopBarViewModel viewModel;
-    private ItemSearchViewModel searchViewModel;
+    private SearchViewModel<? extends SearchFilterable> searchViewModel;
 
     @Override
     public View onCreateView(
@@ -41,13 +42,15 @@ public class TopBarFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final ViewModelProvider provider = new ViewModelProvider(this.requireActivity());
-        this.searchViewModel = provider.get(ItemSearchViewModel.class);
         this.viewModel = provider.get(TopBarViewModel.class);
         this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
+        this.searchViewModel = provider.get(this.viewModel.getSearchViewModelClass());
 
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
+
+        this.binding.topBarTitle.setText(this.viewModel.getTitle());
 
         this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
                 (newQuery) -> {
@@ -55,8 +58,7 @@ public class TopBarFragment extends Fragment {
                     final String loweredQuery = newQuery.trim().toLowerCase();
 
                     if (loweredQuery.length() != 0) {
-                        this.searchViewModel.addFilter(SEARCH_QUERY_KEY,
-                                (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery));
+                        this.searchViewModel.addFilter(SEARCH_QUERY_KEY, (item) -> item.matches(loweredQuery));
                     }
                 }
         ));
