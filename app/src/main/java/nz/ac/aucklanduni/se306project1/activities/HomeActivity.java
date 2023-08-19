@@ -1,15 +1,8 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +18,7 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends TopBarActivity {
 
     private ActivityHomeBinding binding;
     private ItemSearchViewModel searchViewModel;
@@ -68,23 +61,6 @@ public class HomeActivity extends AppCompatActivity {
             }
             this.hasFilter = !this.hasFilter;
         });
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(final MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            final View v = this.getCurrentFocus();
-            if (v instanceof SearchView.SearchAutoComplete) {
-                final Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    final InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
     }
 
     public boolean isPriceGreaterThan20Dollars(final Item item) {
