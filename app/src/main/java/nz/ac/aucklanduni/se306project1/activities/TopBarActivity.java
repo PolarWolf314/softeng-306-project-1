@@ -30,8 +30,10 @@ public abstract class TopBarActivity extends AppCompatActivity {
             // see if it matches our specific search view. That's fine for now though as we only
             // have one.
             if (view instanceof SearchView.SearchAutoComplete) {
+                // We can get the actual search view by navigating the XML tree... Yes this is cursed.
+                final View searchView = (View) view.getParent().getParent().getParent().getParent();
                 final Rect outRect = new Rect();
-                view.getGlobalVisibleRect(outRect);
+                searchView.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
                     this.topBarViewModel.setSearchBarExpanded(false);
                 }
