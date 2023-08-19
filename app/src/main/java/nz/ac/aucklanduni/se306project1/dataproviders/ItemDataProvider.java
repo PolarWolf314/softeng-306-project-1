@@ -10,7 +10,7 @@ public interface ItemDataProvider {
 
     CompletableFuture<Item> getItemById(String itemId);
 
-    CompletableFuture<List<Item>> getFeaturedItems();
+    CompletableFuture<CompletableFuture<List<Item>>> getFeaturedItems(int numItems);
 
     CompletableFuture<Integer> getItemCountPerCategory(String categoryId);
 }

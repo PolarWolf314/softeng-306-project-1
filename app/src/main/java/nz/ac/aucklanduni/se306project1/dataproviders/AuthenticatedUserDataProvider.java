@@ -197,7 +197,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public CompletableFuture<ShoppingCart> getShoppingCart() {
+    public CompletableFuture<CompletableFuture<ShoppingCart>> getShoppingCart() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -209,16 +209,27 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 document -> {
                     List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
                     List<CartItem> cartItems = new ArrayList<>();
+                    CompletableFuture<ShoppingCart> futureShoppingCart = new CompletableFuture<>();
                     ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
-                    for (Map<String, Object> firebaseCartItem : firebaseCartItems) {
+                    for (int i = 0; i < firebaseCartItems.size(); i++) {
+                        Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
                         Long quantity = (Long) firebaseCartItem.get("quantity");
-                        myItemProvider.getItemById(firebaseCartItem.get("itemId").toString()).thenAccept(item ->
-                                cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
-                                firebaseCartItem.get("size").toString(), item)));
+                        int currentIteration = i;
+                        myItemProvider.getItemById(firebaseCartItem.get("itemId").toString()).thenAccept(item -> {
+                            cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
+                                    firebaseCartItem.get("size").toString(), item));
+                            if (currentIteration == firebaseCartItems.size() - 1) {
+                                futureShoppingCart.complete(new ShoppingCart(cartItems));
+                            }
+                        });
                     }
-                    return new ShoppingCart(cartItems);
+                    return futureShoppingCart;
                 }
-        ).exceptionally(exception -> new ShoppingCart(new ArrayList<>()));
+        ).exceptionally(exception -> {
+            CompletableFuture<ShoppingCart> futureShoppingCart = new CompletableFuture<>();
+            futureShoppingCart.complete(new ShoppingCart(new ArrayList<>()));
+            return futureShoppingCart;
+        });
     }
 
     @Override

@@ -22,6 +22,22 @@ import nz.ac.aucklanduni.se306project1.models.items.SoftwareItem;
 import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 
 public class FirebaseItemDataProvider implements ItemDataProvider {
+    private static class ItemIDComparator implements java.util.Comparator<String> {
+        Map<String, Integer> itemPurchaseCount;
+
+        public ItemIDComparator(Map<String, Integer> itemPurchaseCount) {
+            this.itemPurchaseCount = itemPurchaseCount;
+        }
+
+        @Override
+        public int compare(String itemId1, String itemId2) {
+            if (this.itemPurchaseCount.containsKey(itemId2) & this.itemPurchaseCount.containsKey(itemId1)) {
+                return this.itemPurchaseCount.get(itemId2) - this.itemPurchaseCount.get(itemId1);
+            }
+            return 0;
+        }
+    }
+
     @Override
     public CompletableFuture<List<Item>> getItemsByCategoryId(String categoryId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -54,8 +70,46 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
     }
 
     @Override
-    public CompletableFuture<List<Item>> getFeaturedItems() {
-        return null;
+    public CompletableFuture<CompletableFuture<List<Item>>> getFeaturedItems(int numItems) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        return FutureUtils.fromTask(db.collection("orders").get(),
+                () -> new RuntimeException("Error retrieving featured items")).thenApply(documentSnapshots -> {
+                    Map<String, Integer> itemPurchaseCount = new HashMap<>();
+                    String itemId;
+                    Long temp;
+                    int quantityPurchased;
+                    for (DocumentSnapshot document : documentSnapshots) {
+                        List<Map<String, Object>> itemsArr = (List<Map<String, Object>>) document.get("items");
+                        for (Map<String, Object> currentItem : itemsArr) {
+                            itemId = currentItem.get("itemId").toString();
+                            temp = (Long) currentItem.get("quantity");
+                            quantityPurchased = temp.intValue();
+                            if (itemPurchaseCount.containsKey(itemId)) {
+                                itemPurchaseCount.replace(itemId, itemPurchaseCount.get(itemId) + quantityPurchased);
+                            } else {
+                                itemPurchaseCount.put(itemId, quantityPurchased);
+                            }
+                        }
+                    }
+
+                    List<String> itemsPurchased = new ArrayList<>(itemPurchaseCount.keySet());
+                    ItemIDComparator itemIDComparator = new ItemIDComparator(itemPurchaseCount);
+                    itemsPurchased.sort(itemIDComparator);
+                    List<Item> items = new ArrayList<>();
+                    int iterations = Math.min(numItems, itemsPurchased.size());
+                    CompletableFuture<List<Item>> futureItems = new CompletableFuture<>();
+                    for (int i = 0; i < Math.min(numItems, itemsPurchased.size()); i++) {
+                        int currentIteration = i;
+                        this.getItemById(itemsPurchased.get(i)).thenAccept(item -> {
+                            items.add(item);
+                            if (currentIteration == iterations - 1) {
+                                futureItems.complete(items);
+                            }
+                        });
+                    }
+                    return futureItems;
+        });
     }
 
     @Override

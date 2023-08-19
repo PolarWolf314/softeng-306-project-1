@@ -25,7 +25,7 @@ public interface UserDataProvider {
 
     void clearShoppingCart();
 
-    CompletableFuture<ShoppingCart> getShoppingCart();
+    CompletableFuture<CompletableFuture<ShoppingCart>> getShoppingCart();
 
     CompletableFuture<Watchlist> getWatchlist();
 }
