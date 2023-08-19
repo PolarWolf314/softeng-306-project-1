@@ -210,11 +210,11 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                     List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
                     List<CartItem> cartItems = new ArrayList<>();
                     ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
-                    Long quantity;
                     for (Map<String, Object> firebaseCartItem : firebaseCartItems) {
-                        quantity = (Long) firebaseCartItem.get("quantity");
-                        cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
-                                firebaseCartItem.get("size").toString(), myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())));
+                        Long quantity = (Long) firebaseCartItem.get("quantity");
+                        myItemProvider.getItemById(firebaseCartItem.get("itemId").toString()).thenAccept(item ->
+                                cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
+                                firebaseCartItem.get("size").toString(), item)));
                     }
                     return new ShoppingCart(cartItems);
                 }
