@@ -9,7 +9,7 @@ import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     private final FirebaseAuth auth;
 
-    private UserDataProvider userDataProvider;
+    private AuthenticatedUserDataProvider userDataProvider;
 
     public FirebaseAuthenticationProvider() {
         this.auth = FirebaseAuth.getInstance();
@@ -66,6 +66,6 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
     @Override
     public void logoutUser() {
         this.auth.signOut();
-        this.userDataProvider.removeUser();
+        if (this.userDataProvider != null) this.userDataProvider.removeUser();
     }
 }

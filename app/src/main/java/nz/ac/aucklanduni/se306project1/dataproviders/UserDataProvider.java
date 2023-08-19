@@ -26,6 +26,4 @@ public interface UserDataProvider {
     CompletableFuture<ShoppingCart> getShoppingCart();
 
     CompletableFuture<Watchlist> getWatchlist();
-
-    void removeUser();
 }
