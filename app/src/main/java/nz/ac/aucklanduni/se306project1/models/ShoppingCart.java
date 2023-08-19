@@ -7,14 +7,12 @@ import java.util.Objects;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 
 public class ShoppingCart {
-    private String userId;
     private List<CartItem> cartItems;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(final String userId, final List<CartItem> cartItems) {
-        this.userId = userId;
+    public ShoppingCart(final List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
 
@@ -30,10 +28,6 @@ public class ShoppingCart {
         this.cartItems.remove(cartItem);
     }
 
-    public String getUserId() {
-        return this.userId;
-    }
-
     public List<CartItem> getCartItems() {
         return Collections.unmodifiableList(this.cartItems);
     }
@@ -43,12 +37,11 @@ public class ShoppingCart {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         final ShoppingCart that = (ShoppingCart) o;
-        return Objects.equals(this.userId, that.userId) &&
-                Objects.equals(this.cartItems, that.cartItems);
+        return Objects.equals(this.cartItems, that.cartItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.cartItems);
+        return Objects.hash(this.cartItems);
     }
 }

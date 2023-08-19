@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Watchlist {
-    private String userId;
     private List<String> itemIds;
 
     public Watchlist() {
     }
 
-    public Watchlist(final String userId, final List<String> itemIds) {
-        this.userId = userId;
+    public Watchlist(final List<String> itemIds) {
         this.itemIds = itemIds;
     }
 
@@ -24,10 +22,6 @@ public class Watchlist {
         this.itemIds.remove(itemId);
     }
 
-    public String getUserId() {
-        return this.userId;
-    }
-
     public List<String> getItemIds() {
         return Collections.unmodifiableList(this.itemIds);
     }
@@ -37,12 +31,11 @@ public class Watchlist {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         final Watchlist watchlist = (Watchlist) o;
-        return Objects.equals(this.userId, watchlist.userId) &&
-                Objects.equals(this.itemIds, watchlist.itemIds);
+        return Objects.equals(this.itemIds, watchlist.itemIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userId, this.itemIds);
+        return Objects.hash(this.itemIds);
     }
 }
