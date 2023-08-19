@@ -7,10 +7,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
+public class HorizontalItemSpacingDecoration extends RecyclerView.ItemDecoration {
     private final int horizontalSpacing;
 
-    public ItemSpacingDecoration(final Context context, final int horizontalSpacing) {
+    public HorizontalItemSpacingDecoration(final Context context, final int horizontalSpacing) {
         this.horizontalSpacing = horizontalSpacing;
     }
 
