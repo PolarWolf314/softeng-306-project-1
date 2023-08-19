@@ -7,19 +7,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.function.Predicate;
+
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
+import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public class TopBarFragment extends Fragment {
 
     private FragmentTopBarBinding binding;
     private TopBarViewModel viewModel;
+    private ItemSearchViewModel searchViewModel;
+    private Predicate<Item> searchFilter;
 
     @Override
     public View onCreateView(
@@ -35,13 +42,33 @@ public class TopBarFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        this.viewModel = new ViewModelProvider(this.requireActivity()).get(TopBarViewModel.class);
+        final ViewModelProvider provider = new ViewModelProvider(this.requireActivity());
+        this.searchViewModel = provider.get(ItemSearchViewModel.class);
+        this.viewModel = provider.get(TopBarViewModel.class);
         this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
 
-
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
+
+        this.binding.topBarSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                if (TopBarFragment.this.searchFilter != null) {
+                    TopBarFragment.this.searchViewModel.removeFilter(TopBarFragment.this.searchFilter);
+                }
+                final String loweredQuery = newText.toLowerCase();
+                TopBarFragment.this.searchFilter = (item) -> item.getDisplayName().toLowerCase().contains(loweredQuery);
+                TopBarFragment.this.searchViewModel.addFilter(TopBarFragment.this.searchFilter);
+
+                return true;
+            }
+        });
     }
 
     private void bindIconButton(final MaterialButton button, @Nullable final IconButton iconButton) {
