@@ -24,17 +24,12 @@ import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 public class FirebaseItemDataProvider implements ItemDataProvider {
     private static class ItemIDComparator implements java.util.Comparator<String> {
         Map<String, Integer> itemPurchaseCount;
-
         public ItemIDComparator(Map<String, Integer> itemPurchaseCount) {
             this.itemPurchaseCount = itemPurchaseCount;
         }
-
         @Override
-        public int compare(String itemId1, String itemId2) {
-            if (this.itemPurchaseCount.containsKey(itemId2) & this.itemPurchaseCount.containsKey(itemId1)) {
-                return this.itemPurchaseCount.get(itemId2) - this.itemPurchaseCount.get(itemId1);
-            }
-            return 0;
+        public int compare(final String itemId1, final String itemId2) {
+            return this.itemPurchaseCount.getOrDefault(itemId2, 0) - this.itemPurchaseCount.getOrDefault(itemId1, 0);
         }
     }
 
