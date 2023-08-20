@@ -149,7 +149,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_button"
+                android:id="@+id/signup_sign_up_button"
                 style="@style/ButtonIconCustomStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 android:backgroundTint="#75E6FF"
                 android:fontFamily="@font/pptelegraf_medium"
                 android:shadowColor="@color/fui_transparent"
-                android:text="@string/login"
+                android:text="Sign up"
                 android:textColor="@color/black"
                 app:cornerRadius="10dp"
                 app:strokeColor="@color/black"
@@ -174,17 +174,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pptelegraf_medium"
-                    android:text="Don't have an account? "
+                    android:text="@string/already_have_an_account"
                     android:textColor="@color/light_gray" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/sign_up_button"
+                    android:id="@+id/signup_sign_in_button"
                     style="@style/ButtonTextCustomStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-16dp"
                     android:fontFamily="@font/pptelegraf_medium"
-                    android:text="@string/sign_up"
+                    android:text="Sign in."
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
