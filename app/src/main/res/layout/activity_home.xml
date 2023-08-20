@@ -5,9 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/top_bar_fragment_container"
+        android:name="nz.ac.aucklanduni.se306project1.fragments.TopBarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_top_bar" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/top_bar_fragment_container"
         android:orientation="vertical">
 
         <LinearLayout
@@ -266,13 +275,6 @@
 
                 </LinearLayout>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/toggle_filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Toggle filter :)" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -281,5 +283,6 @@
         android:name="nz.ac.aucklanduni.se306project1.fragments.BottomNavigationFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_bottom_navigation" />
 </RelativeLayout>

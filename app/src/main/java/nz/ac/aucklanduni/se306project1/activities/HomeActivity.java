@@ -3,12 +3,9 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.function.Predicate;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
@@ -19,11 +16,10 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends TopBarActivity {
 
     private ActivityHomeBinding binding;
     private ItemSearchViewModel searchViewModel;
-    private boolean hasFilter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -46,41 +42,9 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
         final Intent intent = new Intent(this, ListActivity.class);
-
-        this.binding.civilCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.softwareCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.chemmatCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        this.binding.mechanicalCategory.setOnClickListener(v -> {
-            // Create intent and navigate to ListActivity
-            this.startActivity(intent);
-        });
-
-        // We have to keep a reference to the specific filter we're adding.
-        final Predicate<Item> filter = this::isPriceGreaterThan20Dollars;
-
-        this.binding.toggleFilterButton.setOnClickListener(view -> {
-            if (this.hasFilter) {
-                this.searchViewModel.removeFilter(filter);
-            } else {
-                this.searchViewModel.addFilter(filter);
-            }
-            this.hasFilter = !this.hasFilter;
-        });
-    }
-
-    public boolean isPriceGreaterThan20Dollars(final Item item) {
-        return item.getPrice() > 20D;
+        this.binding.civilCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.softwareCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.chemmatCategory.setOnClickListener(v -> this.startActivity(intent));
+        this.binding.mechanicalCategory.setOnClickListener(v -> this.startActivity(intent));
     }
 }

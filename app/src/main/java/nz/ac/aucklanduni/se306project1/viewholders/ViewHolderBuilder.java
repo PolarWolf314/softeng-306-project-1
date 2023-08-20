@@ -9,7 +9,7 @@ public interface ViewHolderBuilder<ViewHolder extends BindableViewHolder<?>> {
 
     /**
      * Retrieve the id of the layout for this particular view holder, as specified in
-     * <link>R.layout.LAYOUT_NAME</code>.
+     * <code>R.layout.LAYOUT_NAME</code>.
      *
      * @return The id of the layout
      */

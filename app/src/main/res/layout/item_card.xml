@@ -49,7 +49,7 @@
 
         <CheckBox
             android:id="@+id/item_card_favourite"
-            style="@style/IconButton.Common"
+            style="@style/IconButtonCommon"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:button="@drawable/favourite_24dp"

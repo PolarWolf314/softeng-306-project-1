@@ -2,7 +2,9 @@ package nz.ac.aucklanduni.se306project1.models.items;
 
 import java.util.Objects;
 
-public class CartItem extends CartItemSpecifications {
+import nz.ac.aucklanduni.se306project1.models.SearchFilterable;
+
+public class CartItem extends CartItemSpecifications implements SearchFilterable {
     private Item item;
 
     public CartItem() {
@@ -29,5 +31,10 @@ public class CartItem extends CartItemSpecifications {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), this.item);
+    }
+
+    @Override
+    public boolean matches(final String query) {
+        return this.item.matches(query);
     }
 }

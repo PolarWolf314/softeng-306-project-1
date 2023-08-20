@@ -4,37 +4,38 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class SearchViewModel<Item> extends ViewModel {
-    private final List<Predicate<Item>> filters = new ArrayList<>();
+    private final Map<String, Predicate<Item>> filters = new HashMap<>();
     private final MutableLiveData<List<Item>> filteredItems = new MutableLiveData<>();
     private List<Item> originalItems = Collections.emptyList();
 
     /**
-     * Removes this filter from the list of filters being applied to the items. This will cause the
-     * filtered items to be recalculated.
+     * Removes the filter associated with this key from the filters being applied to the items.
+     * This will cause the filtered items to be recalculated.
      *
-     * @param filter The filter to remove
+     * @param filterKey The key of the filter to remove
      */
-    public void removeFilter(final Predicate<Item> filter) {
-        if (this.filters.remove(filter)) {
-            this.applyFilters();
-        }
+    public void removeFilter(final String filterKey) {
+        this.filters.remove(filterKey);
+        this.applyFilters();
     }
 
     /**
-     * Adds this filter to the list of filters being applied to the items. This will cause the
-     * filtered items to be recalculated.
+     * Adds this filter to the filters being applied to the items. This will cause the filtered
+     * items to be recalculated.
      *
-     * @param filter The filter to add
+     * @param filterKey The key to associate with the filter
+     * @param filter    The filter to add
      */
-    public void addFilter(final Predicate<Item> filter) {
-        this.filters.add(filter);
+    public void addFilter(final String filterKey, final Predicate<Item> filter) {
+        this.filters.put(filterKey, filter);
         this.applyFilters();
     }
 
@@ -78,7 +79,7 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * @return Whether the item matches all the current filters
      */
     private boolean matchesFilters(final Item item) {
-        return this.filters.stream().allMatch(filter -> filter.test(item));
+        return this.filters.values().stream().allMatch(filter -> filter.test(item));
     }
 
     /**
