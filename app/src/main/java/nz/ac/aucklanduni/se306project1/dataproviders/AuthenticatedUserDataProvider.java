@@ -197,7 +197,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public CompletableFuture<CompletableFuture<ShoppingCart>> getShoppingCart() {
+    public CompletableFuture<ShoppingCart> getShoppingCart() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -205,31 +205,31 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
-        return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenApply(
+        return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenCompose(
                 document -> {
-                    List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
-                    List<CartItem> cartItems = new ArrayList<>();
-                    CompletableFuture<ShoppingCart> futureShoppingCart = new CompletableFuture<>();
-                    ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
+                    final List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
+                    final List<CartItem> cartItems = new ArrayList<>();
+                    final ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
+
+                    // Keep an array of futures so that we can wait for them all to be finished
+                    final CompletableFuture<Void>[] futures = new CompletableFuture[firebaseCartItems.size()];
+
                     for (int i = 0; i < firebaseCartItems.size(); i++) {
-                        Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
-                        Long quantity = (Long) firebaseCartItem.get("quantity");
-                        int currentIteration = i;
-                        myItemProvider.getItemById(firebaseCartItem.get("itemId").toString()).thenAccept(item -> {
-                            cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
-                                    firebaseCartItem.get("size").toString(), item));
-                            if (currentIteration == firebaseCartItems.size() - 1) {
-                                futureShoppingCart.complete(new ShoppingCart(cartItems));
-                            }
-                        });
+                        final Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
+                        final Long quantity = (Long) firebaseCartItem.get("quantity");
+
+                        futures[i] = myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())
+                                .thenAccept(item -> cartItems.add(new CartItem(
+                                        quantity.intValue(),
+                                        firebaseCartItem.get("colour").toString(),
+                                        firebaseCartItem.get("size").toString(),
+                                        item))
+                                );
                     }
-                    return futureShoppingCart;
+
+                    return CompletableFuture.allOf(futures).thenApply(nothing -> new ShoppingCart(cartItems));
                 }
-        ).exceptionally(exception -> {
-            CompletableFuture<ShoppingCart> futureShoppingCart = new CompletableFuture<>();
-            futureShoppingCart.complete(new ShoppingCart(new ArrayList<>()));
-            return futureShoppingCart;
-        });
+        ).exceptionally(exception -> new ShoppingCart(new ArrayList<>()));
     }
 
     @Override

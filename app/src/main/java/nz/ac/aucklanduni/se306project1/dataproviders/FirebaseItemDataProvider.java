@@ -70,11 +70,11 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
     }
 
     @Override
-    public CompletableFuture<CompletableFuture<List<Item>>> getFeaturedItems(int numItems) {
+    public CompletableFuture<List<Item>> getFeaturedItems(int numItems) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         return FutureUtils.fromTask(db.collection("orders").get(),
-                () -> new RuntimeException("Error retrieving featured items")).thenApply(documentSnapshots -> {
+                () -> new RuntimeException("Error retrieving featured items")).thenCompose(documentSnapshots -> {
                     Map<String, Integer> itemPurchaseCount = new HashMap<>();
                     String itemId;
                     Long temp;
@@ -96,19 +96,15 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
                     List<String> itemsPurchased = new ArrayList<>(itemPurchaseCount.keySet());
                     ItemIDComparator itemIDComparator = new ItemIDComparator(itemPurchaseCount);
                     itemsPurchased.sort(itemIDComparator);
+                    final CompletableFuture<Void>[] futures = new CompletableFuture[itemsPurchased.size()];
                     List<Item> items = new ArrayList<>();
-                    int iterations = Math.min(numItems, itemsPurchased.size());
-                    CompletableFuture<List<Item>> futureItems = new CompletableFuture<>();
                     for (int i = 0; i < Math.min(numItems, itemsPurchased.size()); i++) {
-                        int currentIteration = i;
-                        this.getItemById(itemsPurchased.get(i)).thenAccept(item -> {
+                        futures[i] = this.getItemById(itemsPurchased.get(i)).thenAccept(item -> {
                             items.add(item);
-                            if (currentIteration == iterations - 1) {
-                                futureItems.complete(items);
-                            }
                         });
                     }
-                    return futureItems;
+
+                    return CompletableFuture.allOf(futures).thenApply(nothing -> items);
         });
     }
 
