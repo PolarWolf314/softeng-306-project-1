@@ -30,6 +30,9 @@ public abstract class Item implements SearchFilterable {
     public boolean matches(final String query) {
         return this.displayName.toLowerCase().contains(query);
     }
+    public void setId(String newId) {
+        this.id = newId;
+    }
 
     public String getId() {
         return this.id;

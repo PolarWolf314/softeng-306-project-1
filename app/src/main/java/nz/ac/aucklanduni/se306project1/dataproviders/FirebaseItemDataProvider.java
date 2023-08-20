@@ -41,7 +41,7 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
                 , () -> new RuntimeException("Error reading items from firestore")).thenApply(documentSnapshots -> {
                     List<Item> categoryItemList = new ArrayList<>();
                     for (DocumentSnapshot document : documentSnapshots) {
-                        categoryItemList.add(this.parseDocumentForItem(document, categoryId));
+                        categoryItemList.add(this.parseDocumentForItem(document, this.getItemClassFromCategoryId(categoryId)));
                     }
                     return categoryItemList;
                 }
@@ -56,7 +56,7 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
         return FutureUtils.fromTask(itemRef.get(), () -> new RuntimeException("Error reading item from Firestore")).thenApply(
                 document -> {
                     if (document.exists()) {
-                        return this.parseDocumentForItem(document, document.get("categoryId").toString());
+                        return this.parseDocumentForItem(document, this.getItemClassFromCategoryId(document.get("categoryId").toString()));
                     } else {
                         throw new RuntimeException("Invalid item ID");
                     }
@@ -112,56 +112,25 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
                         documentSnapshots -> documentSnapshots.size());
     }
 
-    private Item parseDocumentForItem(DocumentSnapshot document, String categoryId) {
-        String displayName = document.get("displayName").toString();
-        String description = document.get("description").toString();
-        Long temp = (Long) document.get("price");
-        double price = temp.doubleValue();
-
-        SoftwareSubcategory softwareSubcategory;
-        CivilSubcategory civilSubcategory;
-        double meltingPoint;
-
-        List<Map<String, Object>> documentImagesInfo;
-        Map<String, Object> documentSizeQuantities;
-        List<ImageInfo> imagesInfo = new ArrayList<>();
-        String colour;
-        List<ColouredItemInformation> colouredItems = new ArrayList<>();
-        Map<String, Integer> sizeQuantities = new HashMap<>();
-        List<Map<String, Object>> coloursInfo = (List<Map<String, Object>>) document.get("colours");
-        for (Map<String, Object> colourInfo : coloursInfo) {
-            colour = colourInfo.get("colour").toString();
-            documentImagesInfo = (List<Map<String, Object>>) colourInfo.get("images");
-            for (Map<String, Object> imageInfo : documentImagesInfo) {
-                imagesInfo.add(new ImageInfo(imageInfo.get("url").toString(), imageInfo.get("description").toString()));
-            }
-            documentSizeQuantities = (Map<String, Object>) colourInfo.get("sizeQuantities");
-            temp = (Long) documentSizeQuantities.get("s");
-            sizeQuantities.put("s", temp.intValue());
-            temp = (Long) documentSizeQuantities.get("m");
-            sizeQuantities.put("m", temp.intValue());
-            temp = (Long) documentSizeQuantities.get("l");
-            sizeQuantities.put("l", temp.intValue());
-            temp = (Long) documentSizeQuantities.get("xl");
-            sizeQuantities.put("xl", temp.intValue());
-            colouredItems.add(new ColouredItemInformation(colour, imagesInfo, sizeQuantities));
-        }
-
+    private Class<? extends Item> getItemClassFromCategoryId(final String categoryId) {
         switch (categoryId) {
             case "mechanical":
-                return new MechanicalItem(document.getId(), displayName, categoryId, description, price, colouredItems);
+                return MechanicalItem.class;
             case "software":
-                softwareSubcategory = SoftwareSubcategory.valueOf(document.get("subCategory").toString());
-                return new SoftwareItem(document.getId(), displayName, categoryId, description, price, colouredItems, softwareSubcategory);
+                return SoftwareItem.class;
             case "civil":
-                civilSubcategory = CivilSubcategory.valueOf(document.get("subCategory").toString());
-                return new CivilItem(document.getId(), displayName, categoryId, description, price, colouredItems, civilSubcategory);
+                return CivilItem.class;
             case "chemmat":
-                temp = (Long) document.get("meltingPoint");
-                meltingPoint = temp.doubleValue();
-                return new ChemmatItem(document.getId(), displayName, categoryId, description, price, colouredItems, meltingPoint);
+                return ChemmatItem.class;
+            default:
+                throw new IllegalArgumentException(String.format("The category id %s is not valid", categoryId));
         }
+    }
 
-        throw new RuntimeException("Invalid category ID");
+    private Item parseDocumentForItem(final DocumentSnapshot document, final Class<? extends Item> itemClass) {
+        final Item item = document.toObject(itemClass);
+        item.setId(document.getId());
+
+        return item;
     }
 }
