@@ -37,7 +37,8 @@
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-17dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin">
 
                     <androidx.fragment.app.FragmentContainerView
