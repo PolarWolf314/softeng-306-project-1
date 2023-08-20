@@ -6,7 +6,6 @@ import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
-
 public interface UserDataProvider {
     void placeOrder(Order order);
 

@@ -205,18 +205,29 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
-        return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenApply(
+        return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenCompose(
                 document -> {
-                    List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
-                    List<CartItem> cartItems = new ArrayList<>();
-                    ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
-                    Long quantity;
-                    for (Map<String, Object> firebaseCartItem : firebaseCartItems) {
-                        quantity = (Long) firebaseCartItem.get("quantity");
-                        cartItems.add(new CartItem(quantity.intValue(), firebaseCartItem.get("colour").toString(),
-                                firebaseCartItem.get("size").toString(), myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())));
+                    final List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
+                    final List<CartItem> cartItems = new ArrayList<>();
+                    final ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
+
+                    // Keep an array of futures so that we can wait for them all to be finished
+                    final CompletableFuture<Void>[] futures = new CompletableFuture[firebaseCartItems.size()];
+
+                    for (int i = 0; i < firebaseCartItems.size(); i++) {
+                        final Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
+                        final Long quantity = (Long) firebaseCartItem.get("quantity");
+
+                        futures[i] = myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())
+                                .thenAccept(item -> cartItems.add(new CartItem(
+                                        quantity.intValue(),
+                                        firebaseCartItem.get("colour").toString(),
+                                        firebaseCartItem.get("size").toString(),
+                                        item))
+                                );
                     }
-                    return new ShoppingCart(cartItems);
+
+                    return CompletableFuture.allOf(futures).thenApply(nothing -> new ShoppingCart(cartItems));
                 }
         ).exceptionally(exception -> new ShoppingCart(new ArrayList<>()));
     }
