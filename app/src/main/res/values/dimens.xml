@@ -1,4 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="horizontal_item_spacing">8dp</dimen>
+    <dimen name="top_bar_horizontal_padding">16dp</dimen>
 </resources>
