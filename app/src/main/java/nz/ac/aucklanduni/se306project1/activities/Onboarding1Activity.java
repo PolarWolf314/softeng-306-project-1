@@ -21,6 +21,7 @@ public class Onboarding1Activity extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             final Intent intent = new Intent(Onboarding1Activity.this, Onboarding2Activity.class);
             Onboarding1Activity.this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
     }
 }
