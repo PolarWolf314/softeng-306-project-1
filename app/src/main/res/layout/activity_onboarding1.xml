@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/background_image"
+            android:scaleType="fitXY"
+            android:src="@drawable/green_wave_background" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/background_image"
+            android:paddingHorizontal="80dp"
+            android:src="@drawable/green_onboarding_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/DisplayLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="40dp"
+                android:text="@string/ready_to_find_your_look"
+                android:textColor="@color/black" />
+
+            <TextView
+                style="@style/TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineHeight="26dp"
+                android:paddingHorizontal="40dp"
+                android:paddingTop="10dp"
+                android:text="@string/at_engiwear_we_supply_you_with_the_engineering_look_no_matter_your_specialisation"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="40dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="24dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="90dp"
+                app:strokeColor="@color/black" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="@color/light_gray"
+                app:cardCornerRadius="90dp"
+                app:strokeColor="@color/light_gray" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                app:cardBackgroundColor="@color/light_gray"
+                app:cardCornerRadius="90dp"
+                app:strokeColor="@color/light_gray" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="66dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:progress="33"
+                app:indicatorColor="@color/black"
+                app:indicatorSize="58dp"
+                app:trackColor="@color/light_gray"
+                app:trackThickness="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button_onboarding1"
+                style="@style/ButtonIconCustomStyle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/black"
+                app:icon="@drawable/baseline_navigate_next_24"
+                app:iconSize="40dp" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>
