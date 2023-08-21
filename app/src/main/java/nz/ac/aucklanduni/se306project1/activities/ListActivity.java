@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
@@ -18,12 +21,16 @@ import nz.ac.aucklanduni.se306project1.databinding.SubcategoryChipBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
+import nz.ac.aucklanduni.se306project1.models.enums.CivilSubcategory;
+import nz.ac.aucklanduni.se306project1.models.items.CivilItem;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ListViewModel;
 
 public class ListActivity extends TopBarActivity {
+
+    private static final String CATEGORY_FILTERING_KEY = "CategoryFilteringKey";
 
     private ActivityListBinding binding;
     private ItemSearchViewModel searchViewModel;
@@ -62,8 +69,8 @@ public class ListActivity extends TopBarActivity {
     }
 
     private void addCategorySpecificUI() {
-        final String[] labels = new String[]{"Personal Protective Equipment", "Clothing", "Vehicles", "Tools"};
 
+        final Set<CivilSubcategory> selectedSubcategories = new HashSet<>();
         final HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
         final ChipGroup chipGroup = new ChipGroup(this);
         final int horizontalPadding = this.getResources().getDimensionPixelSize(R.dimen.top_bar_horizontal_padding);
@@ -73,13 +80,22 @@ public class ListActivity extends TopBarActivity {
         chipGroup.setSingleLine(true);
         chipGroup.setPadding(horizontalPadding, 0, horizontalPadding, 0);
 
-        for (final String label : labels) {
+        for (final CivilSubcategory subcategory : CivilSubcategory.values()) {
             final Chip chip = SubcategoryChipBinding.inflate(this.getLayoutInflater()).getRoot();
-            chip.setText(label);
+            chip.setText(subcategory.name());
             chip.setOnCheckedChangeListener((button, isChecked) -> {
-                System.out.println("hi :)");
+                if (isChecked) selectedSubcategories.add(subcategory);
+                else selectedSubcategories.remove(subcategory);
+
+                if (selectedSubcategories.isEmpty()) {
+                    this.searchViewModel.removeFilter(CATEGORY_FILTERING_KEY);
+                } else {
+                    this.searchViewModel.addFilter(CATEGORY_FILTERING_KEY,
+                            (item) -> item instanceof CivilItem &&
+                                    selectedSubcategories.contains(((CivilItem) item).getSubcategory()));
+                }
             });
-            
+
             chipGroup.addView(chip);
         }
 
