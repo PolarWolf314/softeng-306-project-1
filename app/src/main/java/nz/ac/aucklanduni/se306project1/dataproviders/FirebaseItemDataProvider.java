@@ -73,7 +73,7 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
             final List<String> itemsPurchased = new ArrayList<>(itemPurchaseCount.keySet());
             final ItemIDComparator itemIDComparator = new ItemIDComparator(itemPurchaseCount);
             itemsPurchased.sort(itemIDComparator);
-            final CompletableFuture<Void>[] futures = new CompletableFuture[itemsPurchased.size()];
+            final CompletableFuture<?>[] futures = new CompletableFuture[itemsPurchased.size()];
             final List<Item> items = new ArrayList<>();
             for (int i = 0; i < Math.min(numItems, itemsPurchased.size()); i++) {
                 futures[i] = this.getItemById(itemsPurchased.get(i)).thenAccept(item -> {

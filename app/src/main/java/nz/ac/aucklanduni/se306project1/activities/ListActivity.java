@@ -48,6 +48,6 @@ public class ListActivity extends TopBarActivity {
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
 
         this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
-        this.topBarViewModel.setTitle("Civil");
+        this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
     }
 }
