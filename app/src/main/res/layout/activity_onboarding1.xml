@@ -25,4 +25,43 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/background_image"
+            android:paddingHorizontal="80dp"
+            android:src="@drawable/green_onboarding_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/DisplayLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="40dp"
+                android:text="Ready to find your look?"
+                android:textColor="@color/black" />
+
+            <TextView
+                style="@style/TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineHeight="26dp"
+                android:paddingHorizontal="40dp"
+                android:text="At EngiWear, we supply you with the engineering look, no matter your specialisation."
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
