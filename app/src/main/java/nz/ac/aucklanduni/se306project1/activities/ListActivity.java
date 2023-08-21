@@ -2,27 +2,18 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.HorizontalScrollView;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
-import nz.ac.aucklanduni.se306project1.databinding.SubcategoryChipBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
-import nz.ac.aucklanduni.se306project1.models.enums.CivilSubcategory;
-import nz.ac.aucklanduni.se306project1.models.items.CivilItem;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -62,41 +53,17 @@ public class ListActivity extends TopBarActivity {
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());
 
-        this.addCategorySpecificUI();
+        this.addCategoryFilterView(category);
 
     }
 
-    private void addCategorySpecificUI() {
+    private void addCategoryFilterView(final Category category) {
+        final CategoryFilterBuilder builder = category.getCategoryFilterBuilder();
+        if (builder == null) return;
 
-        final Set<CivilSubcategory> selectedSubcategories = new HashSet<>();
-        final HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
-        final ChipGroup chipGroup = new ChipGroup(this);
-        final int horizontalPadding = this.getResources().getDimensionPixelSize(R.dimen.top_bar_horizontal_padding);
+        final View categoryFilterView = builder.buildFilteringView(
+                this, this.getLayoutInflater(), this.searchViewModel);
 
-        horizontalScrollView.addView(chipGroup);
-        horizontalScrollView.setHorizontalScrollBarEnabled(false);
-        chipGroup.setSingleLine(true);
-        chipGroup.setPadding(horizontalPadding, 0, horizontalPadding, 0);
-
-        for (final CivilSubcategory subcategory : CivilSubcategory.values()) {
-            final Chip chip = SubcategoryChipBinding.inflate(this.getLayoutInflater()).getRoot();
-            chip.setText(subcategory.name());
-            chip.setOnCheckedChangeListener((button, isChecked) -> {
-                if (isChecked) selectedSubcategories.add(subcategory);
-                else selectedSubcategories.remove(subcategory);
-
-                if (selectedSubcategories.isEmpty()) {
-                    this.searchViewModel.removeFilter(Constants.FilterKeys.CATEGORY_FILTERING);
-                } else {
-                    this.searchViewModel.putFilter(Constants.FilterKeys.CATEGORY_FILTERING,
-                            (item) -> item instanceof CivilItem &&
-                                    selectedSubcategories.contains(((CivilItem) item).getSubcategory()));
-                }
-            });
-
-            chipGroup.addView(chip);
-        }
-
-        this.binding.topBarContainer.addView(horizontalScrollView);
+        this.binding.topBarContainer.addView(categoryFilterView);
     }
 }
