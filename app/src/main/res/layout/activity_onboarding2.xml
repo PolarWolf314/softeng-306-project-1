@@ -17,7 +17,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/background_image"
             android:scaleType="fitXY"
-            android:src="@drawable/green_wave_background" />
+            android:src="@drawable/pink_wave_background" />
 
         <View
             android:layout_width="match_parent"
@@ -37,11 +37,12 @@
             android:layout_weight="1"
             android:contentDescription="@string/background_image"
             android:paddingHorizontal="80dp"
-            android:src="@drawable/green_onboarding_image" />
+            android:src="@drawable/pink_onboarding_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="60dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -50,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="40dp"
-                android:text="Ready to find your look?"
+                android:text="We supply the goods."
                 android:textColor="@color/black" />
 
             <TextView
@@ -58,9 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineHeight="26dp"
-                android:paddingHorizontal="40dp"
+                android:paddingStart="40dp"
                 android:paddingTop="10dp"
-                android:text="At EngiWear, we supply you with the engineering look, no matter your specialisation."
+                android:paddingEnd="60dp"
+                android:text="A wide range of selections, each with their unique taste to fit your style."
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -82,13 +84,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="24dp"
-                android:layout_height="8dp"
-                android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/black"
-                app:cardCornerRadius="90dp"
-                app:strokeColor="@color/black" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="8dp"
@@ -97,6 +92,14 @@
                 app:cardBackgroundColor="@color/light_gray"
                 app:cardCornerRadius="90dp"
                 app:strokeColor="@color/light_gray" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="24dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                app:cardBackgroundColor="@color/black"
+                app:cardCornerRadius="90dp"
+                app:strokeColor="@color/black" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="8dp"
@@ -116,14 +119,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:progress="33"
+                android:progress="66"
                 app:indicatorColor="@color/black"
                 app:indicatorSize="58dp"
                 app:trackColor="@color/light_gray"
                 app:trackThickness="4dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/next_button_onboarding1"
+                android:id="@+id/next_button_onboarding2"
                 style="@style/ButtonIconCustomStyle"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
