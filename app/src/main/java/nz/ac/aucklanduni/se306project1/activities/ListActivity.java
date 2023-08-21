@@ -6,22 +6,20 @@ import android.os.Bundle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
-import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.ListViewModel;
 
 public class ListActivity extends TopBarActivity {
 
     private ActivityListBinding binding;
     private ItemSearchViewModel searchViewModel;
+    private ListViewModel listViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -30,13 +28,13 @@ public class ListActivity extends TopBarActivity {
         this.binding = ActivityListBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        // Just so that we have to scroll, add the mock data twice
-        final List<Item> items = new ArrayList<>();
-        items.addAll(MockData.ITEMS);
-        items.addAll(MockData.ITEMS);
-
+        this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.initializer))
+                .get(ListViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItems(items);
+
+        this.listViewModel.getItemDataProvider().getItemsByCategoryId("civil")
+                .thenAccept(this.searchViewModel::setOriginalItems);
+
         final RecyclerView recyclerView = this.binding.listRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
