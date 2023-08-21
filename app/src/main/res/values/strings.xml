@@ -87,4 +87,11 @@
     <string name="a_wide_range_of_selections_each_with_their_unique_taste_to_fit_your_style">A wide range of selections, each with their unique taste to fit your style.</string>
     <string name="are_you_ready">Are you ready?</string>
     <string name="sign_up_with_an_account_and_get_started">Sign up with an account, and get started.</string>
+    <string name="civil_subcategory_ppe">PPE</string>
+    <string name="civil_subcategory_clothing">Clothing</string>
+    <string name="civil_subcategory_vehicles">Vehicles</string>
+    <string name="civil_subcategory_tools">Tools</string>
+    <string name="software_subcategory_linux_chad">Linux Chad</string>
+    <string name="software_subcategory_apple_fanboy">Apple Fanboy</string>
+    <string name="software_subcategory_default_skin">Default Skin</string>
 </resources>
