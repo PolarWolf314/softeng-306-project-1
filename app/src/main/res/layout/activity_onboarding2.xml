@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="40dp"
-                android:text="We supply the goods."
+                android:text="@string/we_supply_the_goods"
                 android:textColor="@color/black" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:paddingStart="40dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="60dp"
-                android:text="A wide range of selections, each with their unique taste to fit your style."
+                android:text="@string/a_wide_range_of_selections_each_with_their_unique_taste_to_fit_your_style"
                 android:textColor="@color/black" />
         </LinearLayout>
 

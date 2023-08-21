@@ -81,4 +81,10 @@
     <string name="first_name">First Name</string>
     <string name="title_sign_up">Sign Up</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="ready_to_find_your_look">Ready to find your look?</string>
+    <string name="at_engiwear_we_supply_you_with_the_engineering_look_no_matter_your_specialisation">At EngiWear, we supply you with the engineering look, no matter your specialisation.</string>
+    <string name="we_supply_the_goods">We supply the goods.</string>
+    <string name="a_wide_range_of_selections_each_with_their_unique_taste_to_fit_your_style">A wide range of selections, each with their unique taste to fit your style.</string>
+    <string name="are_you_ready">Are you ready?</string>
+    <string name="sign_up_with_an_account_and_get_started">Sign up with an account, and get started.</string>
 </resources>

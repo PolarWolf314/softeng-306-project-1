@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="40dp"
-                android:text="Ready to find your look?"
+                android:text="@string/ready_to_find_your_look"
                 android:textColor="@color/black" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:lineHeight="26dp"
                 android:paddingHorizontal="40dp"
                 android:paddingTop="10dp"
-                android:text="At EngiWear, we supply you with the engineering look, no matter your specialisation."
+                android:text="@string/at_engiwear_we_supply_you_with_the_engineering_look_no_matter_your_specialisation"
                 android:textColor="@color/black" />
         </LinearLayout>
 

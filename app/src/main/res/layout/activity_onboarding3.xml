@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="40dp"
-                android:text="Are you ready?"
+                android:text="@string/are_you_ready"
                 android:textColor="@color/black" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:lineHeight="26dp"
                 android:paddingHorizontal="40dp"
                 android:paddingTop="10dp"
-                android:text="Sign up with an account, and get started."
+                android:text="@string/sign_up_with_an_account_and_get_started"
                 android:textColor="@color/black" />
         </LinearLayout>
 
