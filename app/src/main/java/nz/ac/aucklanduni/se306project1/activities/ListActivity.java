@@ -2,11 +2,13 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
@@ -50,5 +52,18 @@ public class ListActivity extends TopBarActivity {
         this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());
+
+        this.addCategoryFilterView(category);
+
+    }
+
+    private void addCategoryFilterView(final Category category) {
+        final CategoryFilterBuilder builder = category.getCategoryFilterBuilder();
+        if (builder == null) return;
+
+        final View categoryFilterView = builder.buildFilteringView(
+                this, this.getLayoutInflater(), this.searchViewModel);
+
+        this.binding.topBarContainer.addView(categoryFilterView);
     }
 }

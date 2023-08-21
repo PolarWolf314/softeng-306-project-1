@@ -23,4 +23,8 @@ public class SoftwareItem extends Item {
         super(id, displayName, categoryId, description, price, colours);
         this.subcategory = subcategory;
     }
+
+    public SoftwareSubcategory getSubcategory() {
+        return this.subcategory;
+    }
 }

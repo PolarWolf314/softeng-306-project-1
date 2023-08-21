@@ -18,23 +18,27 @@ public abstract class SearchViewModel<Item> extends ViewModel {
 
     /**
      * Removes the filter associated with this key from the filters being applied to the items.
-     * This will cause the filtered items to be recalculated.
+     * This will cause the filtered items to be recalculated. If there is no filter with this key
+     * then nothing happens.
      *
      * @param filterKey The key of the filter to remove
      */
     public void removeFilter(final String filterKey) {
-        this.filters.remove(filterKey);
-        this.applyFilters();
+        if (this.filters.containsKey(filterKey)) {
+            this.filters.remove(filterKey);
+            this.applyFilters();
+        }
     }
 
     /**
      * Adds this filter to the filters being applied to the items. This will cause the filtered
-     * items to be recalculated.
+     * items to be recalculated. If there is already a filter associated with this key it will be
+     * overwritten.
      *
      * @param filterKey The key to associate with the filter
      * @param filter    The filter to add
      */
-    public void addFilter(final String filterKey, final Predicate<Item> filter) {
+    public void putFilter(final String filterKey, final Predicate<Item> filter) {
         this.filters.put(filterKey, filter);
         this.applyFilters();
     }
