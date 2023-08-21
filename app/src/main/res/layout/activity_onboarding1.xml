@@ -123,6 +123,7 @@
                 app:trackThickness="4dp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button"
                 style="@style/ButtonIconCustomStyle"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
