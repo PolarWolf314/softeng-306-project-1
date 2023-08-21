@@ -2,6 +2,7 @@ package nz.ac.aucklanduni.se306project1.models.enums;
 
 import android.content.res.Resources;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
 import java.util.HashMap;
@@ -15,10 +16,10 @@ import nz.ac.aucklanduni.se306project1.models.items.MechanicalItem;
 import nz.ac.aucklanduni.se306project1.models.items.SoftwareItem;
 
 public enum Category {
-    CIVIL("civil", CivilItem.class, R.string.civil),
-    SOFTWARE("software", SoftwareItem.class, R.string.software),
-    CHEMMAT("chemmat", ChemmatItem.class, R.string.chemmat),
-    MECHANICAL("mechanical", MechanicalItem.class, R.string.mechanical);
+    CIVIL("civil", CivilItem.class, R.string.civil, R.drawable.civil_category_image),
+    SOFTWARE("software", SoftwareItem.class, R.string.software, R.drawable.software_category_image),
+    CHEMMAT("chemmat", ChemmatItem.class, R.string.chemmat, R.drawable.chemmat_category_image),
+    MECHANICAL("mechanical", MechanicalItem.class, R.string.mechanical, R.drawable.mechanical_category_image);
 
     public static final Map<String, Category> mappedCategories = new HashMap<>();
 
@@ -32,11 +33,19 @@ public enum Category {
     private final Class<? extends Item> itemClass;
     @StringRes
     private final int displayNameId;
+    @DrawableRes
+    private final int categoryImageId;
 
-    Category(final String id, final Class<? extends Item> itemClass, @StringRes final int displayNameId) {
+    Category(
+            final String id,
+            final Class<? extends Item> itemClass,
+            @StringRes final int displayNameId,
+            @DrawableRes final int categoryImageId
+    ) {
         this.id = id;
         this.itemClass = itemClass;
         this.displayNameId = displayNameId;
+        this.categoryImageId = categoryImageId;
     }
 
     /**
@@ -65,5 +74,9 @@ public enum Category {
      */
     public String getDisplayName(final Resources resources) {
         return resources.getString(this.displayNameId);
+    }
+
+    public int getCategoryImageId() {
+        return this.categoryImageId;
     }
 }

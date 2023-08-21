@@ -49,5 +49,6 @@ public class ListActivity extends TopBarActivity {
 
         this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
+        this.binding.categoryImage.setImageResource(category.getCategoryImageId());
     }
 }
