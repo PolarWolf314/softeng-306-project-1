@@ -30,8 +30,6 @@ import nz.ac.aucklanduni.se306project1.viewmodels.ListViewModel;
 
 public class ListActivity extends TopBarActivity {
 
-    private static final String CATEGORY_FILTERING_KEY = "CategoryFilteringKey";
-
     private ActivityListBinding binding;
     private ItemSearchViewModel searchViewModel;
     private ListViewModel listViewModel;
@@ -88,9 +86,9 @@ public class ListActivity extends TopBarActivity {
                 else selectedSubcategories.remove(subcategory);
 
                 if (selectedSubcategories.isEmpty()) {
-                    this.searchViewModel.removeFilter(CATEGORY_FILTERING_KEY);
+                    this.searchViewModel.removeFilter(Constants.FilterKeys.CATEGORY_FILTERING);
                 } else {
-                    this.searchViewModel.addFilter(CATEGORY_FILTERING_KEY,
+                    this.searchViewModel.putFilter(Constants.FilterKeys.CATEGORY_FILTERING,
                             (item) -> item instanceof CivilItem &&
                                     selectedSubcategories.contains(((CivilItem) item).getSubcategory()));
                 }

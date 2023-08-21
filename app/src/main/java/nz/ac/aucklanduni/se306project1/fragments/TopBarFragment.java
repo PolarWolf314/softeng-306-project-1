@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
 import nz.ac.aucklanduni.se306project1.models.SearchFilterable;
@@ -20,8 +21,6 @@ import nz.ac.aucklanduni.se306project1.viewmodels.SearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.TopBarViewModel;
 
 public class TopBarFragment extends Fragment {
-
-    private static final String SEARCH_QUERY_KEY = "SearchQueryFilter";
 
     private FragmentTopBarBinding binding;
     private TopBarViewModel viewModel;
@@ -54,11 +53,11 @@ public class TopBarFragment extends Fragment {
 
         this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
                 (newQuery) -> {
-                    this.searchViewModel.removeFilter(SEARCH_QUERY_KEY);
+                    this.searchViewModel.removeFilter(Constants.FilterKeys.SEARCH_QUERY);
                     final String loweredQuery = newQuery.trim().toLowerCase();
 
                     if (loweredQuery.length() != 0) {
-                        this.searchViewModel.addFilter(SEARCH_QUERY_KEY, (item) -> item.matches(loweredQuery));
+                        this.searchViewModel.putFilter(Constants.FilterKeys.SEARCH_QUERY, (item) -> item.matches(loweredQuery));
                     }
                 }
         ));
