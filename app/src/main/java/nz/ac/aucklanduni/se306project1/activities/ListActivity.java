@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
@@ -28,11 +29,13 @@ public class ListActivity extends TopBarActivity {
         this.binding = ActivityListBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
+        final String categoryId = this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID);
+
         this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.initializer))
                 .get(ListViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
 
-        this.listViewModel.getItemDataProvider().getItemsByCategoryId("civil")
+        this.listViewModel.getItemDataProvider().getItemsByCategoryId(categoryId)
                 .thenAccept(this.searchViewModel::setOriginalItems);
 
         final RecyclerView recyclerView = this.binding.listRecyclerView;

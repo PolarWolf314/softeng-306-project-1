@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
@@ -41,10 +42,15 @@ public class HomeActivity extends TopBarActivity {
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
+        this.binding.civilCategory.setOnClickListener(v -> this.switchToCategory("civil"));
+        this.binding.softwareCategory.setOnClickListener(v -> this.switchToCategory("software"));
+        this.binding.chemmatCategory.setOnClickListener(v -> this.switchToCategory("chemmat"));
+        this.binding.mechanicalCategory.setOnClickListener(v -> this.switchToCategory("mechanical"));
+    }
+
+    private void switchToCategory(final String categoryId) {
         final Intent intent = new Intent(this, ListActivity.class);
-        this.binding.civilCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.softwareCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.chemmatCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.mechanicalCategory.setOnClickListener(v -> this.startActivity(intent));
+        intent.putExtra(Constants.IntentKeys.CATEGORY_ID, categoryId);
+        this.startActivity(intent);
     }
 }
