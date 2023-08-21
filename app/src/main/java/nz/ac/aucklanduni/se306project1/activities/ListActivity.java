@@ -11,6 +11,7 @@ import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityListBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
+import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -29,13 +30,13 @@ public class ListActivity extends TopBarActivity {
         this.binding = ActivityListBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        final String categoryId = this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID);
+        final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
 
         this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.initializer))
                 .get(ListViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
 
-        this.listViewModel.getItemDataProvider().getItemsByCategoryId(categoryId)
+        this.listViewModel.getItemDataProvider().getItemsByCategory(category)
                 .thenAccept(this.searchViewModel::setOriginalItems);
 
         final RecyclerView recyclerView = this.binding.listRecyclerView;
