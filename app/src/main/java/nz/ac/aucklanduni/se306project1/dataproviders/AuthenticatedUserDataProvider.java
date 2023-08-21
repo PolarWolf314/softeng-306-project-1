@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +24,17 @@ import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 public class AuthenticatedUserDataProvider implements UserDataProvider {
     private FirebaseUser user;
 
-    public AuthenticatedUserDataProvider(FirebaseUser appUser) {
+    public AuthenticatedUserDataProvider(final FirebaseUser appUser) {
         this.user = appUser;
     }
 
     @Override
-    public void placeOrder(Order order) {
+    public void placeOrder(final Order order) {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("orders").add(order).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -48,16 +49,16 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
         watchlistRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     watchlistRef.update("itemIds", FieldValue.arrayUnion(itemId));
                 } else {
-                    watchlistRef.set(new Watchlist(new ArrayList<>(Arrays.asList(itemId))));
+                    watchlistRef.set(new Watchlist(new ArrayList<>(Collections.singletonList(itemId))));
                 }
             } else {
                 throw new RuntimeException("Error occurred while writing to Firestore watchlist");
@@ -71,12 +72,12 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
         watchlistRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     watchlistRef.update("itemIds", FieldValue.arrayRemove(itemId));
                 }
@@ -92,17 +93,17 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
         shoppingCartRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     shoppingCartRef.update("items", FieldValue.arrayUnion(cartItem));
                 } else {
-                    Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
-                    initialShoppingCart.put("items", new ArrayList<>(Arrays.asList(cartItem)));
+                    final Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
+                    initialShoppingCart.put("items", new ArrayList<>(Collections.singletonList(cartItem)));
                     shoppingCartRef.set(initialShoppingCart);
                 }
             } else {
@@ -117,12 +118,12 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
         shoppingCartRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     shoppingCartRef.update("items", FieldValue.arrayRemove(cartItem));
                 }
@@ -143,22 +144,22 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, int newQuantity) {
+    public void changeShoppingCartItemQuantity(final SerializedCartItem cartItem, final int newQuantity) {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
         shoppingCartRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    List<Object> shoppingCart = (List<Object>) document.get("items");
+                    final List<Object> shoppingCart = (List<Object>) document.get("items");
                     Map<String, Object> currentItem;
-                    SerializedCartItem newCartItem;
-                    for (Object shoppingCartItem : shoppingCart) {
+                    final SerializedCartItem newCartItem;
+                    for (final Object shoppingCartItem : shoppingCart) {
                         currentItem = (Map<String, Object>) shoppingCartItem;
                         if (currentItem.get("itemId").equals(cartItem.getItemId())) {
                             newCartItem = new SerializedCartItem(newQuantity, currentItem.get("colour").toString(),
@@ -181,12 +182,12 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
         shoppingCartRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
+                final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
                     shoppingCartRef.update("items", new ArrayList<>());
                 }
@@ -202,8 +203,8 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("shoppingCarts").document(this.user.getUid());
 
         return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenCompose(
                 document -> {
@@ -212,7 +213,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                     final ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
 
                     // Keep an array of futures so that we can wait for them all to be finished
-                    final CompletableFuture<Void>[] futures = new CompletableFuture[firebaseCartItems.size()];
+                    final CompletableFuture<?>[] futures = new CompletableFuture[firebaseCartItems.size()];
 
                     for (int i = 0; i < firebaseCartItems.size(); i++) {
                         final Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
@@ -238,8 +239,8 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             throw new RuntimeException("User does not exist");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
         return FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist")).thenApply(
                 document -> document.toObject(Watchlist.class)

@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
+import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -41,10 +43,15 @@ public class HomeActivity extends TopBarActivity {
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
+        this.binding.civilCategory.setOnClickListener(v -> this.switchToCategory(Category.CIVIL));
+        this.binding.softwareCategory.setOnClickListener(v -> this.switchToCategory(Category.SOFTWARE));
+        this.binding.chemmatCategory.setOnClickListener(v -> this.switchToCategory(Category.CHEMMAT));
+        this.binding.mechanicalCategory.setOnClickListener(v -> this.switchToCategory(Category.MECHANICAL));
+    }
+
+    private void switchToCategory(final Category category) {
         final Intent intent = new Intent(this, ListActivity.class);
-        this.binding.civilCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.softwareCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.chemmatCategory.setOnClickListener(v -> this.startActivity(intent));
-        this.binding.mechanicalCategory.setOnClickListener(v -> this.startActivity(intent));
+        intent.putExtra(Constants.IntentKeys.CATEGORY_ID, category.getId());
+        this.startActivity(intent);
     }
 }
