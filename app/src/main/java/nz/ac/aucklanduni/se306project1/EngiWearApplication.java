@@ -37,15 +37,7 @@ public class EngiWearApplication extends Application {
         return this.authenticationProvider;
     }
 
-    public void setAuthenticationProvider(final AuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
-    }
-
     public ItemDataProvider getItemDataProvider() {
         return this.itemDataProvider;
-    }
-
-    public void setItemDataProvider(final ItemDataProvider itemDataProvider) {
-        this.itemDataProvider = itemDataProvider;
     }
 }
