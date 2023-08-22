@@ -2,14 +2,13 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.DetailsViewModel;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends TopBarActivity {
 
     private ActivityDetailsBinding binding;
     private DetailsViewModel detailsViewModel;
@@ -31,6 +30,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void bindItemData(final Item item) {
+        this.topBarViewModel.setTitle(item.getDisplayName());
         System.out.println("Loaded item " + item.getDisplayName());
     }
 }

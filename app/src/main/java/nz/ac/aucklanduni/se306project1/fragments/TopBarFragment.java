@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
@@ -49,7 +50,10 @@ public class TopBarFragment extends Fragment {
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
 
-        this.binding.topBarTitle.setText(this.viewModel.getTitle());
+
+        final LiveData<String> title = this.viewModel.getTitle();
+        this.binding.topBarTitle.setText(title.getValue());
+        title.observe(this.getViewLifecycleOwner(), (newTitle) -> this.binding.topBarTitle.setText(newTitle));
 
         this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
                 (newQuery) -> {
