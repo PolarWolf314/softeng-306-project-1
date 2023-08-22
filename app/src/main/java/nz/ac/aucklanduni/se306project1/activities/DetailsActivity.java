@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -13,10 +14,12 @@ import com.google.android.material.radiobutton.MaterialRadioButton;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
+import nz.ac.aucklanduni.se306project1.databinding.ItemSizeRadioBinding;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.DetailsViewModel;
@@ -50,7 +53,7 @@ public class DetailsActivity extends TopBarActivity {
         System.out.println("Loaded item " + item.getDisplayName());
 
         this.generateColourOptions(item);
-        this.setPrice(item.getPrice());
+        this.binding.addToCartButton.setText(this.getResources().getString(R.string.add_to_cart, item.getPrice()));
 
         if (item.getColours().size() >= 1) {
             this.setColourInformation(item.getColours().get(0));
@@ -92,6 +95,8 @@ public class DetailsActivity extends TopBarActivity {
         this.getWindow().setStatusBarColor(parsedColour);
         this.getWindow().setNavigationBarColor(parsedColour);
 
+        this.generateSizeOptions(colourInfo.getSizeQuantities());
+
         this.binding.detailsCarousel.setData(
                 colourInfo.getImages()
                         .stream()
@@ -101,7 +106,30 @@ public class DetailsActivity extends TopBarActivity {
         this.binding.detailsLayout.setBackgroundColor(parsedColour);
     }
 
-    private void setPrice(final double price) {
-        this.binding.addToCartButton.setText(this.getResources().getString(R.string.add_to_cart, price));
+    private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {
+        final RadioGroup radioGroup = this.binding.sizeSelector;
+        radioGroup.removeAllViews();
+
+        final List<String> sizes = sizeQuantities.keySet()
+                .stream()
+                .filter(size -> sizeQuantities.get(size) > 0)
+                .collect(Collectors.toList());
+
+        for (int index = 0; index < sizes.size(); index++) {
+            final String size = sizes.get(index);
+            final RadioButton radio = ItemSizeRadioBinding.inflate(this.getLayoutInflater()).getRoot();
+            radio.setText(size.toUpperCase());
+            radioGroup.addView(radio);
+
+            if (index == 0) {
+                radio.setChecked(true);
+            }
+
+            radio.setOnCheckedChangeListener((r, isChecked) -> {
+
+            });
+        }
+
+
     }
 }

@@ -105,18 +105,22 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/test"
                     style="@style/ItemSize"
                     android:text="S" />
 
                 <RadioButton
+                    android:id="@+id/test2"
                     style="@style/ItemSize"
                     android:text="M" />
 
                 <RadioButton
+                    android:id="@+id/test3"
                     style="@style/ItemSize"
                     android:text="L" />
 
                 <RadioButton
+                    android:id="@+id/test4"
                     style="@style/ItemSize"
                     android:text="XL" />
 
