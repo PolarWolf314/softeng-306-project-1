@@ -28,7 +28,7 @@ public class LoginViewModel extends ViewModel {
 
     public CompletableFuture<?> authenticateUser(String email, String password) {
         return this.engiWear.getAuthenticationProvider().loginUser(email, password).thenAccept(userDataProvider ->
-            this.engiWear.setUserDataProvider(userDataProvider)).exceptionally(exception -> null);
+            this.engiWear.setUserDataProvider(userDataProvider));
     }
 
 }
