@@ -106,7 +106,7 @@
                 style="@style/TitleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$117.00 NZD"
+                android:text="$50.99 NZD"
                 android:textFontWeight="900" />
         </LinearLayout>
 

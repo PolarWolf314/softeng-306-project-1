@@ -59,9 +59,9 @@
     <string name="watchlist">Watchlist</string>
     <string name="cart">Cart</string>
     <string name="clear_watchlist">Clear Watchlist</string>
-    <string name="_1_item_in_watchlist">1 Item in Watchlist</string>
+    <string name="_1_item_in_watchlist">2 Items in Watchlist</string>
     <string name="clear_cart">Clear cart</string>
-    <string name="_4_items_in_cart">4 Items in cart</string>
+    <string name="_4_items_in_cart">2 Items in cart</string>
     <string name="checkout">Checkout</string>
     <string name="item_image">Item Image</string>
     <string name="total">Total</string>
