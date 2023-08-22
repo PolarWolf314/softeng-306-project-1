@@ -6,9 +6,12 @@ import android.os.Bundle;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityLoginBinding;
+import nz.ac.aucklanduni.se306project1.viewmodels.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
+
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
