@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -23,5 +24,7 @@ public class Onboarding2Activity extends AppCompatActivity {
             Onboarding2Activity.this.startActivity(intent);
             this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.pink_onboarding));
     }
 }

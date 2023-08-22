@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -21,5 +22,7 @@ public class Onboarding3Activity extends AppCompatActivity {
             final Intent intent = new Intent(Onboarding3Activity.this, HomeActivity.class);
             Onboarding3Activity.this.startActivity(intent);
         });
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.yellow_onboarding));
     }
 }
