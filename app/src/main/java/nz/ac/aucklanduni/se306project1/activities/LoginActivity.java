@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         this.binding.loginButton.setOnClickListener(v -> {
             String email = this.binding.usernameTextInputLayout.getEditText().getText().toString();
             String password = this.binding.passwordTextInputLayout.getEditText().getText().toString();
-            this.loginViewModel.authenticateUser(email, password).thenAccept(userDataProvider -> {
+            this.loginViewModel.authenticateUser(email, password).thenAccept(nothing -> {
                 final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             });
