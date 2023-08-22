@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.data.Constants;
@@ -55,6 +57,7 @@ public class ListActivity extends TopBarActivity {
 
         this.addCategoryFilterView(category);
 
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
     }
 
     private void addCategoryFilterView(final Category category) {

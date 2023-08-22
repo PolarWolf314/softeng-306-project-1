@@ -3,6 +3,7 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,6 +55,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_cart);
 
-        this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.red_top_bar));
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
     }
 }

@@ -44,5 +44,6 @@ public class WatchlistActivity extends AppCompatActivity {
 
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
     }
 }
