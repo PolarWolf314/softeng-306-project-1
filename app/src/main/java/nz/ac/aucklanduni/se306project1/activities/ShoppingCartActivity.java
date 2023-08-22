@@ -53,5 +53,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_cart);
+
+        this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.red_top_bar));
     }
 }

@@ -3,6 +3,7 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +53,8 @@ public class HomeActivity extends TopBarActivity {
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
     }
 
     private void switchToCategory(final Category category) {

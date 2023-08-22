@@ -3,6 +3,7 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,5 +41,8 @@ public class WatchlistActivity extends AppCompatActivity {
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_watchlist);
+
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
     }
 }
