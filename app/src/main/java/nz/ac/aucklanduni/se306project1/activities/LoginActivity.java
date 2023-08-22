@@ -31,23 +31,15 @@ public class LoginActivity extends AppCompatActivity {
         this.binding = ActivityLoginBinding.inflate(this.getLayoutInflater());
         setContentView(this.binding.getRoot());
 
-        this.loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        this.loginViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(LoginViewModel.initializer)).get(LoginViewModel.class);
 
         this.binding.loginButton.setOnClickListener(v -> {
-            this.authenticateUser().thenAccept(userDataProvider -> {
+            String email = this.binding.usernameTextInputLayout.getEditText().getText().toString();
+            String password = this.binding.passwordTextInputLayout.getEditText().getText().toString();
+            this.loginViewModel.authenticateUser(email, password).thenAccept(userDataProvider -> {
                 final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             });
         });
-    }
-
-    public CompletableFuture<UserDataProvider> authenticateUser() {
-        Log.i("lol", "hi");
-        String email = this.binding.usernameTextInputLayout.getEditText().getText().toString();
-        String password = this.binding.passwordTextInputLayout.getEditText().getText().toString();
-        Log.i("lol", email);
-        Log.i("lol", password);
-        return this.loginViewModel.getAuthenticationProvider().loginUser(email, password).thenApply(
-                userDataProvider -> userDataProvider).exceptionally(exception -> null);
     }
 }
