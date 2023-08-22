@@ -8,14 +8,15 @@ import android.widget.RadioGroup;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
-import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.DetailsViewModel;
@@ -34,6 +35,7 @@ public class DetailsActivity extends TopBarActivity {
 
         final String itemId = "bEaYWrsVPWxwFMM8s8wp";
 
+        this.binding.detailsCarousel.registerLifecycle(this.getLifecycle());
         this.detailsViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(DetailsViewModel.INITIALIZER))
                 .get(DetailsViewModel.class);
 
@@ -53,6 +55,8 @@ public class DetailsActivity extends TopBarActivity {
         if (item.getColours().size() >= 1) {
             this.setColourInformation(item.getColours().get(0));
         }
+
+        this.binding.detailsItemDescription.setText(item.getDescription());
     }
 
     @SuppressLint("RestrictedApi")
@@ -83,10 +87,12 @@ public class DetailsActivity extends TopBarActivity {
     }
 
     private void setColourInformation(final ColouredItemInformation colourInfo) {
-        final ImageInfo imageInfo = colourInfo.getImages().get(0);
-        Glide.with(this).load(imageInfo.getUrl()).into(this.binding.detailsItemImage);
-
-        this.binding.detailsItemImage.setContentDescription(imageInfo.getDescription());
+        this.binding.detailsCarousel.setData(
+                colourInfo.getImages()
+                        .stream()
+                        .map(imageInfo -> new CarouselItem(imageInfo.getUrl()))
+                        .collect(Collectors.toList())
+        );
         this.binding.detailsLayout.setBackgroundColor(Color.parseColor(colourInfo.getColour()));
     }
 

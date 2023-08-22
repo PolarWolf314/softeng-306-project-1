@@ -33,14 +33,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp">
 
-                <ImageView
-                    android:id="@+id/details_item_image"
+                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                    android:id="@+id/details_carousel"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_centerInParent="true"
-                    android:contentDescription="item image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/orange_hard_helmet" />
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:imagePlaceholder="@null"
+                    app:infiniteCarousel="false"
+                    app:showBottomShadow="false"
+                    app:showNavigationButtons="false"
+                    app:showTopShadow="false" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="48dp"
@@ -60,41 +64,14 @@
                 </com.google.android.material.card.MaterialCardView>
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="24dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="90dp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white_60_opacity"
-                    app:cardCornerRadius="90dp" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    app:cardBackgroundColor="@color/white_60_opacity"
-                    app:cardCornerRadius="90dp" />
-            </LinearLayout>
-
             <TextView
+                android:id="@+id/details_item_description"
                 style="@style/BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineHeight="18dp"
                 android:paddingHorizontal="32dp"
                 android:paddingVertical="16dp"
-                android:text="@string/lorem_ipsum"
                 android:textColor="@color/white" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
