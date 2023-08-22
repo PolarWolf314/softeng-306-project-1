@@ -16,12 +16,14 @@ import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDeco
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
+import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class HomeActivity extends TopBarActivity {
 
     private ActivityHomeBinding binding;
     private ItemSearchViewModel searchViewModel;
+    private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class HomeActivity extends TopBarActivity {
         this.binding.softwareCategory.setOnClickListener(v -> this.switchToCategory(Category.SOFTWARE));
         this.binding.chemmatCategory.setOnClickListener(v -> this.switchToCategory(Category.CHEMMAT));
         this.binding.mechanicalCategory.setOnClickListener(v -> this.switchToCategory(Category.MECHANICAL));
+
+        this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
+        this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
     }
 
     private void switchToCategory(final Category category) {
