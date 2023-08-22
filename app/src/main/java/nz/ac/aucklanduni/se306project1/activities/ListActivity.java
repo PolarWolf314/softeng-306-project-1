@@ -53,6 +53,7 @@ public class ListActivity extends TopBarActivity {
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
 
         this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
+        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());
 

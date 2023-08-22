@@ -20,6 +20,7 @@ public abstract class TopBarActivity extends AppCompatActivity {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.topBarViewModel = new ViewModelProvider(this).get(TopBarViewModel.class);
+        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
