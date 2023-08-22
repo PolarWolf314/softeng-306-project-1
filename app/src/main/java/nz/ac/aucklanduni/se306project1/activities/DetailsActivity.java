@@ -87,13 +87,18 @@ public class DetailsActivity extends TopBarActivity {
     }
 
     private void setColourInformation(final ColouredItemInformation colourInfo) {
+        final int parsedColour = Color.parseColor(colourInfo.getColour());
+
+        this.getWindow().setStatusBarColor(parsedColour);
+        this.getWindow().setNavigationBarColor(parsedColour);
+
         this.binding.detailsCarousel.setData(
                 colourInfo.getImages()
                         .stream()
                         .map(imageInfo -> new CarouselItem(imageInfo.getUrl()))
                         .collect(Collectors.toList())
         );
-        this.binding.detailsLayout.setBackgroundColor(Color.parseColor(colourInfo.getColour()));
+        this.binding.detailsLayout.setBackgroundColor(parsedColour);
     }
 
     private void setPrice(final double price) {
