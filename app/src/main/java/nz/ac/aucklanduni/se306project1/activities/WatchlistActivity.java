@@ -6,18 +6,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityWatchlistBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
+import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class WatchlistActivity extends AppCompatActivity {
 
     private ActivityWatchlistBinding binding;
     private ItemSearchViewModel searchViewModel;
+    private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -35,5 +38,7 @@ public class WatchlistActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
+        this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
+        this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_watchlist);
     }
 }

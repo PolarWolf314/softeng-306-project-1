@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.viewholders.CartItemCardViewHolder;
+import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class ShoppingCartActivity extends AppCompatActivity {
@@ -24,6 +26,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private ActivityShoppingCartBinding binding;
     private ItemSearchViewModel searchViewModel;
+    private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -47,5 +50,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new VerticalItemSpacingDecoration(this, 12));
 
+
+        this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
+        this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_cart);
     }
 }
