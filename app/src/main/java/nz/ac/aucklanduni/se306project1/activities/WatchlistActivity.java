@@ -35,8 +35,10 @@ public class WatchlistActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
+        this.watchlistViewModel.getWatchlistItems().thenAccept(items -> {
+            this.searchViewModel.setOriginalItems(items);
+        });
 
-            this.searchViewModel.setOriginalItems(MockData.ITEMS);
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
