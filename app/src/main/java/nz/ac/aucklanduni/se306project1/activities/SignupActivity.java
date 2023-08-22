@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
@@ -26,15 +25,16 @@ public class SignupActivity extends AppCompatActivity {
         this.signupViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(SignupViewModel.initializer)).get(SignupViewModel.class);
 
         this.binding.signupSignUpButton.setOnClickListener(v -> {
-            String email = this.binding.signupEmailTextInputLayout.getEditText().getText().toString();
-            String password = this.binding.signupPasswordTextInputLayout.getEditText().getText().toString();
-            String confirmedPassword = this.binding.signupConfirmPasswordTextInputLayout.getEditText().getText().toString();
+            final String email = this.binding.signupEmailTextInputLayout.getEditText().getText().toString();
+            final String password = this.binding.signupPasswordTextInputLayout.getEditText().getText().toString();
+            final String confirmedPassword = this.binding.signupConfirmPasswordTextInputLayout.getEditText().getText().toString();
             if (password.equals(confirmedPassword)) {
                 this.signupViewModel.authenticateUser(email, password).thenAccept(nothing -> {
                     final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    this.startActivity(intent);
                 });
             }
         });
+        this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.blue_onboarding));
     }
 }
