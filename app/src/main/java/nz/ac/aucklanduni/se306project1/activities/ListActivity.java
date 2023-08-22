@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -57,6 +58,11 @@ public class ListActivity extends TopBarActivity {
 
         this.addCategoryFilterView(category);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            this.getWindow().setDecorFitsSystemWindows(false);
+        }
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
     }
 
