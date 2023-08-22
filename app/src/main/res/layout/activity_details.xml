@@ -31,7 +31,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="24dp">
+                android:layout_margin="16dp">
 
                 <org.imaginativeworld.whynotimagecarousel.ImageCarousel
                     android:id="@+id/details_carousel"
@@ -69,8 +69,8 @@
                 style="@style/BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:lineHeight="18dp"
-                android:paddingHorizontal="32dp"
                 android:paddingVertical="16dp"
                 android:textColor="@color/white" />
         </LinearLayout>
