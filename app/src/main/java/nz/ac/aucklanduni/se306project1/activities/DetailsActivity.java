@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
 import nz.ac.aucklanduni.se306project1.databinding.ItemSizeRadioBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
@@ -39,7 +40,7 @@ public class DetailsActivity extends TopBarActivity {
         this.binding = ActivityDetailsBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        final String itemId = "bEaYWrsVPWxwFMM8s8wp";
+        final String itemId = this.getIntent().getStringExtra(Constants.IntentKeys.ITEM_ID);
 
         this.binding.detailsCarousel.registerLifecycle(this.getLifecycle());
         this.detailsViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(DetailsViewModel.INITIALIZER))

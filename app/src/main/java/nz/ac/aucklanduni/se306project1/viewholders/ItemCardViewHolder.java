@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.viewholders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide;
 import java.util.Locale;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.activities.DetailsActivity;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
@@ -56,6 +59,12 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
             // TODO: Toggle whether the item is in the watchlist
+        });
+
+        this.cardView.setOnClickListener((v) -> {
+            final Intent intent = new Intent(this.context, DetailsActivity.class);
+            intent.putExtra(Constants.IntentKeys.ITEM_ID, item.getId());
+            this.context.startActivity(intent);
         });
     }
 
