@@ -11,8 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.activities.HomeActivity;
 import nz.ac.aucklanduni.se306project1.activities.ShoppingCartActivity;
@@ -72,8 +70,4 @@ public class BottomNavigationFragment extends Fragment {
         });
     }
 
-    private void setSelectedItemId(final int id) {
-        final BottomNavigationView bottomNavigationView = this.binding.bottomNavigation;
-        bottomNavigationView.setSelectedItemId(id);
-    }
 }

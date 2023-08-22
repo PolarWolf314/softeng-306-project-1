@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -59,7 +61,20 @@ public class ListActivity extends TopBarActivity {
         this.addCategoryFilterView(category);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            this.getWindow().setDecorFitsSystemWindows(false);
+            // Set the layout to extend into the system gesture area
+            final Window window = this.getWindow();
+            window.setDecorFitsSystemWindows(false);
+
+            // Calculate the height of the system NavigationBar
+            final int navBarHeight = this.getSystemNavigationBarHeight();
+
+            // Get a reference to your custom bottom navigation bar view
+            final View customBottomNavBar = this.binding.bottomNavigationFragmentContainerView;
+
+            // Add margin to the custom bottom navigation bar
+            final ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) customBottomNavBar.getLayoutParams();
+            layoutParams.bottomMargin = navBarHeight;
+            customBottomNavBar.setLayoutParams(layoutParams);
         }
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
@@ -74,5 +89,13 @@ public class ListActivity extends TopBarActivity {
                 this, this.getLayoutInflater(), this.searchViewModel);
 
         this.binding.topBarContainer.addView(categoryFilterView);
+    }
+
+    private int getSystemNavigationBarHeight() {
+        final int resourceId = this.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return this.getResources().getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }
