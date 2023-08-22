@@ -36,7 +36,7 @@
                 <org.imaginativeworld.whynotimagecarousel.ImageCarousel
                     android:id="@+id/details_carousel"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="320dp"
                     android:layout_centerInParent="true"
                     android:clipChildren="false"
                     android:clipToPadding="false"
@@ -78,14 +78,14 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -97,12 +97,30 @@
                 android:text="@string/size"
                 android:textFontWeight="900" />
 
-            <LinearLayout
+            <RadioGroup
                 android:id="@+id/size_selector"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    style="@style/ItemSize"
+                    android:text="S" />
+
+                <RadioButton
+                    style="@style/ItemSize"
+                    android:text="M" />
+
+                <RadioButton
+                    style="@style/ItemSize"
+                    android:text="L" />
+
+                <RadioButton
+                    style="@style/ItemSize"
+                    android:text="XL" />
+
+            </RadioGroup>
 
             <Button
                 android:id="@+id/add_to_cart_button"

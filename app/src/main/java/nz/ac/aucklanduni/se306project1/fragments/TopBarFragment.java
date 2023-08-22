@@ -50,7 +50,6 @@ public class TopBarFragment extends Fragment {
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
         this.bindIconButton(this.binding.endIconButton, this.viewModel.getEndIconButton());
 
-
         final LiveData<String> title = this.viewModel.getTitle();
         this.binding.topBarTitle.setText(title.getValue());
         title.observe(this.getViewLifecycleOwner(), (newTitle) -> this.binding.topBarTitle.setText(newTitle));
