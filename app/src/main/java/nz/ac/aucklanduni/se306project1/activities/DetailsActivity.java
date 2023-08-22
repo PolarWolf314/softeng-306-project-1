@@ -8,12 +8,14 @@ import android.widget.RadioGroup;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import java.util.List;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
+import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.DetailsViewModel;
@@ -37,6 +39,8 @@ public class DetailsActivity extends TopBarActivity {
 
         this.detailsViewModel.getItemDataProvider().getItemById(itemId)
                 .thenAccept(this::bindItemData);
+
+        this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
     }
 
     private void bindItemData(final Item item) {
@@ -44,6 +48,10 @@ public class DetailsActivity extends TopBarActivity {
         System.out.println("Loaded item " + item.getDisplayName());
 
         this.generateColourOptions(item);
+
+        if (item.getColours().size() >= 1) {
+            this.setColourInformation(item.getColours().get(0));
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -68,7 +76,16 @@ public class DetailsActivity extends TopBarActivity {
 
         radioGroup.setOnCheckedChangeListener((group, checkedItemPosition) -> {
             final int checkedItemIndex = checkedItemPosition - 1;
-            System.out.println("Selected: " + checkedItemIndex);
+            final ColouredItemInformation selectedColourInfo = item.getColours().get(checkedItemIndex);
+            this.detailsViewModel.setSelectedColourInfo(selectedColourInfo);
         });
+    }
+
+    private void setColourInformation(final ColouredItemInformation colourInfo) {
+        final ImageInfo imageInfo = colourInfo.getImages().get(0);
+        Glide.with(this).load(imageInfo.getUrl()).into(this.binding.detailsItemImage);
+
+        this.binding.detailsItemImage.setContentDescription(imageInfo.getDescription());
+        this.binding.detailsLayout.setBackgroundColor(Color.parseColor(colourInfo.getColour()));
     }
 }
