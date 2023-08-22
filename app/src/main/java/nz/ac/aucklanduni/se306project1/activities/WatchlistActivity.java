@@ -16,11 +16,14 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.WatchlistViewModel;
 
 public class WatchlistActivity extends AppCompatActivity {
 
     private ActivityWatchlistBinding binding;
     private ItemSearchViewModel searchViewModel;
+
+    private WatchlistViewModel watchlistViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
@@ -31,7 +34,9 @@ public class WatchlistActivity extends AppCompatActivity {
         this.setContentView(this.binding.getRoot());
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItems(MockData.ITEMS);
+        this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
+
+            this.searchViewModel.setOriginalItems(MockData.ITEMS);
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
