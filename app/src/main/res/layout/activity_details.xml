@@ -8,27 +8,19 @@
     android:background="#F26F18"
     tools:context=".activities.DetailsActivity">
 
-    <FrameLayout
-        android:id="@+id/details_item_name_container"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/top_bar_fragment_container"
+        android:name="nz.ac.aucklanduni.se306project1.fragments.TopBarFragment"
         android:layout_width="match_parent"
-        android:layout_height="64dp">
-
-        <TextView
-            android:id="@+id/details_item_name"
-            style="@style/HeadlineSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:text="The Hard Helmet"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_top_bar" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/details_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/details_item_name_container"
+        android:layout_below="@id/top_bar_fragment_container"
         android:layout_marginBottom="220dp">
 
         <LinearLayout
@@ -38,12 +30,13 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="370dp">
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp">
 
                 <ImageView
                     android:id="@+id/details_item_image"
-                    android:layout_width="320dp"
-                    android:layout_height="320dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
                     android:layout_centerInParent="true"
                     android:contentDescription="item image"
                     android:scaleType="centerCrop"
@@ -52,18 +45,32 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     app:cardBackgroundColor="@color/black_60_opacity"
                     app:cardCornerRadius="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/details_item_color_selector_container"
+                    <RadioGroup
+                        android:id="@+id/details_item_color_selector_radio_group"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                    </LinearLayout>
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/colour_option_selector"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/colour_option_selector" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/colour_option_selector" />
+
+                    </RadioGroup>
                 </com.google.android.material.card.MaterialCardView>
             </RelativeLayout>
 
@@ -137,10 +144,10 @@
             <Button
                 android:id="@+id/add_to_cart_button"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@color/black"
                 android:text="+ ADD TO CART $39.99NZD"
-                android:textColor="#F26F18"
+                android:textColor="@color/white"
                 android:textFontWeight="900" />
         </LinearLayout>
 
