@@ -76,7 +76,6 @@ public class DetailsActivity extends TopBarActivity {
     @SuppressLint("RestrictedApi")
     private void generateColourOptions(final Item item) {
         final RadioGroup radioGroup = this.binding.detailsItemColorSelectorRadioGroup;
-
         final List<ColouredItemInformation> colouredItemInfo = item.getColours();
 
         for (int index = 0; index < colouredItemInfo.size(); index++) {
@@ -91,13 +90,11 @@ public class DetailsActivity extends TopBarActivity {
                 // Note: We can only check it AFTER adding it to the radio group
                 radio.setChecked(true);
             }
-        }
 
-        radioGroup.setOnCheckedChangeListener((group, checkedItemPosition) -> {
-            final int checkedItemIndex = checkedItemPosition - 1;
-            final ColouredItemInformation selectedColourInfo = item.getColours().get(checkedItemIndex);
-            this.detailsViewModel.setSelectedColourInfo(selectedColourInfo);
-        });
+            radio.setOnCheckedChangeListener((r, isChecked) -> {
+                if (isChecked) this.detailsViewModel.setSelectedColourInfo(colouredInfo);
+            });
+        }
     }
 
     private void setColourInformation(final ColouredItemInformation colourInfo) {
