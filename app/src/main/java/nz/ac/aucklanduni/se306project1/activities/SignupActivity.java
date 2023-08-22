@@ -32,6 +32,7 @@ public class SignupActivity extends AppCompatActivity {
                 this.signupViewModel.authenticateUser(email, password).thenAccept(nothing -> {
                     final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                     this.startActivity(intent);
+                    this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 });
             }
         });
@@ -39,6 +40,7 @@ public class SignupActivity extends AppCompatActivity {
         this.binding.signupSignInButton.setOnClickListener(v -> {
             final Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
         this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.blue_onboarding));
     }

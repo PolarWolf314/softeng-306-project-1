@@ -21,6 +21,7 @@ public class Onboarding3Activity extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             final Intent intent = new Intent(Onboarding3Activity.this, LoginActivity.class);
             Onboarding3Activity.this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.yellow_onboarding));
