@@ -46,7 +46,8 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/black_60_opacity"
-                    app:cardCornerRadius="10dp">
+                    app:cardCornerRadius="10dp"
+                    app:strokeColor="@android:color/transparent">
 
                     <RadioGroup
                         android:id="@+id/details_item_color_selector_radio_group"
@@ -54,21 +55,6 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/colour_option_selector"
-                            android:checked="true" />
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/colour_option_selector" />
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:button="@drawable/colour_option_selector" />
 
                     </RadioGroup>
                 </com.google.android.material.card.MaterialCardView>
