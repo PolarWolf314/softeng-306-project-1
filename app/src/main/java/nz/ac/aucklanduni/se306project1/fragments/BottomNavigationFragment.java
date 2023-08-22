@@ -55,14 +55,17 @@ public class BottomNavigationFragment extends Fragment {
             if (id == R.id.navigation_home) {
                 final Intent homeIntent = new Intent(BottomNavigationFragment.this.getActivity(), HomeActivity.class);
                 BottomNavigationFragment.this.startActivity(homeIntent);
+                this.requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
             } else if (id == R.id.navigation_watchlist) {
                 final Intent watchlistIntent = new Intent(BottomNavigationFragment.this.getActivity(), WatchlistActivity.class);
                 BottomNavigationFragment.this.startActivity(watchlistIntent);
+                this.requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
             } else if (id == R.id.navigation_cart) {
                 final Intent cartIntent = new Intent(BottomNavigationFragment.this.getActivity(), ShoppingCartActivity.class);
                 BottomNavigationFragment.this.startActivity(cartIntent);
+                this.requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
             }
             return false;
