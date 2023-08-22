@@ -3,13 +3,14 @@ package nz.ac.aucklanduni.se306project1.viewmodels;
 import androidx.lifecycle.ViewModel;
 
 import nz.ac.aucklanduni.se306project1.dataproviders.AuthenticationProvider;
+import nz.ac.aucklanduni.se306project1.dataproviders.FirebaseAuthenticationProvider;
 
 public class LoginViewModel extends ViewModel {
     private String email;
 
     private String password;
 
-    private AuthenticationProvider authProvider;
+    private final AuthenticationProvider authProvider = new FirebaseAuthenticationProvider();
 
     public String getEmail() {
         return this.email;
