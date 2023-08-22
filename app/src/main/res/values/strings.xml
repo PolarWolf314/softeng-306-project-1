@@ -94,4 +94,5 @@
     <string name="software_subcategory_linux_chad">Linux Chad</string>
     <string name="software_subcategory_apple_fanboy">Apple Fanboy</string>
     <string name="software_subcategory_default_skin">Default Skin</string>
+    <string name="top_bar_background_image">top bar background image</string>
 </resources>
