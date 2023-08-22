@@ -41,6 +41,7 @@
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:imagePlaceholder="@null"
+                    app:imageScaleType="fitCenter"
                     app:infiniteCarousel="false"
                     app:showBottomShadow="false"
                     app:showNavigationButtons="false"
@@ -58,7 +59,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
 
                     </RadioGroup>
                 </com.google.android.material.card.MaterialCardView>
