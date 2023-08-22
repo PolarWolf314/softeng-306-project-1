@@ -18,7 +18,7 @@ public class Onboarding3Activity extends AppCompatActivity {
 
         final MaterialButton nextButton = this.findViewById(R.id.next_button_onboarding3);
         nextButton.setOnClickListener(v -> {
-            final Intent intent = new Intent(Onboarding3Activity.this, HomeActivity.class);
+            final Intent intent = new Intent(Onboarding3Activity.this, LoginActivity.class);
             Onboarding3Activity.this.startActivity(intent);
         });
     }

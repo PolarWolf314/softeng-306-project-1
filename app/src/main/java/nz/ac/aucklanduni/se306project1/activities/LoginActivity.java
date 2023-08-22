@@ -3,10 +3,13 @@ package nz.ac.aucklanduni.se306project1.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -26,23 +29,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.binding = ActivityLoginBinding.inflate(this.getLayoutInflater());
-        setContentView(R.layout.activity_login);
+        setContentView(this.binding.getRoot());
 
         this.loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        final MaterialButton loginButton = this.findViewById(R.id.login_button);
-        loginButton.setOnClickListener(v -> {
+        this.binding.loginButton.setOnClickListener(v -> {
             this.authenticateUser().thenAccept(userDataProvider -> {
-
-            }).exceptionally(exception -> {
-                // write code to handle login failure
+                final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
             });
         });
     }
 
     public CompletableFuture<UserDataProvider> authenticateUser() {
-        String email = this.loginViewModel.getEmail();
-        String password = this.loginViewModel.getPassword();
+        Log.i("lol", "hi");
+        String email = this.binding.usernameTextInputLayout.getEditText().getText().toString();
+        String password = this.binding.passwordTextInputLayout.getEditText().getText().toString();
+        Log.i("lol", email);
+        Log.i("lol", password);
         return this.loginViewModel.getAuthenticationProvider().loginUser(email, password).thenApply(
                 userDataProvider -> userDataProvider).exceptionally(exception -> null);
     }
