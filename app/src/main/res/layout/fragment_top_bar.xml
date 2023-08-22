@@ -4,48 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp"
     tools:context=".fragments.TopBarFragment">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/top_bar_search_view"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/rounded_edit_text_rectangle"
-        android:foregroundTint="@color/black"
-        android:paddingStart="24dp"
-        android:paddingEnd="12dp"
-        android:visibility="gone"
-        app:defaultQueryHint="@string/top_bar_search_hint"
-        app:queryBackground="@null" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/start_icon_button"
-        style="@style/IconButton"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:icon="@drawable/back_arrow_24dp" />
-
-    <TextView
-        android:id="@+id/top_bar_title"
-        style="@style/HeadlineSmall"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Civil"
-        android:textColor="@android:color/white"
-        android:textFontWeight="700" />
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/end_icon_button"
-        style="@style/IconButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        app:icon="@drawable/search_icon_24dp" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/top_bar_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/rounded_edit_text_rectangle"
+            android:foregroundTint="@color/black"
+            android:paddingStart="24dp"
+            android:paddingEnd="12dp"
+            android:visibility="gone"
+            app:defaultQueryHint="@string/top_bar_search_hint"
+            app:queryBackground="@null" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/start_icon_button"
+            style="@style/IconButton"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:icon="@drawable/back_arrow_24dp" />
+
+        <TextView
+            android:id="@+id/top_bar_title"
+            style="@style/HeadlineSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Civil"
+            android:textColor="@android:color/white"
+            android:textFontWeight="700" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/end_icon_button"
+            style="@style/IconButton"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:icon="@drawable/search_icon_24dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
