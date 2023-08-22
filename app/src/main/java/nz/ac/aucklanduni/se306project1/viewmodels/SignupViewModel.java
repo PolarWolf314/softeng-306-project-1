@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
+import java.util.concurrent.CompletableFuture;
+
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 
 public class SignupViewModel extends ViewModel {
@@ -19,5 +21,10 @@ public class SignupViewModel extends ViewModel {
 
     public SignupViewModel(EngiWearApplication engiWear) {
         this.engiWear = engiWear;
+    }
+
+    public CompletableFuture<?> authenticateUser(String email, String password) {
+        return this.engiWear.getAuthenticationProvider().registerUser(email, password).thenAccept(userDataProvider ->
+                this.engiWear.setUserDataProvider(userDataProvider)).exceptionally(exception -> null);
     }
 }
