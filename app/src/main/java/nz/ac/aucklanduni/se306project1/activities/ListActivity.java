@@ -37,7 +37,7 @@ public class ListActivity extends TopBarActivity {
 
         final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
 
-        this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.initializer))
+        this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.INITIALIZER))
                 .get(ListViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
 

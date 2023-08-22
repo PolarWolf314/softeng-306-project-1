@@ -8,114 +8,77 @@
     android:background="#F26F18"
     tools:context=".activities.DetailsActivity">
 
-    <FrameLayout
-        android:id="@+id/details_item_name_container"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/top_bar_fragment_container"
+        android:name="nz.ac.aucklanduni.se306project1.fragments.TopBarFragment"
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_top_bar" />
 
-        <TextView
-            android:id="@+id/details_item_name"
-            style="@style/HeadlineSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:text="The Hard Helmet"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-    </FrameLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/details_scroll_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/details_item_name_container"
-        android:layout_marginBottom="220dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_bar_fragment_container"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="16dp">
 
-            <RelativeLayout
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                android:id="@+id/details_carousel"
                 android:layout_width="match_parent"
-                android:layout_height="370dp">
+                android:layout_height="320dp"
+                android:layout_centerInParent="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:imagePlaceholder="@null"
+                app:imageScaleType="fitCenter"
+                app:infiniteCarousel="false"
+                app:showBottomShadow="false"
+                app:showNavigationButtons="false"
+                app:showTopShadow="false" />
 
-                <ImageView
-                    android:id="@+id/details_item_image"
-                    android:layout_width="320dp"
-                    android:layout_height="320dp"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="item image"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/orange_hard_helmet" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    app:cardBackgroundColor="@color/black_60_opacity"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/details_item_color_selector_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                app:cardBackgroundColor="@color/black_60_opacity"
+                app:cardCornerRadius="10dp"
+                app:strokeColor="@android:color/transparent">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="24dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="90dp" />
+                <RadioGroup
+                    android:id="@+id/details_item_color_selector_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/white_60_opacity"
-                    app:cardCornerRadius="90dp" />
+                </RadioGroup>
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    app:cardBackgroundColor="@color/white_60_opacity"
-                    app:cardCornerRadius="90dp" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/BodyMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lineHeight="18dp"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp"
-                android:text="@string/lorem_ipsum"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/details_item_description"
+            style="@style/BodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:lineHeight="18dp"
+            android:paddingVertical="16dp"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -127,20 +90,42 @@
                 android:text="@string/size"
                 android:textFontWeight="900" />
 
-            <LinearLayout
+            <RadioGroup
                 android:id="@+id/size_selector"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/test"
+                    style="@style/ItemSize"
+                    android:text="S" />
+
+                <RadioButton
+                    android:id="@+id/test2"
+                    style="@style/ItemSize"
+                    android:text="M" />
+
+                <RadioButton
+                    android:id="@+id/test3"
+                    style="@style/ItemSize"
+                    android:text="L" />
+
+                <RadioButton
+                    android:id="@+id/test4"
+                    style="@style/ItemSize"
+                    android:text="XL" />
+
+            </RadioGroup>
 
             <Button
                 android:id="@+id/add_to_cart_button"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="48dp"
                 android:backgroundTint="@color/black"
-                android:text="+ ADD TO CART $39.99NZD"
-                android:textColor="#F26F18"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/white"
                 android:textFontWeight="900" />
         </LinearLayout>
 

@@ -8,7 +8,7 @@ import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
 
 public class ListViewModel extends ViewModel {
-    public static final ViewModelInitializer<ListViewModel> initializer = new ViewModelInitializer<>(
+    public static final ViewModelInitializer<ListViewModel> INITIALIZER = new ViewModelInitializer<>(
             ListViewModel.class,
             creationExtras -> {
                 final EngiWearApplication app = (EngiWearApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);

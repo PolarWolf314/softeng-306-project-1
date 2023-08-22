@@ -35,10 +35,7 @@ public class BottomNavigationFragment extends Fragment {
 
 
         this.binding = FragmentBottomNavigationBinding.inflate(inflater, container, false);
-
-
         return this.binding.getRoot();
-
     }
 
     @Override
@@ -69,5 +66,4 @@ public class BottomNavigationFragment extends Fragment {
             return false;
         });
     }
-
 }
