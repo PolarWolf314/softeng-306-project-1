@@ -48,6 +48,7 @@ public class DetailsActivity extends TopBarActivity {
         System.out.println("Loaded item " + item.getDisplayName());
 
         this.generateColourOptions(item);
+        this.setPrice(item.getPrice());
 
         if (item.getColours().size() >= 1) {
             this.setColourInformation(item.getColours().get(0));
@@ -87,5 +88,9 @@ public class DetailsActivity extends TopBarActivity {
 
         this.binding.detailsItemImage.setContentDescription(imageInfo.getDescription());
         this.binding.detailsLayout.setBackgroundColor(Color.parseColor(colourInfo.getColour()));
+    }
+
+    private void setPrice(final double price) {
+        this.binding.addToCartButton.setText(this.getResources().getString(R.string.add_to_cart, price));
     }
 }

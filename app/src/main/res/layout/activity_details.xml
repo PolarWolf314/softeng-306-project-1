@@ -132,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/black"
-                android:text="+ ADD TO CART $39.99NZD"
+                android:text="@string/add_to_cart"
                 android:textColor="@color/white"
                 android:textFontWeight="900" />
         </LinearLayout>
