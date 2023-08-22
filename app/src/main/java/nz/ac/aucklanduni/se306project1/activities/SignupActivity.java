@@ -35,6 +35,11 @@ public class SignupActivity extends AppCompatActivity {
                 });
             }
         });
+
+        this.binding.signupSignInButton.setOnClickListener(v -> {
+            final Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+            this.startActivity(intent);
+        });
         this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.blue_onboarding));
     }
 }
