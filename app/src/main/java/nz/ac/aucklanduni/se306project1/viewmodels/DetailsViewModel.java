@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
+import java.util.Collections;
+import java.util.List;
+
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
@@ -21,9 +24,27 @@ public class DetailsViewModel extends ViewModel {
             });
     private final ItemDataProvider itemDataProvider;
     private final MutableLiveData<ColouredItemInformation> selectedColourInfo = new MutableLiveData<>();
+    private String selectedSize = null;
+    private List<String> currentSizes = Collections.emptyList();
 
     public DetailsViewModel(final ItemDataProvider itemDataProvider) {
         this.itemDataProvider = itemDataProvider;
+    }
+
+    public String getSelectedSize() {
+        return this.selectedSize;
+    }
+
+    public void setSelectedSize(final String selectedSize) {
+        this.selectedSize = selectedSize;
+    }
+
+    public List<String> getCurrentSizes() {
+        return this.currentSizes;
+    }
+
+    public void setCurrentSizes(final List<String> currentSizes) {
+        this.currentSizes = currentSizes;
     }
 
     public LiveData<ColouredItemInformation> getSelectedColourInfo() {

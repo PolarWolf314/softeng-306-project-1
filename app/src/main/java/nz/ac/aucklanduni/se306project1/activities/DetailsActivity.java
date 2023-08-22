@@ -107,13 +107,19 @@ public class DetailsActivity extends TopBarActivity {
     }
 
     private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {
-        final RadioGroup radioGroup = this.binding.sizeSelector;
-        radioGroup.removeAllViews();
-
         final List<String> sizes = sizeQuantities.keySet()
                 .stream()
                 .filter(size -> sizeQuantities.get(size) > 0)
                 .collect(Collectors.toList());
+
+        if (this.detailsViewModel.getCurrentSizes().equals(sizes)) {
+            // The sizes are the same, we don't need to regenerate
+            return;
+        }
+
+        this.detailsViewModel.setCurrentSizes(sizes);
+        final RadioGroup radioGroup = this.binding.sizeSelector;
+        radioGroup.removeAllViews();
 
         for (int index = 0; index < sizes.size(); index++) {
             final String size = sizes.get(index);
@@ -126,7 +132,7 @@ public class DetailsActivity extends TopBarActivity {
             }
 
             radio.setOnCheckedChangeListener((r, isChecked) -> {
-
+                if (isChecked) this.detailsViewModel.setSelectedSize(size);
             });
         }
 
