@@ -12,11 +12,10 @@ import nz.ac.aucklanduni.se306project1.models.SearchFilterable;
 public class TopBarViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isSearchBarExpanded = new MutableLiveData<>();
     private final MutableLiveData<String> title = new MutableLiveData<>();
+    private final MutableLiveData<IconButton> endIconButton = new MutableLiveData<>(SearchIcon.INSTANCE);
     private Class<? extends SearchViewModel<? extends SearchFilterable>> searchViewModelClass = ItemSearchViewModel.class;
     @Nullable
     private IconButton startIconButton = null;
-    @Nullable
-    private IconButton endIconButton = SearchIcon.INSTANCE;
 
     public LiveData<String> getTitle() {
         return this.title;
@@ -51,12 +50,11 @@ public class TopBarViewModel extends ViewModel {
         this.startIconButton = iconButton;
     }
 
-    @Nullable
-    public IconButton getEndIconButton() {
+    public LiveData<IconButton> getEndIconButton() {
         return this.endIconButton;
     }
 
     public void setEndIconButton(@Nullable final IconButton iconButton) {
-        this.endIconButton = iconButton;
+        this.endIconButton.setValue(iconButton);
     }
 }

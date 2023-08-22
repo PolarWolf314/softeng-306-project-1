@@ -26,9 +26,29 @@ public class DetailsViewModel extends ViewModel {
     private final MutableLiveData<ColouredItemInformation> selectedColourInfo = new MutableLiveData<>();
     private String selectedSize = null;
     private List<String> currentSizes = Collections.emptyList();
+    private final MutableLiveData<Boolean> isInWatchlist = new MutableLiveData<>();
 
     public DetailsViewModel(final ItemDataProvider itemDataProvider) {
         this.itemDataProvider = itemDataProvider;
+    }
+
+    public void setItemId(final String itemId) {
+        // TODO: Fetch if in watchlist
+    }
+
+    public LiveData<Boolean> isInWatchlist() {
+        return this.isInWatchlist;
+    }
+
+    public void toggleIsInWatchlist() {
+        final Boolean isInWatchlist = this.isInWatchlist.getValue();
+        if (isInWatchlist == null) {
+            this.isInWatchlist.setValue(true);
+        } else {
+            this.isInWatchlist.setValue(!isInWatchlist);
+        }
+
+        // TODO: Update user data provider
     }
 
     public String getSelectedSize() {

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
 import nz.ac.aucklanduni.se306project1.databinding.ItemSizeRadioBinding;
+import nz.ac.aucklanduni.se306project1.iconbuttons.WatchlistButton;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewmodels.DetailsViewModel;
@@ -46,11 +47,14 @@ public class DetailsActivity extends TopBarActivity {
                 .thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
+        this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
+
+        this.detailsViewModel.isInWatchlist().observe(this, isInWatchlist ->
+                this.topBarViewModel.setEndIconButton(new WatchlistButton(isInWatchlist, this.detailsViewModel::toggleIsInWatchlist)));
     }
 
     private void bindItemData(final Item item) {
         this.topBarViewModel.setTitle(item.getDisplayName());
-        System.out.println("Loaded item " + item.getDisplayName());
 
         this.generateColourOptions(item);
         this.binding.addToCartButton.setText(this.getResources().getString(R.string.add_to_cart, item.getPrice()));
@@ -135,7 +139,5 @@ public class DetailsActivity extends TopBarActivity {
                 if (isChecked) this.detailsViewModel.setSelectedSize(size);
             });
         }
-
-
     }
 }
