@@ -7,18 +7,18 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
 
-public class DetailedItemViewModel extends ViewModel {
+public class DetailsViewModel extends ViewModel {
 
-    public static final ViewModelInitializer<DetailedItemViewModel> INITIALIZER = new ViewModelInitializer<>(
-            DetailedItemViewModel.class,
+    public static final ViewModelInitializer<DetailsViewModel> INITIALIZER = new ViewModelInitializer<>(
+            DetailsViewModel.class,
             creationExtras -> {
                 final EngiWearApplication app = (EngiWearApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
                 assert app != null;
-                return new DetailedItemViewModel(app.getItemDataProvider());
+                return new DetailsViewModel(app.getItemDataProvider());
             });
     private final ItemDataProvider itemDataProvider;
 
-    public DetailedItemViewModel(final ItemDataProvider itemDataProvider) {
+    public DetailsViewModel(final ItemDataProvider itemDataProvider) {
         this.itemDataProvider = itemDataProvider;
     }
 
