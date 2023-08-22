@@ -95,26 +95,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="30dp">
 
                 <RadioButton
                     android:id="@+id/test"
                     style="@style/ItemSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pptelegraf_medium"
                     android:text="S" />
 
                 <RadioButton
                     android:id="@+id/test2"
                     style="@style/ItemSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pptelegraf_medium"
                     android:text="M" />
 
                 <RadioButton
                     android:id="@+id/test3"
                     style="@style/ItemSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pptelegraf_medium"
                     android:text="L" />
 
                 <RadioButton
                     android:id="@+id/test4"
                     style="@style/ItemSize"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pptelegraf_medium"
                     android:text="XL" />
 
             </RadioGroup>
@@ -124,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/black"
+                android:fontFamily="@font/pptelegraf_medium"
                 android:text="@string/add_to_cart"
                 android:textColor="@color/white"
                 android:textFontWeight="900" />
