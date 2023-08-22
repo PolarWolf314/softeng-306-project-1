@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
 import nz.ac.aucklanduni.se306project1.databinding.ItemSizeRadioBinding;
+import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.iconbuttons.WatchlistButton;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
@@ -47,6 +49,10 @@ public class DetailsActivity extends TopBarActivity {
                 .thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
+
+        final Intent intent = new Intent(this, HomeActivity.class);
+
+        this.topBarViewModel.setStartIconButton(new BackButton(intent));
         this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
 
         this.detailsViewModel.isInWatchlist().observe(this, isInWatchlist ->
