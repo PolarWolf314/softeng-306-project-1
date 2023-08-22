@@ -1,12 +1,15 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.data.Constants;
@@ -55,6 +58,14 @@ public class ListActivity extends TopBarActivity {
 
         this.addCategoryFilterView(category);
 
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
+
+        this.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        this.getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     private void addCategoryFilterView(final Category category) {
@@ -66,4 +77,5 @@ public class ListActivity extends TopBarActivity {
 
         this.binding.topBarContainer.addView(categoryFilterView);
     }
+
 }
