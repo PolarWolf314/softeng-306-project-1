@@ -12,4 +12,9 @@ public class Constants {
         public static final String SEARCH_QUERY = "SearchQuery";
 
     }
+
+    public static class PreferencesKeys {
+        public static final String USER_SETTINGS_FILE_NAME = "User settings";
+        public static final String FIRST_TIME_PREFERENCE_KEY = "firstTime";
+    }
 }

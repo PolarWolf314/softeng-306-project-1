@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButton;
 
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 
 public class Onboarding1Activity extends AppCompatActivity {
 
@@ -23,7 +24,8 @@ public class Onboarding1Activity extends AppCompatActivity {
             Onboarding1Activity.this.startActivity(intent);
             this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } catch (RuntimeException e) {
-            if (this.getSharedPreferences("User settings", Context.MODE_PRIVATE).contains("firstTime")) {
+            if (this.getSharedPreferences(Constants.PreferencesKeys.USER_SETTINGS_FILE_NAME,
+                    Context.MODE_PRIVATE).contains(Constants.PreferencesKeys.FIRST_TIME_PREFERENCE_KEY)) {
                 final Intent intent = new Intent(Onboarding1Activity.this, LoginActivity.class);
                 Onboarding1Activity.this.startActivity(intent);
                 this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
