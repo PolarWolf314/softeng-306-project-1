@@ -33,12 +33,14 @@ public class HomeActivity extends TopBarActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final int NUM_FEATURED_ITEMS = 5;
+
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
         this.homeViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.homeViewModel.getFeaturedItems(5).thenAccept(items -> this.searchViewModel.setOriginalItems(items));
+        this.homeViewModel.getFeaturedItems(NUM_FEATURED_ITEMS).thenAccept(items -> this.searchViewModel.setOriginalItems(items));
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
