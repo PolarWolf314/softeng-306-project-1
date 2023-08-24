@@ -22,12 +22,12 @@ public class Onboarding1Activity extends AppCompatActivity {
             final Intent intent = new Intent(Onboarding1Activity.this, HomeActivity.class);
             Onboarding1Activity.this.startActivity(intent);
             this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        } catch (RuntimeException e) {}
-
-        if (this.getSharedPreferences("User settings", Context.MODE_PRIVATE).contains("firstTime")) {
-            final Intent intent = new Intent(Onboarding1Activity.this, LoginActivity.class);
-            Onboarding1Activity.this.startActivity(intent);
-            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } catch (RuntimeException e) {
+            if (this.getSharedPreferences("User settings", Context.MODE_PRIVATE).contains("firstTime")) {
+                final Intent intent = new Intent(Onboarding1Activity.this, LoginActivity.class);
+                Onboarding1Activity.this.startActivity(intent);
+                this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
         }
 
         super.onCreate(savedInstanceState);
