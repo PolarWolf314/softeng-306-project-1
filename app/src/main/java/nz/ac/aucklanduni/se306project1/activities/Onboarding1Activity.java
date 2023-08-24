@@ -8,12 +8,21 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 
+import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 
 public class Onboarding1Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
+        EngiWearApplication engiWear = (EngiWearApplication) this.getApplication();
+        try {
+            engiWear.setUserDataProvider(engiWear.getAuthenticationProvider().getCurrentUserDataProvider());
+            final Intent intent = new Intent(Onboarding1Activity.this, HomeActivity.class);
+            Onboarding1Activity.this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } catch (RuntimeException e) {}
+
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_onboarding1);
 
