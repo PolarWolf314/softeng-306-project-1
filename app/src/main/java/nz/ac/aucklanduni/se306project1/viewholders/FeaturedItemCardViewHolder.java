@@ -55,9 +55,8 @@ public class FeaturedItemCardViewHolder extends BindableViewHolder<Item> {
         this.cardView.setCardBackgroundColor(Color.parseColor(colourInformation.getColour()));
         this.itemName.setText(item.getDisplayName());
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice()));
-        this.engiWear.getUserDataProvider().existsInWatchlist(item.getId()).thenAccept(inWatchlist -> {
-            this.favouriteItemCheckbox.setChecked(inWatchlist);
-        });
+        this.engiWear.getUserDataProvider().getWatchlist().thenAccept(watchlist ->
+                this.favouriteItemCheckbox.setChecked(watchlist.getItemIds().contains(item.getId())));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
             if (isChecked) {
                 this.engiWear.getUserDataProvider().addToWatchlist(item.getId());
