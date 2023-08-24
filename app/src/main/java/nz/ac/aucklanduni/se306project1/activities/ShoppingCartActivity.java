@@ -46,7 +46,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 .collect(Collectors.toList());
 
         final ListRecyclerAdapter<CartItem, ?> adapter = new ListRecyclerAdapter<>(
-                (EngiWearApplication) this.getApplication(), new MutableLiveData<>(cartItems), CartItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), new MutableLiveData<>(cartItems), CartItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

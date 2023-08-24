@@ -43,7 +43,7 @@ public class WatchlistActivity extends AppCompatActivity {
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                (EngiWearApplication) this.getApplication(), this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);

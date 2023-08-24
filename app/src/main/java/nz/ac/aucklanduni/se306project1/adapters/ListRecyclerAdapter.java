@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.utils.ListDiff;
 import nz.ac.aucklanduni.se306project1.viewholders.BindableViewHolder;
 import nz.ac.aucklanduni.se306project1.viewholders.ViewHolderBuilder;
@@ -23,16 +22,16 @@ import nz.ac.aucklanduni.se306project1.viewholders.ViewHolderBuilder;
 public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Item>>
         extends RecyclerView.Adapter<ViewHolder> {
 
-    private final EngiWearApplication engiWear;
+    private final Context context;
     private final List<Item> items;
     private final ViewHolderBuilder<ViewHolder> viewHolderBuilder;
 
     public ListRecyclerAdapter(
-            final EngiWearApplication engiWear,
+            final Context context,
             final LiveData<List<Item>> items,
             final ViewHolderBuilder<ViewHolder> viewHolderBuilder
     ) {
-        this.engiWear = engiWear;
+        this.context = context;
         this.items = new ArrayList<>(Objects.requireNonNullElse(items.getValue(), Collections.emptyList()));
         this.viewHolderBuilder = viewHolderBuilder;
         items.observeForever(this::updateItems);
@@ -44,7 +43,7 @@ public class ListRecyclerAdapter<Item, ViewHolder extends BindableViewHolder<Ite
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view = inflater.inflate(this.viewHolderBuilder.getLayoutId(), parent, false);
 
-        return this.viewHolderBuilder.createViewHolder(this.engiWear, view);
+        return this.viewHolderBuilder.createViewHolder(this.context, view);
     }
 
     @Override
