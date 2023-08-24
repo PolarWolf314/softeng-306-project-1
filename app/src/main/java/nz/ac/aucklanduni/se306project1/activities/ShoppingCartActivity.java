@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
@@ -45,7 +46,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 .collect(Collectors.toList());
 
         final ListRecyclerAdapter<CartItem, ?> adapter = new ListRecyclerAdapter<>(
-                this, new MutableLiveData<>(cartItems), CartItemCardViewHolder.Builder.INSTANCE);
+                (EngiWearApplication) this.getApplication(), new MutableLiveData<>(cartItems), CartItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

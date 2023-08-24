@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
@@ -38,7 +39,7 @@ public class HomeActivity extends TopBarActivity {
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
+                (EngiWearApplication) this.getApplication(), this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
