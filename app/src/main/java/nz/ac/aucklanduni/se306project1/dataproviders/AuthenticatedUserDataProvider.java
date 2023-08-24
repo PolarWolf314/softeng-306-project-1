@@ -96,8 +96,14 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
-        return FutureUtils.fromTask(watchlistRef.get(),
-                () -> new RuntimeException("Error reading watchlist")).thenApply(document -> document.exists());
+        return FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("Error reading watchlist")).thenApply(document -> {
+            if (document.exists()) {
+                Watchlist tempWatchlist = document.toObject(Watchlist.class);
+                return tempWatchlist.getItemIds().contains(itemId);
+            } else {
+                throw new RuntimeException("Error reading watchlist");
+            }
+        });
     }
 
     @Override
