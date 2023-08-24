@@ -88,6 +88,19 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
+    public CompletableFuture<Boolean> existsInWatchlist(final String itemId) {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
+
+        return FutureUtils.fromTask(watchlistRef.get(),
+                () -> new RuntimeException("Error reading watchlist")).thenApply(document -> document.exists());
+    }
+
+    @Override
     public void addToShoppingCart(final SerializedCartItem cartItem) {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
