@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.MockData;
@@ -16,11 +17,14 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.WatchlistViewModel;
 
 public class WatchlistActivity extends AppCompatActivity {
 
     private ActivityWatchlistBinding binding;
     private ItemSearchViewModel searchViewModel;
+
+    private WatchlistViewModel watchlistViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
@@ -31,11 +35,15 @@ public class WatchlistActivity extends AppCompatActivity {
         this.setContentView(this.binding.getRoot());
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItems(MockData.ITEMS);
+        this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
+        this.watchlistViewModel.getWatchlistItems().thenAccept(items -> {
+            this.searchViewModel.setOriginalItems(items);
+        });
+
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);

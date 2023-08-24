@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
@@ -18,11 +19,13 @@ import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.HomeViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class HomeActivity extends TopBarActivity {
 
     private ActivityHomeBinding binding;
+    private HomeViewModel homeViewModel;
     private ItemSearchViewModel searchViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
 
@@ -30,15 +33,18 @@ public class HomeActivity extends TopBarActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final int NUM_FEATURED_ITEMS = 5;
+
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
+        this.homeViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItemsIfEmpty(MockData.ITEMS);
+        this.homeViewModel.getFeaturedItems(NUM_FEATURED_ITEMS).thenAccept(items -> this.searchViewModel.setOriginalItems(items));
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
