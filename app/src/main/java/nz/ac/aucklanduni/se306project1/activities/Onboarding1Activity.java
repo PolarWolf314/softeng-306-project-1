@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,6 +23,12 @@ public class Onboarding1Activity extends AppCompatActivity {
             Onboarding1Activity.this.startActivity(intent);
             this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } catch (RuntimeException e) {}
+
+        if (this.getSharedPreferences("User settings", Context.MODE_PRIVATE).contains("firstTime")) {
+            final Intent intent = new Intent(Onboarding1Activity.this, LoginActivity.class);
+            Onboarding1Activity.this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
 
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_onboarding1);
