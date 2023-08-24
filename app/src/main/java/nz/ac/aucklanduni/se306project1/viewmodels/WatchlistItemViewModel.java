@@ -17,8 +17,8 @@ public class WatchlistItemViewModel extends ViewModel {
                 assert app != null;
                 return new WatchlistItemViewModel(app.getUserDataProvider());
             });
-    
-    private final UserDataProvider userDataProvider;
+
+    protected final UserDataProvider userDataProvider;
 
     public WatchlistItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
