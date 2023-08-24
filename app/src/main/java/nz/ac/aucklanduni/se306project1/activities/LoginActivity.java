@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.getSharedPreferences("User settings", Context.MODE_PRIVATE).edit().putBoolean("firstTime", false).apply();
 
         this.binding = ActivityLoginBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
