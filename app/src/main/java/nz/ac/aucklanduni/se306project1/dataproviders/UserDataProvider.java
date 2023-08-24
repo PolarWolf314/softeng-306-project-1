@@ -13,6 +13,8 @@ public interface UserDataProvider {
 
     void removeFromWatchlist(final String itemId);
 
+    CompletableFuture<Boolean> existsInWatchlist(final String itemId);
+
     void addToShoppingCart(final SerializedCartItem cartItem);
 
     void removeFromShoppingCart(final SerializedCartItem cartItem);
