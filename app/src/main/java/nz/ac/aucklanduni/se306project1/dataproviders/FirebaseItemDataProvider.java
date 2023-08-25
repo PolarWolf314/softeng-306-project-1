@@ -3,6 +3,7 @@ package nz.ac.aucklanduni.se306project1.dataproviders;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,9 @@ import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 
 public class FirebaseItemDataProvider implements ItemDataProvider {
+
+    private final Map<String, Item> cachedItems = new HashMap<>();
+
     @Override
     public CompletableFuture<List<Item>> getItemsByCategory(final Category category) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -32,6 +36,10 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
 
     @Override
     public CompletableFuture<Item> getItemById(final String itemId) {
+        if (this.cachedItems.containsKey(itemId)) {
+            return CompletableFuture.completedFuture(this.cachedItems.get(itemId));
+        }
+
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference itemRef = db.collection("items").document(itemId);
 
@@ -76,9 +84,7 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
             final CompletableFuture<?>[] futures = new CompletableFuture[itemsPurchased.size()];
             final List<Item> items = new ArrayList<>();
             for (int i = 0; i < Math.min(numItems, itemsPurchased.size()); i++) {
-                futures[i] = this.getItemById(itemsPurchased.get(i)).thenAccept(item -> {
-                    items.add(item);
-                });
+                futures[i] = this.getItemById(itemsPurchased.get(i)).thenAccept(items::add);
             }
 
             return CompletableFuture.allOf(futures).thenApply(nothing -> items);
@@ -91,12 +97,14 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
 
         return FutureUtils.fromTask(db.collection("items").whereEqualTo("categoryId", category).get()
                 , () -> new RuntimeException("Error reading items from firestore")).thenApply(
-                documentSnapshots -> documentSnapshots.size());
+                QuerySnapshot::size);
     }
 
     private Item parseDocumentForItem(final DocumentSnapshot document, final Category category) {
         final Item item = document.toObject(category.getItemClass());
         item.setId(document.getId());
+
+        this.cachedItems.put(item.getId(), item);
 
         return item;
     }
