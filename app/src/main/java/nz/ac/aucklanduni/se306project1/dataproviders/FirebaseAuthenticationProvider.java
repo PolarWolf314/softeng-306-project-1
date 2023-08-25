@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
@@ -48,7 +49,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
                         throw new EmailAlreadyInUseException();
                     } else if (exceptionClass.equals(FirebaseAuthWeakPasswordException.class)) {
                         throw new WeakPasswordException();
-                    } else if (exceptionClass.equals(FirebaseAuthException.class)) {
+                    } else if (exceptionClass.equals(FirebaseAuthInvalidCredentialsException.class)) {
                         throw new InvalidEmailException();
                     }
                     throw new RuntimeException();
