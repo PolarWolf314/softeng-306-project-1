@@ -21,7 +21,7 @@ public class EngiWearApplication extends Application {
     public void onCreate() {
         super.onCreate();
         this.itemDataProvider = new FirebaseItemDataProvider();
-        this.authenticationProvider = new FirebaseAuthenticationProvider();
+        this.authenticationProvider = new FirebaseAuthenticationProvider(this.itemDataProvider);
     }
 
     @Nullable
