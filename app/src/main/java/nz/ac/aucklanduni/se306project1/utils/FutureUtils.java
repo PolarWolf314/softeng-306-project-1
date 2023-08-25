@@ -18,4 +18,16 @@ public class FutureUtils {
         });
         return completableFuture;
     }
+
+    public static <T> CompletableFuture<T> fromTask(final Task<T> task) {
+        final CompletableFuture<T> completableFuture = new CompletableFuture<>();
+        task.addOnCompleteListener(t -> {
+            if (t.isSuccessful()) {
+                completableFuture.complete(t.getResult());
+            } else {
+                completableFuture.completeExceptionally(t.getException());
+            }
+        });
+        return completableFuture;
+    }
 }
