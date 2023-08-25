@@ -7,10 +7,10 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import nz.ac.aucklanduni.se306project1.EngiWearApplication;
+import java.util.ArrayList;
+
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
-import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityWatchlistBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
@@ -36,9 +36,8 @@ public class WatchlistActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
-        this.watchlistViewModel.getWatchlistItems().thenAccept(items -> {
-            this.searchViewModel.setOriginalItems(items);
-        });
+        this.watchlistViewModel.getWatchlistItems()
+                .observe(this, items -> this.searchViewModel.setOriginalItems(new ArrayList<>(items)));
 
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
@@ -49,7 +48,6 @@ public class WatchlistActivity extends AppCompatActivity {
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_watchlist);
-
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
