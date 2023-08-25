@@ -6,9 +6,7 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
@@ -29,7 +27,7 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
     public WatchlistViewModel(final UserDataProvider userDataProvider, final ItemDataProvider itemDataProvider) {
         super(userDataProvider);
         this.itemDataProvider = itemDataProvider;
-        this.fetchWatchlistItems().thenAccept(this.watchlistItems::setValue);
+        this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
     }
 
     @Override
@@ -52,18 +50,5 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
         final Set<Item> items = this.watchlistItems.getValue();
         if (items == null) return new HashSet<>();
         return items;
-    }
-
-    private CompletableFuture<Set<Item>> fetchWatchlistItems() {
-        return this.userDataProvider.getWatchlist().thenCompose(watchlist -> {
-            final Set<Item> itemList = new HashSet<>();
-            final List<String> itemIdList = watchlist.getItemIds();
-            final CompletableFuture<?>[] futures = new CompletableFuture[itemIdList.size()];
-            for (int i = 0; i < itemIdList.size(); i++) {
-                futures[i] = this.itemDataProvider.getItemById(itemIdList.get(i))
-                        .thenAccept(itemList::add);
-            }
-            return CompletableFuture.allOf(futures).thenApply(nothing -> itemList);
-        });
     }
 }

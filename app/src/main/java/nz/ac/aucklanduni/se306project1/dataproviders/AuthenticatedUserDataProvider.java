@@ -7,25 +7,29 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.Watchlist;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
+import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 
 public class AuthenticatedUserDataProvider implements UserDataProvider {
+    private final ItemDataProvider itemDataProvider;
     private FirebaseUser user;
 
-    public AuthenticatedUserDataProvider(final FirebaseUser appUser) {
-        this.user = appUser;
+    public AuthenticatedUserDataProvider(final ItemDataProvider itemDataProvider, final FirebaseUser user) {
+        this.itemDataProvider = itemDataProvider;
+        this.user = user;
     }
 
     @Override
@@ -210,7 +214,6 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                 document -> {
                     final List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
                     final List<CartItem> cartItems = new ArrayList<>();
-                    final ItemDataProvider myItemProvider = new FirebaseItemDataProvider();
 
                     // Keep an array of futures so that we can wait for them all to be finished
                     final CompletableFuture<?>[] futures = new CompletableFuture[firebaseCartItems.size()];
@@ -219,7 +222,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                         final Map<String, Object> firebaseCartItem = firebaseCartItems.get(i);
                         final Long quantity = (Long) firebaseCartItem.get("quantity");
 
-                        futures[i] = myItemProvider.getItemById(firebaseCartItem.get("itemId").toString())
+                        futures[i] = this.itemDataProvider.getItemById(firebaseCartItem.get("itemId").toString())
                                 .thenAccept(item -> cartItems.add(new CartItem(
                                         quantity.intValue(),
                                         firebaseCartItem.get("colour").toString(),
@@ -234,7 +237,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public CompletableFuture<Watchlist> getWatchlist() {
+    public CompletableFuture<Set<Item>> getWatchlist() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -242,11 +245,20 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference watchlistRef = db.collection("watchlists").document(this.user.getUid());
 
-        return FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist")).thenApply(
-                document -> document.toObject(Watchlist.class)
-        ).exceptionally(
-                exception -> new Watchlist(new ArrayList<>())
-        );
+        return FutureUtils.fromTask(watchlistRef.get(), () -> new RuntimeException("User doesn't have watchlist"))
+                .thenCompose(document -> {
+                    final Set<Item> items = new HashSet<>();
+                    final Watchlist watchlist = document.toObject(Watchlist.class);
+                    final List<String> itemIds = watchlist.getItemIds();
+
+                    final CompletableFuture<?>[] futures = new CompletableFuture[itemIds.size()];
+                    for (int i = 0; i < itemIds.size(); i++) {
+                        futures[i] = this.itemDataProvider.getItemById(itemIds.get(i))
+                                .thenAccept(items::add);
+                    }
+                    return CompletableFuture.allOf(futures).thenApply(nothing -> items);
+                })
+                .exceptionally(exception -> new HashSet<>());
     }
 
     public void removeUser() {

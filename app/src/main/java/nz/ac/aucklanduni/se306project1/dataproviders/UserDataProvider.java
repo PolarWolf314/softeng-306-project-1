@@ -1,11 +1,13 @@
 package nz.ac.aucklanduni.se306project1.dataproviders;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
-import nz.ac.aucklanduni.se306project1.models.Watchlist;
+import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
+
 public interface UserDataProvider {
     void placeOrder(Order order);
 
@@ -27,5 +29,5 @@ public interface UserDataProvider {
 
     CompletableFuture<ShoppingCart> getShoppingCart();
 
-    CompletableFuture<Watchlist> getWatchlist();
+    CompletableFuture<Set<Item>> getWatchlist();
 }
