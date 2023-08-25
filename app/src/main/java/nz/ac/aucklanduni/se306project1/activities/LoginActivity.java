@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityLoginBinding;
 import nz.ac.aucklanduni.se306project1.viewmodels.LoginViewModel;
 
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }).exceptionally(exception -> {
-                Toast.makeText(this, "Username and/or password is incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, Constants.ToastMessages.INCORRECT_USERNAME_OR_PASSWORD, Toast.LENGTH_LONG).show();
                 return null;
             });
         });

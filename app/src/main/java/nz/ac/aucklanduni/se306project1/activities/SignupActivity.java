@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivitySignupBinding;
 import nz.ac.aucklanduni.se306project1.exceptions.EmailAlreadyInUseException;
 import nz.ac.aucklanduni.se306project1.exceptions.InvalidEmailException;
@@ -49,17 +50,17 @@ public class SignupActivity extends AppCompatActivity {
                     String errorMessage = "";
                     Class<?> exceptionClass = exception.getCause().getClass();
                     if (exceptionClass.equals(EmailAlreadyInUseException.class)) {
-                        errorMessage = "Email address already in use";
+                        errorMessage = Constants.ToastMessages.EMAIL_ALREADY_IN_USE;
                     } else if (exceptionClass.equals(WeakPasswordException.class)) {
-                        errorMessage = "Password must be at least 6 characters in length";
+                        errorMessage = Constants.ToastMessages.WEAK_PASSWORD;
                     } else if (exceptionClass.equals(InvalidEmailException.class)){
-                        errorMessage = "Invalid email address";
+                        errorMessage = Constants.ToastMessages.INVALID_EMAIL;
                     }
                     Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
                     return null;
                 });
             } else {
-                Toast.makeText(this, "Confirmed password must match password", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, Constants.ToastMessages.CONFIRMED_PASSWORD_MISMATCH, Toast.LENGTH_LONG).show();
             }
         });
 
