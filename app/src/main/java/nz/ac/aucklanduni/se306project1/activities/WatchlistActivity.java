@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityWatchlistBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -36,8 +38,7 @@ public class WatchlistActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
-        this.watchlistViewModel.getWatchlistItems()
-                .observe(this, items -> this.searchViewModel.setOriginalItems(new ArrayList<>(items)));
+        this.watchlistViewModel.getWatchlistItems().observe(this, this::onWatchlistItemsLoaded);
 
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;
 
@@ -51,5 +52,13 @@ public class WatchlistActivity extends AppCompatActivity {
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
+    }
+
+    private void onWatchlistItemsLoaded(final Set<Item> watchlistItems) {
+        this.searchViewModel.setOriginalItems(new ArrayList<>(watchlistItems));
+        final String label = StringUtils.getQuantity(
+                this.getResources(), R.plurals.number_of_items_in_watchlist,
+                R.string.no_items_in_watchlist, watchlistItems.size());
+        this.binding.itemsInWatchlist.setText(label);
     }
 }
