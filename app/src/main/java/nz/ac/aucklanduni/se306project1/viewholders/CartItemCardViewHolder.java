@@ -27,12 +27,14 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
     private final TextView itemName;
     private final TextView itemPrice;
     private final TextView itemQuantity;
+    private final TextView checkoutPrice;
     private final MaterialButton decrementButton;
     private final MaterialButton incrementButton;
     private final MaterialButton removeButton;
 
 
-    public CartItemCardViewHolder(final ShoppingCartItemViewModel viewModel, @NonNull final Context context, @NonNull final View itemView) {
+    public CartItemCardViewHolder(final ShoppingCartItemViewModel viewModel, @NonNull final Context context,
+                                  @NonNull final View itemView, @NonNull final TextView checkoutPrice) {
         super(itemView);
 
         this.viewModel = viewModel;
@@ -41,6 +43,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         this.itemName = itemView.findViewById(R.id.cart_item_card_name);
         this.itemPrice = itemView.findViewById(R.id.cart_item_card_price);
         this.itemQuantity = itemView.findViewById(R.id.cart_item_card_quantity);
+        this.checkoutPrice = checkoutPrice;
         this.decrementButton = itemView.findViewById(R.id.cart_item_card_decrement_button);
         this.incrementButton = itemView.findViewById(R.id.cart_item_card_increment_button);
         this.removeButton = itemView.findViewById(R.id.cart_item_card_delete_button);
@@ -63,25 +66,35 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         this.itemName.setText(item.getDisplayName());
         this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
         this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+        this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
+
         this.decrementButton.setOnClickListener(v -> {
             this.viewModel.decrementItemQuantity(cartItem);
             this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
             this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+            this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
         });
         this.incrementButton.setOnClickListener(v -> {
             this.viewModel.incrementItemQuantity(cartItem);
             this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
             this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+            this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
         });
-        this.removeButton.setOnClickListener(v -> this.viewModel.removeItemFromCart(cartItem));
+        this.removeButton.setOnClickListener(v -> {
+            this.viewModel.removeItemFromCart(cartItem);
+            this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
+        });
     }
 
     public static class Builder implements ViewHolderBuilder<CartItemCardViewHolder> {
 
         public final ShoppingCartItemViewModel viewModel;
 
-        public Builder(final ShoppingCartItemViewModel viewModel) {
+        public final TextView checkoutPrice;
+
+        public Builder(final ShoppingCartItemViewModel viewModel, TextView checkoutPrice) {
             this.viewModel = viewModel;
+            this.checkoutPrice = checkoutPrice;
         }
 
         @Override
@@ -91,7 +104,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
 
         @Override
         public CartItemCardViewHolder createViewHolder(final Context context, final View view) {
-            return new CartItemCardViewHolder(this.viewModel, context, view);
+            return new CartItemCardViewHolder(this.viewModel, context, view, this.checkoutPrice);
         }
     }
 }

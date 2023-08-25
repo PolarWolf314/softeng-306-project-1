@@ -1,5 +1,7 @@
 package nz.ac.aucklanduni.se306project1.viewmodels;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.Collections;
@@ -16,9 +18,17 @@ public class ShoppingCartItemViewModel extends ItemSearchViewModel {
 
     protected final UserDataProvider userDataProvider;
 
+    private double totalPrice;
+
     public ShoppingCartItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
-        this.userDataProvider.getShoppingCart().thenAccept(this.shoppingCartItems::setValue);
+        this.userDataProvider.getShoppingCart().thenAccept(cartItems -> {
+            this.shoppingCartItems.setValue(cartItems);
+            this.totalPrice = 0;
+            for (CartItem cartItem : this.shoppingCartItems.getValue()) {
+                this.totalPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
+            }
+        });
     }
 
     public void incrementItemQuantity(final CartItem cartItem) {
@@ -29,6 +39,7 @@ public class ShoppingCartItemViewModel extends ItemSearchViewModel {
         cartItem.incrementQuantity();
         cartItems.add(cartItem);
         this.shoppingCartItems.setValue(cartItems);
+        this.totalPrice += cartItem.getItem().getPrice();
     }
 
     public void decrementItemQuantity(final CartItem cartItem) {
@@ -39,9 +50,11 @@ public class ShoppingCartItemViewModel extends ItemSearchViewModel {
         cartItem.decrementQuantity();
         cartItems.add(cartItem);
         this.shoppingCartItems.setValue(cartItems);
+        this.totalPrice -= cartItem.getItem().getPrice();
     }
 
     public void changeItemQuantity(final CartItem cartItem, int newQuantity) {
+        this.totalPrice += ((newQuantity - cartItem.getQuantity()) * cartItem.getItem().getPrice());
         this.userDataProvider.changeShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()), newQuantity);
         Set<CartItem> cartItems = this.getCartItems();
@@ -57,6 +70,11 @@ public class ShoppingCartItemViewModel extends ItemSearchViewModel {
         Set<CartItem> cartItems = this.getCartItems();
         cartItems.remove(cartItem);
         this.shoppingCartItems.setValue(cartItems);
+        this.totalPrice -= (cartItem.getItem().getPrice() * cartItem.getQuantity());
+    }
+
+    public double getTotalPrice() {
+        return this.totalPrice;
     }
 
     private Set<CartItem> getCartItems() {
