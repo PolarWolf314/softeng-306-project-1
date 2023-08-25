@@ -42,7 +42,7 @@ public class HomeActivity extends TopBarActivity {
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this.getApplication(), this.searchViewModel.getFilteredItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
+                this, this.searchViewModel.getFilteredItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
