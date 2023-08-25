@@ -51,6 +51,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new VerticalItemSpacingDecoration(this, 12));
 
+        this.binding.clearCartButton.setOnClickListener(v -> this.shoppingCartViewModel.clearShoppingCart());
+
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_cart);
