@@ -8,7 +8,6 @@ import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.dataproviders.UserDataProvider;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
-import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
 public class ShoppingCartItemViewModel extends ItemSearchViewModel {
@@ -49,6 +48,14 @@ public class ShoppingCartItemViewModel extends ItemSearchViewModel {
         cartItems.remove(cartItem);
         cartItem.changeQuantity(newQuantity);
         cartItems.add(cartItem);
+        this.shoppingCartItems.setValue(cartItems);
+    }
+
+    public void removeItemFromCart(final CartItem cartItem) {
+        this.userDataProvider.removeFromShoppingCart(new SerializedCartItem(cartItem.getQuantity(),
+                cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()));
+        Set<CartItem> cartItems = this.getCartItems();
+        cartItems.remove(cartItem);
         this.shoppingCartItems.setValue(cartItems);
     }
 
