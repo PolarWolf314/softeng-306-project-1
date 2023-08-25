@@ -16,18 +16,21 @@ import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.viewmodels.ShoppingCartItemViewModel;
 
 public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
 
+    private final ShoppingCartItemViewModel viewModel;
     private final Context context;
     private final ImageView itemImage;
     private final TextView itemName;
     private final TextView itemPrice;
     private final TextView itemQuantity;
 
-    public CartItemCardViewHolder(@NonNull final Context context, @NonNull final View itemView) {
+    public CartItemCardViewHolder(final ShoppingCartItemViewModel viewModel, @NonNull final Context context, @NonNull final View itemView) {
         super(itemView);
 
+        this.viewModel = viewModel;
         this.context = context;
         this.itemImage = itemView.findViewById(R.id.cart_item_card_image);
         this.itemName = itemView.findViewById(R.id.cart_item_card_name);
@@ -56,7 +59,11 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
 
     public static class Builder implements ViewHolderBuilder<CartItemCardViewHolder> {
 
-        public static final CartItemCardViewHolder.Builder INSTANCE = new CartItemCardViewHolder.Builder();
+        public final ShoppingCartItemViewModel viewModel;
+
+        public Builder(final ShoppingCartItemViewModel viewModel) {
+            this.viewModel = viewModel;
+        }
 
         @Override
         public int getLayoutId() {
@@ -65,7 +72,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
 
         @Override
         public CartItemCardViewHolder createViewHolder(final Context context, final View view) {
-            return new CartItemCardViewHolder(context, view);
+            return new CartItemCardViewHolder(this.viewModel, context, view);
         }
     }
 }
