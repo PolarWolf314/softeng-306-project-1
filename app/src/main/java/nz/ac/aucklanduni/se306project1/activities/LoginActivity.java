@@ -3,6 +3,8 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -35,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
                 final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 this.startActivity(intent);
                 this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }).exceptionally(exception -> {
+                Toast.makeText(this, "Username and/or password is incorrect", Toast.LENGTH_LONG).show();
+                return null;
             });
         });
 
