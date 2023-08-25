@@ -202,6 +202,27 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
+    public void clearWatchlist() {
+        if (this.user == null) {
+            throw new RuntimeException("User does not exist");
+        }
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        final DocumentReference shoppingCartRef = db.collection("watchlists").document(this.user.getUid());
+
+        shoppingCartRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                final DocumentSnapshot document = task.getResult();
+                if (document.exists()) {
+                    shoppingCartRef.update("itemIds", new ArrayList<>());
+                }
+            } else {
+                throw new RuntimeException("Error occurred while writing to Firestore watchlist");
+            }
+        });
+    }
+
+    @Override
     public CompletableFuture<ShoppingCart> getShoppingCart() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
