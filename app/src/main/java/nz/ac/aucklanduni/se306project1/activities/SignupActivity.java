@@ -2,12 +2,17 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivitySignupBinding;
+import nz.ac.aucklanduni.se306project1.exceptions.EmailAlreadyInUseException;
+import nz.ac.aucklanduni.se306project1.exceptions.InvalidEmailException;
+import nz.ac.aucklanduni.se306project1.exceptions.WeakPasswordException;
 import nz.ac.aucklanduni.se306project1.viewmodels.SignupViewModel;
 
 public class SignupActivity extends AppCompatActivity {
@@ -33,7 +38,21 @@ public class SignupActivity extends AppCompatActivity {
                     final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                     this.startActivity(intent);
                     this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }).exceptionally(exception -> {
+                    String errorMessage = "";
+                    Class<?> exceptionClass = exception.getCause().getClass();
+                    if (exceptionClass.equals(EmailAlreadyInUseException.class)) {
+                        errorMessage = Constants.ToastMessages.EMAIL_ALREADY_IN_USE;
+                    } else if (exceptionClass.equals(WeakPasswordException.class)) {
+                        errorMessage = Constants.ToastMessages.WEAK_PASSWORD;
+                    } else if (exceptionClass.equals(InvalidEmailException.class)){
+                        errorMessage = Constants.ToastMessages.INVALID_EMAIL;
+                    }
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+                    return null;
                 });
+            } else {
+                Toast.makeText(this, Constants.ToastMessages.CONFIRMED_PASSWORD_MISMATCH, Toast.LENGTH_LONG).show();
             }
         });
 

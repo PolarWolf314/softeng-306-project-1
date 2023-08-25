@@ -17,4 +17,12 @@ public class Constants {
         public static final String USER_SETTINGS_FILE_NAME = "User settings";
         public static final String FIRST_TIME_PREFERENCE_KEY = "firstTime";
     }
+
+    public static class ToastMessages {
+        public static final String INCORRECT_USERNAME_OR_PASSWORD = "Username and/or password is incorrect";
+        public static final String EMAIL_ALREADY_IN_USE = "Email address already in use";
+        public static final String WEAK_PASSWORD = "Password must be at least 6 characters in length";
+        public static final String INVALID_EMAIL = "Invalid email address";
+        public static final String CONFIRMED_PASSWORD_MISMATCH = "Confirmed password must match password";
+    }
 }

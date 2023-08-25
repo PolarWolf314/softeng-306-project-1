@@ -3,12 +3,14 @@ package nz.ac.aucklanduni.se306project1.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityLoginBinding;
 import nz.ac.aucklanduni.se306project1.viewmodels.LoginViewModel;
 
@@ -35,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
                 final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 this.startActivity(intent);
                 this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }).exceptionally(exception -> {
+                Toast.makeText(this, Constants.ToastMessages.INCORRECT_USERNAME_OR_PASSWORD, Toast.LENGTH_LONG).show();
+                return null;
             });
         });
 

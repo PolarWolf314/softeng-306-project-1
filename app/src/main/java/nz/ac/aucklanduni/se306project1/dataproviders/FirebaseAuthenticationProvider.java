@@ -3,9 +3,15 @@ package nz.ac.aucklanduni.se306project1.dataproviders;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import java.util.concurrent.CompletableFuture;
 
+import nz.ac.aucklanduni.se306project1.exceptions.EmailAlreadyInUseException;
+import nz.ac.aucklanduni.se306project1.exceptions.InvalidEmailException;
+import nz.ac.aucklanduni.se306project1.exceptions.WeakPasswordException;
 import nz.ac.aucklanduni.se306project1.utils.FutureUtils;
 
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
@@ -32,11 +38,20 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public CompletableFuture<UserDataProvider> registerUser(final String email, final String password) {
-        return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password),
-                        () -> new RuntimeException("Error in user registration"))
+        return FutureUtils.fromTask(this.auth.createUserWithEmailAndPassword(email, password))
                 .thenApply(authResult -> {
                     this.userDataProvider = new AuthenticatedUserDataProvider(this.itemDataProvider, authResult.getUser());
-                    return this.userDataProvider;
+                    return (UserDataProvider) this.userDataProvider;
+                }).exceptionally(exception -> {
+                    Class<?> exceptionClass = exception.getCause().getClass();
+                    if (exceptionClass.equals(FirebaseAuthUserCollisionException.class)) {
+                        throw new EmailAlreadyInUseException();
+                    } else if (exceptionClass.equals(FirebaseAuthWeakPasswordException.class)) {
+                        throw new WeakPasswordException();
+                    } else if (exceptionClass.equals(FirebaseAuthInvalidCredentialsException.class)) {
+                        throw new InvalidEmailException();
+                    }
+                    throw new RuntimeException();
                 });
     }
 
@@ -52,8 +67,7 @@ public class FirebaseAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public CompletableFuture<UserDataProvider> loginUser(final String email, final String password) {
-        return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password),
-                        () -> new RuntimeException("Error in user registration"))
+        return FutureUtils.fromTask(this.auth.signInWithEmailAndPassword(email, password))
                 .thenApply(authResult -> {
                     this.userDataProvider = new AuthenticatedUserDataProvider(this.itemDataProvider, authResult.getUser());
                     return this.userDataProvider;
