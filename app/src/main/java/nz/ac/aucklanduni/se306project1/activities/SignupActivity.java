@@ -2,12 +2,24 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.databinding.ActivitySignupBinding;
+import nz.ac.aucklanduni.se306project1.exceptions.EmailAlreadyInUseException;
+import nz.ac.aucklanduni.se306project1.exceptions.InvalidEmailException;
+import nz.ac.aucklanduni.se306project1.exceptions.WeakPasswordException;
 import nz.ac.aucklanduni.se306project1.viewmodels.SignupViewModel;
 
 public class SignupActivity extends AppCompatActivity {
@@ -33,7 +45,21 @@ public class SignupActivity extends AppCompatActivity {
                     final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                     this.startActivity(intent);
                     this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }).exceptionally(exception -> {
+                    String errorMessage = "";
+                    Class<?> exceptionClass = exception.getCause().getClass();
+                    if (exceptionClass.equals(EmailAlreadyInUseException.class)) {
+                        errorMessage = "Email address already in use";
+                    } else if (exceptionClass.equals(WeakPasswordException.class)) {
+                        errorMessage = "Password must be at least 6 characters in length";
+                    } else if (exceptionClass.equals(InvalidEmailException.class)){
+                        errorMessage = "Invalid email address";
+                    }
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+                    return null;
                 });
+            } else {
+                Toast.makeText(this, "Confirmed password must match password", Toast.LENGTH_LONG).show();
             }
         });
 
