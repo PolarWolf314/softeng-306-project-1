@@ -223,7 +223,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
-    public CompletableFuture<ShoppingCart> getShoppingCart() {
+    public CompletableFuture<Set<CartItem>> getShoppingCart() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -234,7 +234,7 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
         return FutureUtils.fromTask(shoppingCartRef.get(), () -> new RuntimeException("User doesn't have shopping cart")).thenCompose(
                 document -> {
                     final List<Map<String, Object>> firebaseCartItems = (List<Map<String, Object>>) document.get("items");
-                    final List<CartItem> cartItems = new ArrayList<>();
+                    final Set<CartItem> cartItems = new HashSet<>();
 
                     // Keep an array of futures so that we can wait for them all to be finished
                     final CompletableFuture<?>[] futures = new CompletableFuture[firebaseCartItems.size()];
@@ -252,9 +252,9 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
                                 );
                     }
 
-                    return CompletableFuture.allOf(futures).thenApply(nothing -> new ShoppingCart(cartItems));
+                    return CompletableFuture.allOf(futures).thenApply(nothing -> cartItems);
                 }
-        ).exceptionally(exception -> new ShoppingCart(new ArrayList<>()));
+        ).exceptionally(exception -> new HashSet<>());
     }
 
     @Override
