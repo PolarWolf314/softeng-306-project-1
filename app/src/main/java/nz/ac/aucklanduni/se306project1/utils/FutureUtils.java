@@ -2,7 +2,6 @@ package nz.ac.aucklanduni.se306project1.utils;
 
 import com.google.android.gms.tasks.Task;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
