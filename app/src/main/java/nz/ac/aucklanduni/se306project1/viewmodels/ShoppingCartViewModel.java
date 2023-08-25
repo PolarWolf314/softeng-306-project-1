@@ -29,7 +29,7 @@ public class ShoppingCartViewModel extends ShoppingCartItemViewModel {
     }
 
     public void clearShoppingCart() {
-        this.userDataProvider.clearWatchlist();
+        this.userDataProvider.clearShoppingCart();
         this.shoppingCartItems.setValue(new HashSet<>());
     }
 }
