@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
@@ -48,7 +47,7 @@ public class ListActivity extends TopBarActivity {
         final RecyclerView recyclerView = this.binding.listRecyclerView;
 
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this.getApplication(), this.searchViewModel.getFilteredItems(), ItemCardViewHolder.Builder.INSTANCE);
+                this, this.searchViewModel.getFilteredItems(), new ItemCardViewHolder.Builder(this.listViewModel));
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="number_of_items">
+        <item quantity="one">%d Item</item>
+        <item quantity="other">%d Items</item>
+    </plurals>
+    <plurals name="number_of_items_in_watchlist">
+        <item quantity="zero">@string/no_items_in_watchlist</item>
+        <item quantity="one">%d Item in watchlist</item>
+        <item quantity="other">%d Items in watchlist</item>
+    </plurals>
+</resources>
