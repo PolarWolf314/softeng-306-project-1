@@ -8,16 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
-import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
-import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolder;
+import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolderBuilder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.HomeViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -44,7 +42,7 @@ public class HomeActivity extends TopBarActivity {
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this.getApplication(), this.searchViewModel.getFilteredItems(), FeaturedItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), this.searchViewModel.getFilteredItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
