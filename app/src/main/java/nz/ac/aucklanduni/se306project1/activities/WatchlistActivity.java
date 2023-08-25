@@ -47,6 +47,9 @@ public class WatchlistActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
+
+        this.binding.clearWatchlist.setOnClickListener(v -> this.watchlistViewModel.clearWatchlist());
+
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_watchlist);
 

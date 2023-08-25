@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
@@ -25,5 +26,10 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
 
     public LiveData<Set<Item>> getWatchlistItems() {
         return this.watchlistItems;
+    }
+
+    public void clearWatchlist() {
+        this.userDataProvider.clearShoppingCart();
+        this.watchlistItems.setValue(new HashSet<>());
     }
 }
