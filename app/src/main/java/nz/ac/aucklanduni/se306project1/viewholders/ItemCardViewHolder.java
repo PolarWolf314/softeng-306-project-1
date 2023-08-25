@@ -62,9 +62,9 @@ public class ItemCardViewHolder extends BindableViewHolder<Item> {
         this.favouriteItemCheckbox.setChecked(this.viewModel.isInWatchlist(item));
         this.favouriteItemCheckbox.setOnCheckedChangeListener((button, isChecked) -> {
             if (isChecked) {
-                this.viewModel.removeItemFromWatchlist(item);
-            } else {
                 this.viewModel.addItemToWatchlist(item);
+            } else {
+                this.viewModel.removeItemFromWatchlist(item);
             }
         });
 

@@ -35,14 +35,14 @@ public class WatchlistItemViewModel extends ViewModel {
     public void addItemToWatchlist(final Item item) {
         this.userDataProvider.addToWatchlist(item.getId());
         final Set<Item> items = this.getItems();
-        items.remove(item);
+        items.add(item);
         this.watchlistItems.setValue(items);
     }
 
     public void removeItemFromWatchlist(final Item item) {
         this.userDataProvider.removeFromWatchlist(item.getId());
         final Set<Item> items = this.getItems();
-        items.add(item);
+        items.remove(item);
         this.watchlistItems.setValue(items);
     }
 
