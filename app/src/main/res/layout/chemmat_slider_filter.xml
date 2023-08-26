@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/top_bar_horizontal_padding"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/top_bar_horizontal_padding">
 
     <TextView
         style="@style/LabelLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/chemmat_slider_filter_label" />
+        android:text="@string/chemmat_slider_filter_label"
+        android:textColor="@color/white" />
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/slider"
