@@ -1,6 +1,5 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -53,7 +52,7 @@ public class ListActivity extends TopBarActivity {
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
 
-        this.topBarViewModel.setStartIconButton(new BackButton(new Intent(this, HomeActivity.class)));
+        this.topBarViewModel.setStartIconButton(new BackButton());
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());

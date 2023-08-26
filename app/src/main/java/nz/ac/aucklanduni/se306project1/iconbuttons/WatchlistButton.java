@@ -1,6 +1,6 @@
 package nz.ac.aucklanduni.se306project1.iconbuttons;
 
-import android.content.Context;
+import android.app.Activity;
 
 import java.util.function.BiConsumer;
 
@@ -28,7 +28,7 @@ public class WatchlistButton implements IconButton {
     }
 
     @Override
-    public BiConsumer<Context, TopBarViewModel> getOnClickListener() {
-        return (context, topBarViewModel) -> this.callback.run();
+    public BiConsumer<Activity, TopBarViewModel> getOnClickListener() {
+        return (activity, topBarViewModel) -> this.callback.run();
     }
 }
