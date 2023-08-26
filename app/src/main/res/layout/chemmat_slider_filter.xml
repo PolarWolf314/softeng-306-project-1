@@ -10,8 +10,11 @@
         style="@style/LabelLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/top_bar_horizontal_padding"
+        android:paddingVertical="4dp"
         android:text="@string/chemmat_slider_filter_label"
-        android:textColor="@color/white" />
+        android:textColor="@color/black" />
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/slider"
