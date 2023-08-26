@@ -31,5 +31,6 @@ public class ShoppingCartViewModel extends ShoppingCartItemViewModel {
     public void clearShoppingCart() {
         this.userDataProvider.clearShoppingCart();
         this.shoppingCartItems.setValue(new HashSet<>());
+        this.totalPrice.setValue(0.0);
     }
 }
