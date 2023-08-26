@@ -40,6 +40,7 @@ public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
 
             @Override
             public void onStopTrackingTouch(@NonNull final RangeSlider slider) {
+                MeltingPointFilterBuilder.this.applyFilters(slider, searchViewModel);
             }
         });
 
@@ -82,16 +83,12 @@ public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
         final List<Float> values = slider.getValues();
         final float minValue = values.get(0);
         final float maxValue = values.get(1);
+        searchViewModel.putFilter(Constants.FilterKeys.SLIDER_FILTERING,
+                (item) -> {
+                    if (!(item instanceof ChemmatItem)) return false;
+                    final ChemmatItem chemmatItem = (ChemmatItem) item;
+                    return chemmatItem.getMeltingPoint() >= minValue && chemmatItem.getMeltingPoint() <= maxValue;
+                });
 
-        if (minValue == slider.getValueFrom() && maxValue == slider.getValueTo()) {
-            searchViewModel.removeFilter(Constants.FilterKeys.SLIDER_FILTERING);
-        } else {
-            searchViewModel.putFilter(Constants.FilterKeys.SLIDER_FILTERING,
-                    (item) -> {
-                        if (!(item instanceof ChemmatItem)) return false;
-                        final ChemmatItem chemmatItem = (ChemmatItem) item;
-                        return chemmatItem.getMeltingPoint() >= minValue && chemmatItem.getMeltingPoint() <= maxValue;
-                    });
-        }
     }
 }
