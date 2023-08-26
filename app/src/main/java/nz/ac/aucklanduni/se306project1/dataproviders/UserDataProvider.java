@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
+import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
@@ -29,7 +30,7 @@ public interface UserDataProvider {
 
     void clearWatchlist();
 
-    CompletableFuture<ShoppingCart> getShoppingCart();
+    CompletableFuture<Set<CartItem>> getShoppingCart();
 
     CompletableFuture<Set<Item>> getWatchlist();
 }

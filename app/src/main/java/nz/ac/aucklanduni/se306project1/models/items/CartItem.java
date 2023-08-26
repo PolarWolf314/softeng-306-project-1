@@ -19,6 +19,10 @@ public class CartItem extends CartItemSpecifications implements SearchFilterable
         return this.item;
     }
 
+    public double getCollectivePrice() {
+        return this.getQuantity() * this.item.getPrice();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

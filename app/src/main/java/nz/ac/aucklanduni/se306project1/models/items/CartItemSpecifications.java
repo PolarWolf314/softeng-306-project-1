@@ -16,6 +16,18 @@ public abstract class CartItemSpecifications {
         this.size = size;
     }
 
+    public void decrementQuantity() {
+        this.quantity--;
+    }
+
+    public void incrementQuantity() {
+        this.quantity++;
+    }
+
+    public void changeQuantity(int newQuantity) {
+        this.quantity = newQuantity;
+    }
+
     public int getQuantity() {
         return this.quantity;
     }

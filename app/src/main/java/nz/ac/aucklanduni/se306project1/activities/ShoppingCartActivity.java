@@ -4,30 +4,31 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Set;
 
-import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
-import nz.ac.aucklanduni.se306project1.data.MockData;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
+import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.CartItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
-import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.CartItemSearchViewModel;
+import nz.ac.aucklanduni.se306project1.viewmodels.ShoppingCartViewModel;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
 
     private ActivityShoppingCartBinding binding;
-    private ItemSearchViewModel searchViewModel;
+    private CartItemSearchViewModel searchViewModel;
+    private ShoppingCartViewModel shoppingCartViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
@@ -37,20 +38,22 @@ public class ShoppingCartActivity extends AppCompatActivity {
         this.binding = ActivityShoppingCartBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.searchViewModel.setOriginalItems(MockData.ITEMS);
+        this.searchViewModel = new ViewModelProvider(this).get(CartItemSearchViewModel.class);
+        this.shoppingCartViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ShoppingCartViewModel.initializer)).get(ShoppingCartViewModel.class);
+        this.shoppingCartViewModel.getShoppingCartItems().observe(this, this::onShoppingCartItemsLoaded);
+        this.shoppingCartViewModel.getTotalPrice().observe(this, this::onTotalPriceChange);
+
         final RecyclerView recyclerView = this.binding.cartRecyclerView;
 
-        final List<CartItem> cartItems = MockData.ITEMS.stream()
-                .map(item -> new CartItem(1, item.getColours().get(0).getColour(), "m", item))
-                .collect(Collectors.toList());
-
         final ListRecyclerAdapter<CartItem, ?> adapter = new ListRecyclerAdapter<>(
-                this.getApplication(), new MutableLiveData<>(cartItems), CartItemCardViewHolder.Builder.INSTANCE);
+                this.getApplication(), this.searchViewModel.getFilteredItems(),
+                new CartItemCardViewHolder.Builder(this.shoppingCartViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new VerticalItemSpacingDecoration(this, 12));
+
+        this.binding.clearCartButton.setOnClickListener(v -> this.shoppingCartViewModel.clearShoppingCart());
 
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
@@ -58,5 +61,17 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
+    }
+
+    private void onShoppingCartItemsLoaded(final Set<CartItem> shoppingCartItems) {
+        this.searchViewModel.setOriginalItems(new ArrayList<>(shoppingCartItems));
+        final String label = StringUtils.getQuantity(
+                this.getResources(), R.plurals.number_of_items_in_cart,
+                R.string.no_items_in_cart, shoppingCartItems.size());
+        this.binding.cartItemCount.setText(label);
+    }
+
+    private void onTotalPriceChange(final Double totalPrice) {
+        this.binding.cartTotalPrice.setText(String.format(Locale.getDefault(), "$%.2f", totalPrice));
     }
 }
