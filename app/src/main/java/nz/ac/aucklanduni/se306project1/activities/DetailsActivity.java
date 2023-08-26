@@ -109,7 +109,9 @@ public class DetailsActivity extends TopBarActivity {
                         .map(imageInfo -> new CarouselItem(imageInfo.getUrl()))
                         .collect(Collectors.toList())
         );
+
         this.binding.detailsLayout.setBackgroundColor(parsedColour);
+        this.binding.detailsItemDescription.setTextColor(Color.parseColor(colourInfo.getContrastTextColour()));
     }
 
     private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import nz.ac.aucklanduni.se306project1.models.ImageInfo;
+import nz.ac.aucklanduni.se306project1.utils.ColourUtils;
 
 public class ColouredItemInformation {
     private String colour;
@@ -35,6 +36,14 @@ public class ColouredItemInformation {
 
     public Map<String, Integer> getSizeQuantities() {
         return Collections.unmodifiableMap(this.sizeQuantities);
+    }
+
+    public String getContrastTextColour() {
+        final double contrastWithWhite = ColourUtils.calculateContrast(this.colour, ColourUtils.WHITE_HEXCODE);
+        if (contrastWithWhite >= ColourUtils.WCAG_AA_TEXT_CONTRAST_RATIO) {
+            return ColourUtils.WHITE_HEXCODE;
+        }
+        return ColourUtils.BLACK_HEXCODE;
     }
 
     @Override

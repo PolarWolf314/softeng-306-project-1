@@ -3,7 +3,6 @@ package nz.ac.aucklanduni.se306project1.data;
 public class Constants {
     public static class IntentKeys {
         public static final String CATEGORY_ID = "CategoryId";
-        public static final String SELECTED_NAVIGATION_ITEM = "SelectedNavigationItem";
         public static final String ITEM_ID = "ItemId";
     }
 

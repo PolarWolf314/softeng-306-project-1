@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
  * <a href="https://stackoverflow.com/a/9733420">this</a> stackoverflow answer.
  */
 public class ColourUtils {
+    public static final double WCAG_AA_TEXT_CONTRAST_RATIO = 4.5;
+    public static final String WHITE_HEXCODE = "#FFFFFF";
+    public static final String BLACK_HEXCODE = "#000000";
+    
     private static final double RED = 0.2126;
     private static final double GREEN = 0.7152;
     private static final double BLUE = 0.0722;
