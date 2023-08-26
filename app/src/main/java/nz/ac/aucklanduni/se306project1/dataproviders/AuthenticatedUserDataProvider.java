@@ -12,8 +12,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import nz.ac.aucklanduni.se306project1.models.Order;
 import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
@@ -104,7 +106,12 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
             if (task.isSuccessful()) {
                 final DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    shoppingCartRef.update("items", FieldValue.arrayUnion(cartItem));
+                    List<Map<String, Object>> shoppingCartItems  = (List<Map<String, Object>>) document.get("items");
+                    Optional<Map<String, Object>> sameItem = shoppingCartItems.stream().filter(currentMap ->
+                            currentMap.get("itemId").equals(cartItem.getItemId()) &&
+                            currentMap.get("colour").equals(cartItem.getColour()) &&
+                            currentMap.get("size").equals(cartItem.getSize())).findAny();
+                    if (!sameItem.isPresent()) shoppingCartRef.update("items", FieldValue.arrayUnion(cartItem));
                 } else {
                     final Map<String, List<SerializedCartItem>> initialShoppingCart = new HashMap<>();
                     initialShoppingCart.put("items", new ArrayList<>(Collections.singletonList(cartItem)));
