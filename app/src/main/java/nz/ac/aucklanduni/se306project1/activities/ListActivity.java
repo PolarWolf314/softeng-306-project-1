@@ -40,11 +40,19 @@ public class ListActivity extends TopBarActivity {
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
 
         this.topBarViewModel.setStartIconButton(new BackButton());
+        this.topBarViewModel.getIsSearchBarExpanded().observe(this, this::onChangeSearchBarExpansion);
+
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         this.handleListingItems();
         this.setCategoryInformation();
         this.setSystemBarColours();
+    }
+
+    private void onChangeSearchBarExpansion(final boolean isExpanded) {
+        if (isExpanded) {
+            this.binding.appBar.setExpanded(false);
+        }
     }
 
     private void handleListingItems() {
@@ -55,7 +63,7 @@ public class ListActivity extends TopBarActivity {
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
     }
-    
+
     private void setSystemBarColours() {
         this.getWindow().setStatusBarColor(Color.TRANSPARENT);
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
