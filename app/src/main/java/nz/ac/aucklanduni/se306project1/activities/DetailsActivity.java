@@ -146,7 +146,7 @@ public class DetailsActivity extends TopBarActivity {
         if (sizes.size() <= 1) {
             // Don't bother showing the sizes if there's only 1 option
             this.binding.sizeLabel.setVisibility(View.GONE);
-            this.detailsViewModel.setSelectedSize(sizes.get(0));
+            if (sizes.size() == 1) this.detailsViewModel.setSelectedSize(sizes.get(0));
             return;
         }
 
