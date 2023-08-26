@@ -76,9 +76,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
             this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
             this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", cartItem.getCollectivePrice()));
         });
-        this.removeButton.setOnClickListener(v -> {
-            this.viewModel.removeItemFromCart(cartItem);
-        });
+        this.removeButton.setOnClickListener(v -> this.viewModel.removeItemFromCart(cartItem));
     }
 
     public static class Builder implements ViewHolderBuilder<CartItemCardViewHolder> {
