@@ -16,7 +16,7 @@ public class ProfileViewModel extends ViewModel {
                 return new ProfileViewModel(app);
             });
 
-    private EngiWearApplication engiWear
+    private EngiWearApplication engiWear;
 
     public ProfileViewModel(EngiWearApplication engiWear) {
         this.engiWear = engiWear;

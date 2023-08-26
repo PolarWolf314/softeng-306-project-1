@@ -2,12 +2,14 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityProfileBinding;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.LoginViewModel;
@@ -37,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         this.binding.clearDataButton.setOnClickListener(v -> {
             this.profileViewModel.clearUserData();
-
+            Toast.makeText(this, Constants.ToastMessages.USER_DATA_CLEARED, Toast.LENGTH_LONG).show();
         });
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
