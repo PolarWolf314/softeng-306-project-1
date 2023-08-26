@@ -16,7 +16,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
 
     protected final MutableLiveData<Set<CartItem>> shoppingCartItems = new MutableLiveData<>(Collections.emptySet());
 
-    private final MutableLiveData<Double> totalPrice = new MutableLiveData<>(0.0);
+    protected final MutableLiveData<Double> totalPrice = new MutableLiveData<>(0.0);
 
     protected final UserDataProvider userDataProvider;
 
