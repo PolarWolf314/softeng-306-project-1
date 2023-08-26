@@ -152,7 +152,6 @@ public class DetailsActivity extends TopBarActivity {
 
         this.binding.sizeLabel.setVisibility(View.VISIBLE);
 
-
         for (int index = 0; index < sizes.size(); index++) {
             final String size = sizes.get(index);
             final RadioButton radio = ItemSizeRadioBinding.inflate(this.getLayoutInflater()).getRoot();
