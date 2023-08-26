@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -125,6 +126,14 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel.setCurrentSizes(sizes);
         final RadioGroup radioGroup = this.binding.sizeSelector;
         radioGroup.removeAllViews();
+
+        if (sizes.size() <= 1) {
+            // Don't bother showing the sizes if there's only 1 option
+            this.binding.sizeLabel.setVisibility(View.GONE);
+            return;
+        }
+
+        this.binding.sizeLabel.setVisibility(View.VISIBLE);
 
         for (int index = 0; index < sizes.size(); index++) {
             final String size = sizes.get(index);
