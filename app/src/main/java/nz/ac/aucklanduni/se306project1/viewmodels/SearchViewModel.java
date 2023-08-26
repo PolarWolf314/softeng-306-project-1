@@ -44,16 +44,24 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Updates the list of unfiltered items only if they have not been previously set. If updated,
-     * this will cause the filtered items to be recalculated using the current filters. Otherwise,
-     * nothing is changed.
+     * Retrieves an unmodifiable list of the original items before any of the filters have been
+     * applied.
+     *
+     * @return The unmodifiable list
+     */
+    public List<Item> getOriginalItems() {
+        return Collections.unmodifiableList(this.originalItems);
+    }
+
+    /**
+     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
+     * using the current filters.
      *
      * @param items The {@link List} of unfiltered items to use
      */
-    public void setOriginalItemsIfEmpty(final List<Item> items) {
-        if (this.originalItems == Collections.EMPTY_LIST) {
-            this.setOriginalItems(items);
-        }
+    public void setOriginalItems(final List<Item> items) {
+        this.originalItems = items;
+        this.applyFilters();
     }
 
     /**
@@ -84,16 +92,5 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      */
     private boolean matchesFilters(final Item item) {
         return this.filters.values().stream().allMatch(filter -> filter.test(item));
-    }
-
-    /**
-     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
-     * using the current filters.
-     *
-     * @param items The {@link List} of unfiltered items to use
-     */
-    public void setOriginalItems(final List<Item> items) {
-        this.originalItems = items;
-        this.applyFilters();
     }
 }

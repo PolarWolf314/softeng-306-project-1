@@ -10,6 +10,7 @@ import com.google.android.material.slider.RangeSlider;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ChemmatSliderFilterBinding;
@@ -17,14 +18,6 @@ import nz.ac.aucklanduni.se306project1.models.items.ChemmatItem;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
-
-    private final float minValue;
-    private final float maxValue;
-
-    public MeltingPointFilterBuilder(final float minValue, final float maxValue) {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
-    }
 
     @Override
     public View buildFilteringView(
@@ -35,10 +28,7 @@ public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
         final ChemmatSliderFilterBinding binding = ChemmatSliderFilterBinding.inflate(inflater);
         final RangeSlider slider = binding.slider;
 
-        slider.setValueFrom(this.minValue);
-        slider.setValueTo(this.maxValue);
-
-        slider.setValues(this.minValue, this.maxValue);
+        this.setMinAndMaxValues(slider, searchViewModel);
         slider.setLabelFormatter(this::formatValue);
 
         slider.addOnSliderTouchListener(new RangeSlider.OnSliderTouchListener() {
@@ -55,6 +45,32 @@ public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
         return binding.getRoot();
     }
 
+    private void setMinAndMaxValues(final RangeSlider slider, final ItemSearchViewModel searchViewModel) {
+        final List<ChemmatItem> items = searchViewModel.getOriginalItems()
+                .stream()
+                .filter(item -> item instanceof ChemmatItem)
+                .map(item -> (ChemmatItem) item)
+                .collect(Collectors.toList());
+
+        float minValue = 0, maxValue = 0;
+        if (items.size() > 1) {
+            final ChemmatItem firstItem = items.get(0);
+            maxValue = minValue = firstItem.getMeltingPoint();
+        }
+
+        for (final ChemmatItem item : items) {
+            if (item.getMeltingPoint() < minValue) {
+                minValue = item.getMeltingPoint();
+            } else if (item.getMeltingPoint() > maxValue) {
+                maxValue = item.getMeltingPoint();
+            }
+        }
+
+        slider.setValueFrom(minValue);
+        slider.setValueTo(maxValue);
+        slider.setValues(minValue, maxValue);
+    }
+
     private String formatValue(final float value) {
         return String.format(Locale.getDefault(), "%.1f°C", value);
     }
@@ -64,7 +80,7 @@ public class MeltingPointFilterBuilder implements CategoryFilterBuilder {
         final float minValue = values.get(0);
         final float maxValue = values.get(1);
 
-        if (minValue == this.minValue && maxValue == this.maxValue) {
+        if (minValue == slider.getValueFrom() && maxValue == slider.getValueTo()) {
             searchViewModel.removeFilter(Constants.FilterKeys.SLIDER_FILTERING);
         } else {
             searchViewModel.putFilter(Constants.FilterKeys.SLIDER_FILTERING,
