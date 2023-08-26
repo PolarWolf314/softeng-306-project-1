@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.R;
@@ -40,12 +41,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
         this.searchViewModel = new ViewModelProvider(this).get(CartItemSearchViewModel.class);
         this.shoppingCartViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ShoppingCartViewModel.initializer)).get(ShoppingCartViewModel.class);
         this.shoppingCartViewModel.getShoppingCartItems().observe(this, this::onShoppingCartItemsLoaded);
+        this.shoppingCartViewModel.getTotalPrice().observe(this, this::onTotalPriceChange);
 
         final RecyclerView recyclerView = this.binding.cartRecyclerView;
 
         final ListRecyclerAdapter<CartItem, ?> adapter = new ListRecyclerAdapter<>(
                 this.getApplication(), this.searchViewModel.getFilteredItems(),
-                new CartItemCardViewHolder.Builder(this.shoppingCartViewModel, this.binding.cartTotalPrice));
+                new CartItemCardViewHolder.Builder(this.shoppingCartViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -67,5 +69,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 this.getResources(), R.plurals.number_of_items_in_cart,
                 R.string.no_items_in_cart, shoppingCartItems.size());
         this.binding.cartItemCount.setText(label);
+    }
+
+    private void onTotalPriceChange(final Double totalPrice) {
+        this.binding.cartTotalPrice.setText(String.format(Locale.getDefault(), "$%.2f", totalPrice));
     }
 }

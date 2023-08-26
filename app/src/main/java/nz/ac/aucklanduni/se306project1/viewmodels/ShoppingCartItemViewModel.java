@@ -1,7 +1,6 @@
 package nz.ac.aucklanduni.se306project1.viewmodels;
 
-import android.util.Log;
-
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,18 +16,19 @@ public class ShoppingCartItemViewModel extends ViewModel {
 
     protected final MutableLiveData<Set<CartItem>> shoppingCartItems = new MutableLiveData<>(Collections.emptySet());
 
-    protected final UserDataProvider userDataProvider;
+    private final MutableLiveData<Double> totalPrice = new MutableLiveData<>(0.0);
 
-    private double totalPrice;
+    protected final UserDataProvider userDataProvider;
 
     public ShoppingCartItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
         this.userDataProvider.getShoppingCart().thenAccept(cartItems -> {
             this.shoppingCartItems.setValue(cartItems);
-            this.totalPrice = 0;
+            Double tempPrice = 0.0;
             for (CartItem cartItem : this.shoppingCartItems.getValue()) {
-                this.totalPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
+                tempPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
             }
+            this.totalPrice.setValue(tempPrice);
         });
     }
 
@@ -40,7 +40,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
         cartItem.incrementQuantity();
         cartItems.add(cartItem);
         this.shoppingCartItems.setValue(cartItems);
-        this.totalPrice += cartItem.getItem().getPrice();
+        this.totalPrice.setValue(this.totalPrice.getValue() + cartItem.getItem().getPrice());
     }
 
     public void decrementItemQuantity(final CartItem cartItem) {
@@ -51,11 +51,11 @@ public class ShoppingCartItemViewModel extends ViewModel {
         cartItem.decrementQuantity();
         cartItems.add(cartItem);
         this.shoppingCartItems.setValue(cartItems);
-        this.totalPrice -= cartItem.getItem().getPrice();
+        this.totalPrice.setValue(this.totalPrice.getValue() - cartItem.getItem().getPrice());
     }
 
     public void changeItemQuantity(final CartItem cartItem, int newQuantity) {
-        this.totalPrice += ((newQuantity - cartItem.getQuantity()) * cartItem.getItem().getPrice());
+        this.totalPrice.setValue(this.totalPrice.getValue() + ((newQuantity - cartItem.getQuantity()) * cartItem.getItem().getPrice()));
         this.userDataProvider.changeShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()), newQuantity);
         Set<CartItem> cartItems = this.getCartItems();
@@ -71,10 +71,10 @@ public class ShoppingCartItemViewModel extends ViewModel {
         Set<CartItem> cartItems = this.getCartItems();
         cartItems.remove(cartItem);
         this.shoppingCartItems.setValue(cartItems);
-        this.totalPrice -= (cartItem.getItem().getPrice() * cartItem.getQuantity());
+        this.totalPrice.setValue(this.totalPrice.getValue() - cartItem.getCollectivePrice());
     }
 
-    public double getTotalPrice() {
+    public LiveData<Double> getTotalPrice() {
         return this.totalPrice;
     }
 
