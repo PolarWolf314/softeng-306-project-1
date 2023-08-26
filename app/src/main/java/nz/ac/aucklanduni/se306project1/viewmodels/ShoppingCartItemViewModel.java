@@ -3,6 +3,7 @@ package nz.ac.aucklanduni.se306project1.viewmodels;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import nz.ac.aucklanduni.se306project1.dataproviders.UserDataProvider;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
-public class ShoppingCartItemViewModel  {
+public class ShoppingCartItemViewModel extends ViewModel {
 
     protected final MutableLiveData<Set<CartItem>> shoppingCartItems = new MutableLiveData<>(Collections.emptySet());
 
