@@ -148,9 +148,9 @@ public class DetailsActivity extends TopBarActivity {
             this.binding.sizeLabel.setVisibility(View.GONE);
             this.detailsViewModel.setSelectedSize(sizes.get(0));
             return;
-        } else {
-            this.binding.sizeLabel.setVisibility(View.VISIBLE);
         }
+
+        this.binding.sizeLabel.setVisibility(View.VISIBLE);
 
 
         for (int index = 0; index < sizes.size(); index++) {
