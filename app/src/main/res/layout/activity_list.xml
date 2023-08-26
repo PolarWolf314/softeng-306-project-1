@@ -9,7 +9,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        
+
         android:layout_above="@id/bottom_navigation_fragment_container_view"
         android:layout_alignParentTop="true">
 
@@ -84,7 +84,7 @@
                         style="@style/LabelLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="24 Items" />
+                        android:text="@string/no_items" />
                 </FrameLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

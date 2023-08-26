@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
@@ -18,6 +20,7 @@ import nz.ac.aucklanduni.se306project1.iconbuttons.BackButton;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.ListViewModel;
@@ -49,6 +52,11 @@ public class ListActivity extends TopBarActivity {
         this.setSystemBarColours();
     }
 
+    private void updateItemCountLabel(final List<Item> items) {
+        final String label = StringUtils.getQuantity(this.getResources(), R.plurals.number_of_items, R.string.no_items, items.size());
+        this.binding.categoryItemCount.setText(label);
+    }
+
     private void onChangeSearchBarExpansion(final boolean isExpanded) {
         if (isExpanded) {
             this.binding.appBar.setExpanded(false);
@@ -62,6 +70,7 @@ public class ListActivity extends TopBarActivity {
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
+        this.searchViewModel.getFilteredItems().observe(this, this::updateItemCountLabel);
     }
 
     private void setSystemBarColours() {

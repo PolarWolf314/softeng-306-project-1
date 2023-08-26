@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
 import nz.ac.aucklanduni.se306project1.dataproviders.UserDataProvider;
+import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 
 public class HomeViewModel extends WatchlistItemViewModel {
@@ -29,5 +30,9 @@ public class HomeViewModel extends WatchlistItemViewModel {
 
     public CompletableFuture<List<Item>> getFeaturedItems(final int numItems) {
         return this.itemDataProvider.getFeaturedItems(numItems);
+    }
+
+    public CompletableFuture<Integer> getItemCountPerCategory(final Category category) {
+        return this.itemDataProvider.getItemCountPerCategory(category);
     }
 }

@@ -131,10 +131,11 @@
                                     android:textColor="@color/black" />
 
                                 <TextView
+                                    android:id="@+id/civil_item_count"
                                     style="@style/LabelSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="11 Items"
+                                    android:text="@string/no_items"
                                     android:textColor="@color/light_gray" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -181,10 +182,11 @@
                                     android:textColor="@color/black" />
 
                                 <TextView
+                                    android:id="@+id/software_item_count"
                                     style="@style/LabelSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="12 Items"
+                                    android:text="@string/no_items"
                                     android:textColor="@color/light_gray" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -238,10 +240,11 @@
                                     android:textColor="@color/black" />
 
                                 <TextView
+                                    android:id="@+id/chemmat_item_count"
                                     style="@style/LabelSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="11 Items"
+                                    android:text="@string/no_items"
                                     android:textColor="@color/light_gray" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -288,10 +291,11 @@
                                     android:textColor="@color/black" />
 
                                 <TextView
+                                    android:id="@+id/mechanical_item_count"
                                     style="@style/LabelSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="10 Items"
+                                    android:text="@string/no_items"
                                     android:textColor="@color/light_gray" />
                             </LinearLayout>
                         </RelativeLayout>

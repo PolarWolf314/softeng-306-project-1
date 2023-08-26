@@ -59,4 +59,5 @@
     <string name="log_out">Log out</string>
     <string name="clear_user_data">Clear User Data</string>
     <string name="chemmat_slider_filter_label">Filter by melting point</string>
+    <string name="no_items">No items</string>
 </resources>

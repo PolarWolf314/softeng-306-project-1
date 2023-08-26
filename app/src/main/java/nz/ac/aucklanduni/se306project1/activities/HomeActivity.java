@@ -2,7 +2,9 @@ package nz.ac.aucklanduni.se306project1.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolderBuilder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.HomeViewModel;
@@ -50,11 +53,7 @@ public class HomeActivity extends TopBarActivity {
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
-        this.binding.civilCategory.setOnClickListener(v -> this.switchToCategory(Category.CIVIL));
-        this.binding.softwareCategory.setOnClickListener(v -> this.switchToCategory(Category.SOFTWARE));
-        this.binding.chemmatCategory.setOnClickListener(v -> this.switchToCategory(Category.CHEMMAT));
-        this.binding.mechanicalCategory.setOnClickListener(v -> this.switchToCategory(Category.MECHANICAL));
-
+        this.setupCategories();
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
 
@@ -66,5 +65,24 @@ public class HomeActivity extends TopBarActivity {
         final Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(Constants.IntentKeys.CATEGORY_ID, category.getId());
         this.startActivity(intent);
+    }
+
+    private void setupCategories() {
+        this.setupCategory(this.binding.civilCategory, this.binding.civilItemCount, Category.CIVIL);
+        this.setupCategory(this.binding.softwareCategory, this.binding.softwareItemCount, Category.SOFTWARE);
+        this.setupCategory(this.binding.chemmatCategory, this.binding.chemmatItemCount, Category.CHEMMAT);
+        this.setupCategory(this.binding.mechanicalCategory, this.binding.mechanicalItemCount, Category.MECHANICAL);
+    }
+
+    private void setupCategory(
+            final CardView card,
+            final TextView labelView,
+            final Category category
+    ) {
+        card.setOnClickListener(v -> this.switchToCategory(category));
+        this.homeViewModel.getItemCountPerCategory(category).thenAccept(count -> {
+            final String label = StringUtils.getQuantity(this.getResources(), R.plurals.number_of_items, R.string.no_items, count);
+            labelView.setText(label);
+        });
     }
 }

@@ -95,9 +95,11 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
     public CompletableFuture<Integer> getItemCountPerCategory(final Category category) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        return FutureUtils.fromTask(db.collection("items").whereEqualTo("categoryId", category).get()
-                , () -> new RuntimeException("Error reading items from firestore")).thenApply(
-                QuerySnapshot::size);
+        return FutureUtils.fromTask(
+                        db.collection("items")
+                                .whereEqualTo("categoryId", category.getId())
+                                .get())
+                .thenApply(QuerySnapshot::size);
     }
 
     private Item parseDocumentForItem(final DocumentSnapshot document, final Category category) {
