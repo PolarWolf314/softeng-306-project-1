@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -50,6 +51,12 @@ public class DetailsActivity extends TopBarActivity {
                 .thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
+        this.detailsViewModel.setItem(itemId);
+
+        this.binding.addToCartButton.setOnClickListener(v -> {
+            this.detailsViewModel.addToCart();
+            Toast.makeText(this, Constants.ToastMessages.ITEM_ADDED_TO_CART, Toast.LENGTH_LONG).show();
+        });
 
         this.topBarViewModel.setStartIconButton(new BackButton());
         this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
@@ -84,14 +91,14 @@ public class DetailsActivity extends TopBarActivity {
             radio.setSupportButtonTintList(ColorStateList.valueOf(Color.parseColor(colouredInfo.getColour())));
             radioGroup.addView(radio);
 
+            radio.setOnCheckedChangeListener((r, isChecked) -> {
+                if (isChecked) this.detailsViewModel.setSelectedColourInfo(colouredInfo);
+            });
+
             if (index == 0) {
                 // Note: We can only check it AFTER adding it to the radio group
                 radio.setChecked(true);
             }
-
-            radio.setOnCheckedChangeListener((r, isChecked) -> {
-                if (isChecked) this.detailsViewModel.setSelectedColourInfo(colouredInfo);
-            });
         }
     }
 
@@ -141,13 +148,13 @@ public class DetailsActivity extends TopBarActivity {
             radio.setText(size.toUpperCase());
             radioGroup.addView(radio);
 
-            if (index == 0) {
-                radio.setChecked(true);
-            }
-
             radio.setOnCheckedChangeListener((r, isChecked) -> {
                 if (isChecked) this.detailsViewModel.setSelectedSize(size);
             });
+
+            if (index == 0) {
+                radio.setChecked(true);
+            }
         }
     }
 }

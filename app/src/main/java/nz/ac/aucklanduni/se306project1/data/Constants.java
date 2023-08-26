@@ -25,5 +25,6 @@ public class Constants {
         public static final String INVALID_EMAIL = "Invalid email address";
         public static final String CONFIRMED_PASSWORD_MISMATCH = "Confirmed password must match password";
         public static final String USER_DATA_CLEARED = "Cleared shopping cart and watchlist";
+        public static final String ITEM_ADDED_TO_CART = "Item added to cart";
     }
 }
