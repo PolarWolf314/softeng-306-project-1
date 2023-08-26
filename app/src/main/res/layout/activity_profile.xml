@@ -46,7 +46,7 @@
         android:fontFamily="@font/pptelegraf_medium"
         android:shadowColor="@color/fui_transparent"
         android:text="@string/log_out"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textFontWeight="900"
         app:cornerRadius="10dp"
         app:strokeColor="@color/black"
