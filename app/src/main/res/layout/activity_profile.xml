@@ -35,13 +35,31 @@
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/logout_button"
+        android:id="@+id/clear_data_button"
         style="@style/ButtonIconCustomStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_bar_background_image_view"
         android:layout_marginHorizontal="36dp"
         android:layout_marginTop="56dp"
+        android:backgroundTint="@color/red_top_bar"
+        android:fontFamily="@font/pptelegraf_medium"
+        android:shadowColor="@color/fui_transparent"
+        android:text="@string/clear_user_data"
+        android:textColor="@color/white"
+        android:textFontWeight="900"
+        app:cornerRadius="10dp"
+        app:strokeColor="@color/black"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_button"
+        style="@style/ButtonIconCustomStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clear_data_button"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/red_top_bar"
         android:fontFamily="@font/pptelegraf_medium"
         android:shadowColor="@color/fui_transparent"
