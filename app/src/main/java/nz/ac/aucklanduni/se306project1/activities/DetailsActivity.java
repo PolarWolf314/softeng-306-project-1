@@ -97,6 +97,7 @@ public class DetailsActivity extends TopBarActivity {
 
     private void setColourInformation(final ColouredItemInformation colourInfo) {
         final int parsedColour = Color.parseColor(colourInfo.getColour());
+        final int contrastTextColour = colourInfo.getContrastTextColour();
 
         this.getWindow().setStatusBarColor(parsedColour);
         this.getWindow().setNavigationBarColor(parsedColour);
@@ -111,7 +112,8 @@ public class DetailsActivity extends TopBarActivity {
         );
 
         this.binding.detailsLayout.setBackgroundColor(parsedColour);
-        this.binding.detailsItemDescription.setTextColor(Color.parseColor(colourInfo.getContrastTextColour()));
+        this.binding.detailsItemDescription.setTextColor(contrastTextColour);
+        this.topBarViewModel.setTitleColour(contrastTextColour);
     }
 
     private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {

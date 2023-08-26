@@ -1,5 +1,8 @@
 package nz.ac.aucklanduni.se306project1.viewmodels;
 
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,9 +16,18 @@ public class TopBarViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isSearchBarExpanded = new MutableLiveData<>();
     private final MutableLiveData<String> title = new MutableLiveData<>();
     private final MutableLiveData<IconButton> endIconButton = new MutableLiveData<>(SearchIcon.INSTANCE);
+    private final MutableLiveData<Integer> titleColour = new MutableLiveData<>(Color.WHITE);
     private Class<? extends SearchViewModel<? extends SearchFilterable>> searchViewModelClass = ItemSearchViewModel.class;
     @Nullable
     private IconButton startIconButton = null;
+
+    public LiveData<Integer> getTitleColour() {
+        return this.titleColour;
+    }
+
+    public void setTitleColour(final @ColorInt int titleColour) {
+        this.titleColour.setValue(titleColour);
+    }
 
     public LiveData<String> getTitle() {
         return this.title;

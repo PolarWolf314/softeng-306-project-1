@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.util.Objects;
 
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
@@ -52,8 +55,13 @@ public class TopBarFragment extends Fragment {
                 .observe(this.getViewLifecycleOwner(), iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
 
         final LiveData<String> title = this.viewModel.getTitle();
+        final LiveData<Integer> titleColour = this.viewModel.getTitleColour();
+
         this.binding.topBarTitle.setText(title.getValue());
+        this.binding.topBarTitle.setTextColor(Objects.requireNonNullElse(titleColour.getValue(), Color.WHITE));
+
         title.observe(this.getViewLifecycleOwner(), (newTitle) -> this.binding.topBarTitle.setText(newTitle));
+        titleColour.observe(this.getViewLifecycleOwner(), (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
 
         this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
                 (newQuery) -> {

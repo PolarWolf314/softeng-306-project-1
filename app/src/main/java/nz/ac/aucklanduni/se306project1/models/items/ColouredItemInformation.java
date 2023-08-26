@@ -1,5 +1,10 @@
 package nz.ac.aucklanduni.se306project1.models.items;
 
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
+import androidx.core.graphics.ColorUtils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +43,13 @@ public class ColouredItemInformation {
         return Collections.unmodifiableMap(this.sizeQuantities);
     }
 
-    public String getContrastTextColour() {
-        final double contrastWithWhite = ColourUtils.calculateContrast(this.colour, ColourUtils.WHITE_HEXCODE);
+    @ColorInt
+    public int getContrastTextColour() {
+        final double contrastWithWhite = ColorUtils.calculateContrast(Color.WHITE, Color.parseColor(this.colour));
         if (contrastWithWhite >= ColourUtils.WCAG_AA_TEXT_CONTRAST_RATIO) {
-            return ColourUtils.WHITE_HEXCODE;
+            return Color.WHITE;
         }
-        return ColourUtils.BLACK_HEXCODE;
+        return Color.BLACK;
     }
 
     @Override
