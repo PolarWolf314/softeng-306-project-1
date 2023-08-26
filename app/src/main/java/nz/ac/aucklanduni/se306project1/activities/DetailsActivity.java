@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import me.relex.circleindicator.CircleIndicator2;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityDetailsBinding;
@@ -104,6 +105,7 @@ public class DetailsActivity extends TopBarActivity {
 
     private void setColourInformation(final ColouredItemInformation colourInfo) {
         final int parsedColour = Color.parseColor(colourInfo.getColour());
+        final int contrastTextColour = colourInfo.getContrastTextColour();
 
         this.getWindow().setStatusBarColor(parsedColour);
         this.getWindow().setNavigationBarColor(parsedColour);
@@ -116,7 +118,14 @@ public class DetailsActivity extends TopBarActivity {
                         .map(imageInfo -> new CarouselItem(imageInfo.getUrl()))
                         .collect(Collectors.toList())
         );
+
         this.binding.detailsLayout.setBackgroundColor(parsedColour);
+        this.binding.detailsItemDescription.setTextColor(contrastTextColour);
+        this.topBarViewModel.setTitleColour(contrastTextColour);
+        final CircleIndicator2 indicator = this.binding.detailsCarousel.getIndicator();
+        if (indicator != null) {
+            indicator.tintIndicator(contrastTextColour);
+        }
     }
 
     private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {

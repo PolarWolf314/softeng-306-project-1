@@ -3,7 +3,6 @@ package nz.ac.aucklanduni.se306project1.data;
 public class Constants {
     public static class IntentKeys {
         public static final String CATEGORY_ID = "CategoryId";
-        public static final String SELECTED_NAVIGATION_ITEM = "SelectedNavigationItem";
         public static final String ITEM_ID = "ItemId";
     }
 
@@ -26,5 +25,9 @@ public class Constants {
         public static final String CONFIRMED_PASSWORD_MISMATCH = "Confirmed password must match password";
         public static final String USER_DATA_CLEARED = "Cleared shopping cart and watchlist";
         public static final String ITEM_ADDED_TO_CART = "Item added to cart";
+    }
+
+    public static class Colours {
+        public static final double WCAG_AA_TEXT_CONTRAST_RATIO = 4.5;
     }
 }
