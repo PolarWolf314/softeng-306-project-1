@@ -16,60 +16,70 @@
         android:layout_alignParentTop="true"
         tools:layout="@layout/fragment_top_bar" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/details_item_size_selector_layout"
         android:layout_below="@id/top_bar_fragment_container"
-        android:orientation="vertical">
+        android:paddingBottom="22dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp">
+            android:layout_below="@id/top_bar_fragment_container"
+            android:orientation="vertical">
 
-            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                android:id="@+id/details_carousel"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:layout_centerInParent="true"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                app:imagePlaceholder="@null"
-                app:imageScaleType="fitCenter"
-                app:infiniteCarousel="false"
-                app:showBottomShadow="false"
-                app:showNavigationButtons="false"
-                app:showTopShadow="false" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="48dp"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/black_60_opacity"
-                app:cardCornerRadius="10dp"
-                app:strokeColor="@android:color/transparent">
+                android:layout_margin="16dp">
 
-                <RadioGroup
-                    android:id="@+id/details_item_color_selector_radio_group"
+                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                    android:id="@+id/details_carousel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="320dp"
+                    android:layout_centerInParent="true"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:imagePlaceholder="@null"
+                    app:imageScaleType="fitCenter"
+                    app:infiniteCarousel="false"
+                    app:showBottomShadow="false"
+                    app:showNavigationButtons="false"
+                    app:showTopShadow="false" />
 
-                </RadioGroup>
-            </com.google.android.material.card.MaterialCardView>
-        </RelativeLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/black_60_opacity"
+                    app:cardCornerRadius="10dp"
+                    app:strokeColor="@android:color/transparent">
 
-        <TextView
-            android:id="@+id/details_item_description"
-            style="@style/BodyMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:lineHeight="18dp"
-            android:paddingVertical="16dp"
-            android:textColor="@color/white" />
-    </LinearLayout>
+                    <RadioGroup
+                        android:id="@+id/details_item_color_selector_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                    </RadioGroup>
+                </com.google.android.material.card.MaterialCardView>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/details_item_description"
+                style="@style/BodyMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:lineHeight="18dp"
+                android:paddingVertical="16dp"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/details_item_size_selector_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
