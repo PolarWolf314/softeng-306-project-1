@@ -30,6 +30,8 @@ public interface UserDataProvider {
 
     void clearWatchlist();
 
+    String getUserId();
+
     CompletableFuture<Set<CartItem>> getShoppingCart();
 
     CompletableFuture<Set<Item>> getWatchlist();

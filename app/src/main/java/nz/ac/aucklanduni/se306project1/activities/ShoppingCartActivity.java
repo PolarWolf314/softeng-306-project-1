@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
@@ -55,6 +57,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         this.binding.clearCartButton.setOnClickListener(v -> this.shoppingCartViewModel.clearShoppingCart());
 
+        this.binding.checkoutButton.setOnClickListener(v -> {
+            this.shoppingCartViewModel.checkout();
+            Toast.makeText(this, Constants.ToastMessages.CHECKOUT_MESSAGE, Toast.LENGTH_LONG).show();
+        });
 
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_cart);
