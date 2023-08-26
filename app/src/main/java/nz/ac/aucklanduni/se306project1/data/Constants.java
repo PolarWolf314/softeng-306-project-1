@@ -8,6 +8,7 @@ public class Constants {
 
     public static class FilterKeys {
         public static final String CATEGORY_FILTERING = "CategoryFiltering";
+        public static final String SLIDER_FILTERING = "SliderFiltering";
         public static final String SEARCH_QUERY = "SearchQuery";
 
     }

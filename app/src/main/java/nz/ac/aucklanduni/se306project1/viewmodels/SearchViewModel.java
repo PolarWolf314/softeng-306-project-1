@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public abstract class SearchViewModel<Item> extends ViewModel {
     private final Map<String, Predicate<Item>> filters = new HashMap<>();
     private final MutableLiveData<List<Item>> filteredItems = new MutableLiveData<>();
-    private List<Item> originalItems = Collections.emptyList();
+    private final MutableLiveData<List<Item>> originalItems = new MutableLiveData<>(Collections.emptyList());
 
     /**
      * Removes the filter associated with this key from the filters being applied to the items.
@@ -44,16 +45,24 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Updates the list of unfiltered items only if they have not been previously set. If updated,
-     * this will cause the filtered items to be recalculated using the current filters. Otherwise,
-     * nothing is changed.
+     * Retrieves an observable list of the original items before any of the filters have been
+     * applied.
+     *
+     * @return The unmodifiable list
+     */
+    public LiveData<List<Item>> getOriginalItems() {
+        return this.originalItems;
+    }
+
+    /**
+     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
+     * using the current filters.
      *
      * @param items The {@link List} of unfiltered items to use
      */
-    public void setOriginalItemsIfEmpty(final List<Item> items) {
-        if (this.originalItems == Collections.EMPTY_LIST) {
-            this.setOriginalItems(items);
-        }
+    public void setOriginalItems(final List<Item> items) {
+        this.originalItems.setValue(items);
+        this.applyFilters();
     }
 
     /**
@@ -69,7 +78,7 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * Updates the filtered items based on the current filters set.
      */
     private void applyFilters() {
-        final List<Item> newFilteredItems = this.originalItems.stream()
+        final List<Item> newFilteredItems = this.getItems().stream()
                 .filter(this::matchesFilters)
                 .collect(Collectors.toList());
 
@@ -87,13 +96,16 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Update the list of unfiltered items. This will cause the filtered items to be recalculated
-     * using the current filters.
+     * Retrieves the list of unfiltered items. If there is no current value, a new {@link ArrayList}
+     * is returned, otherwise the current value is returned.
      *
-     * @param items The {@link List} of unfiltered items to use
+     * @return The list of unfiltered items
      */
-    public void setOriginalItems(final List<Item> items) {
-        this.originalItems = items;
-        this.applyFilters();
+    private List<Item> getItems() {
+        final List<Item> items = this.originalItems.getValue();
+        if (items == null) {
+            return new ArrayList<>();
+        }
+        return items;
     }
 }
