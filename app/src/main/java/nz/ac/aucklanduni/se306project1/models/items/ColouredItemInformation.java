@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.models.ImageInfo;
-import nz.ac.aucklanduni.se306project1.utils.ColourUtils;
 
 public class ColouredItemInformation {
     private String colour;
@@ -46,7 +46,7 @@ public class ColouredItemInformation {
     @ColorInt
     public int getContrastTextColour() {
         final double contrastWithWhite = ColorUtils.calculateContrast(Color.WHITE, Color.parseColor(this.colour));
-        if (contrastWithWhite >= ColourUtils.WCAG_AA_TEXT_CONTRAST_RATIO) {
+        if (contrastWithWhite >= Constants.Colours.WCAG_AA_TEXT_CONTRAST_RATIO) {
             return Color.WHITE;
         }
         return Color.BLACK;

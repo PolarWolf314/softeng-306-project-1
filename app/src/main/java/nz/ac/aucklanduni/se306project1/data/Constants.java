@@ -25,4 +25,8 @@ public class Constants {
         public static final String CONFIRMED_PASSWORD_MISMATCH = "Confirmed password must match password";
         public static final String USER_DATA_CLEARED = "Cleared shopping cart and watchlist";
     }
+
+    public static class Colours {
+        public static final double WCAG_AA_TEXT_CONTRAST_RATIO = 4.5;
+    }
 }
