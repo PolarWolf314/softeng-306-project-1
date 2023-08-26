@@ -65,19 +65,19 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         this.itemImage.setContentDescription(imageInfo.getDescription());
         this.itemName.setText(item.getDisplayName());
         this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
-        this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+        this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", cartItem.getCollectivePrice()));
         this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
 
         this.decrementButton.setOnClickListener(v -> {
             this.viewModel.decrementItemQuantity(cartItem);
             this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
-            this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+            this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", cartItem.getCollectivePrice()));
             this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
         });
         this.incrementButton.setOnClickListener(v -> {
             this.viewModel.incrementItemQuantity(cartItem);
             this.itemQuantity.setText(String.format(Locale.getDefault(), "%d", cartItem.getQuantity()));
-            this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrice() * cartItem.getQuantity()));
+            this.itemPrice.setText(String.format(Locale.getDefault(), "$%.2f", cartItem.getCollectivePrice()));
             this.checkoutPrice.setText(String.format(Locale.getDefault(), "$%.2f", this.viewModel.getTotalPrice()));
         });
         this.removeButton.setOnClickListener(v -> {
