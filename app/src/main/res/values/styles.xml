@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <style name="Widget.App.Tooltip" parent="Widget.Material3.Tooltip">
+        <item name="android:textAppearance">@style/LabelSmall</item>
+        <item name="backgroundTint">@color/primary</item>
+    </style>
+
     <style name="IconButtonCommon">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">48dp</item>
@@ -66,17 +71,17 @@
 
     <style name="LabelLarge" parent="">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/pptelegraf_regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_medium</item>
     </style>
 
     <style name="LabelMedium" parent="">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">@font/pptelegraf_regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_medium</item>
     </style>
 
     <style name="LabelSmall" parent="">
         <item name="android:textSize">11sp</item>
-        <item name="android:fontFamily">@font/pptelegraf_regular</item>
+        <item name="android:fontFamily">@font/pptelegraf_medium</item>
     </style>
 
     <style name="BodyLarge" parent="">
