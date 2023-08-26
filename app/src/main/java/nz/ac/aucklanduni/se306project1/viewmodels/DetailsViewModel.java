@@ -86,7 +86,9 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public void addToCart() {
-        this.userDataProvider.addToShoppingCart(new SerializedCartItem(1, this.selectedColourInfo.getValue().getColour(),
-                this.selectedSize, this.item.getId()));
+        if (item != null) {
+            this.userDataProvider.addToShoppingCart(new SerializedCartItem(1, this.selectedColourInfo.getValue().getColour(),
+                    this.selectedSize, this.item.getId()));
+        }
     }
 }
