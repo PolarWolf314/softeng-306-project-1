@@ -12,7 +12,7 @@ import nz.ac.aucklanduni.se306project1.dataproviders.UserDataProvider;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.SerializedCartItem;
 
-public class ShoppingCartItemViewModel extends ItemSearchViewModel {
+public class ShoppingCartItemViewModel  {
 
     protected final MutableLiveData<Set<CartItem>> shoppingCartItems = new MutableLiveData<>(Collections.emptySet());
 
