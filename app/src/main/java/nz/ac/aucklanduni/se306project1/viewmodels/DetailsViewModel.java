@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
 import nz.ac.aucklanduni.se306project1.dataproviders.ItemDataProvider;
@@ -38,8 +39,12 @@ public class DetailsViewModel extends ViewModel {
         this.userDataProvider = userDataProvider;
     }
 
-    public void setItem(final String itemId) {
-        this.itemDataProvider.getItemById(itemId).thenAccept(fetchedItem -> this.item = fetchedItem);
+    public void setItem(final Item item) {
+        this.item = item;
+    }
+
+    public CompletableFuture<Item> getItemById(String itemId) {
+        return this.itemDataProvider.getItemById(itemId);
     }
 
     public LiveData<Boolean> isInWatchlist() {
@@ -79,10 +84,6 @@ public class DetailsViewModel extends ViewModel {
 
     public void setSelectedColourInfo(final ColouredItemInformation selectedColourInfo) {
         this.selectedColourInfo.setValue(selectedColourInfo);
-    }
-
-    public ItemDataProvider getItemDataProvider() {
-        return this.itemDataProvider;
     }
 
     public void addToCart() {

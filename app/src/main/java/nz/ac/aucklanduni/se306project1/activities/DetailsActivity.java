@@ -47,11 +47,9 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(DetailsViewModel.INITIALIZER))
                 .get(DetailsViewModel.class);
 
-        this.detailsViewModel.getItemDataProvider().getItemById(itemId)
-                .thenAccept(this::bindItemData);
+        this.detailsViewModel.getItemById(itemId).thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
-        this.detailsViewModel.setItem(itemId);
 
         this.topBarViewModel.setStartIconButton(new BackButton());
         this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
@@ -62,6 +60,8 @@ public class DetailsActivity extends TopBarActivity {
 
     private void bindItemData(final Item item) {
         this.topBarViewModel.setTitle(item.getDisplayName());
+
+        this.detailsViewModel.setItem(item);
 
         this.generateColourOptions(item);
         this.binding.addToCartButton.setText(this.getResources().getString(R.string.add_to_cart, item.getPrice()));
