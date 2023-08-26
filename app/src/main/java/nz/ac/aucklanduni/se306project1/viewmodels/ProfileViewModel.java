@@ -13,16 +13,21 @@ public class ProfileViewModel extends ViewModel {
             creationExtras -> {
                 final EngiWearApplication app = (EngiWearApplication) creationExtras.get(ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY);
                 assert app != null;
-                return new ProfileViewModel(app.getAuthenticationProvider());
+                return new ProfileViewModel(app);
             });
 
-    private AuthenticationProvider authProvider;
+    private EngiWearApplication engiWear
 
-    public ProfileViewModel(AuthenticationProvider authProvider) {
-        this.authProvider = authProvider;
+    public ProfileViewModel(EngiWearApplication engiWear) {
+        this.engiWear = engiWear;
     }
 
     public void signoutUser() {
-        this.authProvider.logoutUser();
+        this.engiWear.getAuthenticationProvider().logoutUser();
+    }
+
+    public void clearUserData() {
+        this.engiWear.getUserDataProvider().clearShoppingCart();
+        this.engiWear.getUserDataProvider().clearWatchlist();
     }
 }
