@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,6 +66,18 @@ public class ListActivity extends TopBarActivity {
         this.getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        int statusBarHeight = 0;
+        final int resourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = this.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        final FragmentContainerView topBarFragmentContainer = this.binding.topBarFragmentContainer;
+        topBarFragmentContainer.setPadding(
+                topBarFragmentContainer.getPaddingLeft(),
+                topBarFragmentContainer.getPaddingTop() + statusBarHeight,
+                topBarFragmentContainer.getPaddingRight(), topBarFragmentContainer.getPaddingBottom());
 
         this.getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
