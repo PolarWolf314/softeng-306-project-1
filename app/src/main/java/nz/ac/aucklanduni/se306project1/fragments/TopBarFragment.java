@@ -74,7 +74,7 @@ public class TopBarFragment extends Fragment {
             button.setVisibility(View.VISIBLE);
             button.setIconResource(iconButton.getIconId());
             button.setOnClickListener((v) ->
-                    iconButton.getOnClickListener().accept(this.getContext(), this.viewModel));
+                    iconButton.getOnClickListener().accept(this.getActivity(), this.viewModel));
         }
     }
 

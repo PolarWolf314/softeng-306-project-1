@@ -1,6 +1,6 @@
 package nz.ac.aucklanduni.se306project1.iconbuttons;
 
-import android.content.Context;
+import android.app.Activity;
 
 import androidx.annotation.DrawableRes;
 
@@ -20,9 +20,9 @@ public interface IconButton {
 
     /**
      * Retrieve the listener to use for clicks on the icon button. It will accept an instance of a
-     * {@link Context} and {@link TopBarViewModel}.
+     * {@link Activity} and {@link TopBarViewModel}.
      *
      * @return The icon buttons on click handler
      */
-    BiConsumer<Context, TopBarViewModel> getOnClickListener();
+    BiConsumer<Activity, TopBarViewModel> getOnClickListener();
 }
