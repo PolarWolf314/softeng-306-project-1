@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.activities.HomeActivity;
+import nz.ac.aucklanduni.se306project1.activities.ProfileActivity;
 import nz.ac.aucklanduni.se306project1.activities.ShoppingCartActivity;
 import nz.ac.aucklanduni.se306project1.activities.WatchlistActivity;
 import nz.ac.aucklanduni.se306project1.databinding.FragmentBottomNavigationBinding;
@@ -60,6 +61,11 @@ public class BottomNavigationFragment extends Fragment {
             } else if (id == R.id.navigation_cart) {
                 final Intent cartIntent = new Intent(BottomNavigationFragment.this.getActivity(), ShoppingCartActivity.class);
                 BottomNavigationFragment.this.startActivity(cartIntent);
+                this.requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
+            } else if (id == R.id.navigation_profile) {
+                final Intent profileIntent = new Intent(BottomNavigationFragment.this.getActivity(), ProfileActivity.class);
+                BottomNavigationFragment.this.startActivity(profileIntent);
                 this.requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
             }

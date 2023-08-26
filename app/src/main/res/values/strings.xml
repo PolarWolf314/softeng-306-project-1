@@ -97,4 +97,7 @@
     <string name="top_bar_background_image">top bar background image</string>
     <string name="category_image">category image</string>
     <string name="add_to_cart">+ Add to cart %.2f NZD</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
+    <string name="clear_user_data">Clear User Data</string>
 </resources>

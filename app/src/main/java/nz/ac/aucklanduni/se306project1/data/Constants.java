@@ -24,5 +24,6 @@ public class Constants {
         public static final String WEAK_PASSWORD = "Password must be at least 6 characters in length";
         public static final String INVALID_EMAIL = "Invalid email address";
         public static final String CONFIRMED_PASSWORD_MISMATCH = "Confirmed password must match password";
+        public static final String USER_DATA_CLEARED = "Cleared shopping cart and watchlist";
     }
 }
