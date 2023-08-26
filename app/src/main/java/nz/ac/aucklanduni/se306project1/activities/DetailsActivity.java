@@ -53,11 +53,6 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
         this.detailsViewModel.setItem(itemId);
 
-        this.binding.addToCartButton.setOnClickListener(v -> {
-            this.detailsViewModel.addToCart();
-            Toast.makeText(this, Constants.ToastMessages.ITEM_ADDED_TO_CART, Toast.LENGTH_LONG).show();
-        });
-
         this.topBarViewModel.setStartIconButton(new BackButton());
         this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
 
@@ -76,6 +71,11 @@ public class DetailsActivity extends TopBarActivity {
         }
 
         this.binding.detailsItemDescription.setText(item.getDescription());
+
+        this.binding.addToCartButton.setOnClickListener(v -> {
+            this.detailsViewModel.addToCart();
+            Toast.makeText(this, Constants.ToastMessages.ITEM_ADDED_TO_CART, Toast.LENGTH_LONG).show();
+        });
     }
 
     @SuppressLint("RestrictedApi")
