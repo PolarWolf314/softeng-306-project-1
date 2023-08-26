@@ -35,31 +35,29 @@ public class ListActivity extends TopBarActivity {
         this.binding = ActivityListBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
-
         this.listViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ListViewModel.INITIALIZER))
                 .get(ListViewModel.class);
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
 
-        this.listViewModel.getItemDataProvider().getItemsByCategory(category)
-                .thenAccept(this.searchViewModel::setOriginalItems);
+        this.topBarViewModel.setStartIconButton(new BackButton());
+        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+        this.handleListingItems();
+        this.setCategoryInformation();
+        this.setSystemBarColours();
+    }
+
+    private void handleListingItems() {
         final RecyclerView recyclerView = this.binding.listRecyclerView;
-
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
                 this, this.searchViewModel.getFilteredItems(), new ItemCardViewHolder.Builder(this.listViewModel));
 
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
-
-        this.topBarViewModel.setStartIconButton(new BackButton());
-        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
-        this.binding.categoryImage.setImageResource(category.getCategoryImageId());
-
-        this.addCategoryFilterView(category);
-
-        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.transparent));
+    }
+    
+    private void setSystemBarColours() {
+        this.getWindow().setStatusBarColor(Color.TRANSPARENT);
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
 
         this.getWindow().getDecorView().setSystemUiVisibility(
@@ -67,18 +65,29 @@ public class ListActivity extends TopBarActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         int statusBarHeight = 0;
-        final int resourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            statusBarHeight = this.getResources().getDimensionPixelSize(resourceId);
+        final int heightResourceId = this.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (heightResourceId > 0) {
+            statusBarHeight = this.getResources().getDimensionPixelSize(heightResourceId);
         }
 
         final FragmentContainerView topBarFragmentContainer = this.binding.topBarFragmentContainer;
         topBarFragmentContainer.setPadding(
                 topBarFragmentContainer.getPaddingLeft(),
                 topBarFragmentContainer.getPaddingTop() + statusBarHeight,
-                topBarFragmentContainer.getPaddingRight(), topBarFragmentContainer.getPaddingBottom());
+                topBarFragmentContainer.getPaddingRight(),
+                topBarFragmentContainer.getPaddingBottom());
+    }
 
-        this.getWindow().setStatusBarColor(Color.TRANSPARENT);
+    private void setCategoryInformation() {
+        final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
+
+        this.listViewModel.getItemDataProvider().getItemsByCategory(category)
+                .thenAccept(this.searchViewModel::setOriginalItems);
+
+        this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
+        this.binding.categoryImage.setImageResource(category.getCategoryImageId());
+
+        this.addCategoryFilterView(category);
     }
 
     private void addCategoryFilterView(final Category category) {
