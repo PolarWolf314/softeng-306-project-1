@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public abstract class SearchViewModel<Item> extends ViewModel {
     private final Map<String, Predicate<Item>> filters = new HashMap<>();
     private final MutableLiveData<List<Item>> filteredItems = new MutableLiveData<>();
-    private List<Item> originalItems = Collections.emptyList();
+    private final MutableLiveData<List<Item>> originalItems = new MutableLiveData<>(Collections.emptyList());
 
     /**
      * Removes the filter associated with this key from the filters being applied to the items.
@@ -44,13 +45,13 @@ public abstract class SearchViewModel<Item> extends ViewModel {
     }
 
     /**
-     * Retrieves an unmodifiable list of the original items before any of the filters have been
+     * Retrieves an observable list of the original items before any of the filters have been
      * applied.
      *
      * @return The unmodifiable list
      */
-    public List<Item> getOriginalItems() {
-        return Collections.unmodifiableList(this.originalItems);
+    public LiveData<List<Item>> getOriginalItems() {
+        return this.originalItems;
     }
 
     /**
@@ -60,7 +61,7 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * @param items The {@link List} of unfiltered items to use
      */
     public void setOriginalItems(final List<Item> items) {
-        this.originalItems = items;
+        this.originalItems.setValue(items);
         this.applyFilters();
     }
 
@@ -77,7 +78,7 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      * Updates the filtered items based on the current filters set.
      */
     private void applyFilters() {
-        final List<Item> newFilteredItems = this.originalItems.stream()
+        final List<Item> newFilteredItems = this.getItems().stream()
                 .filter(this::matchesFilters)
                 .collect(Collectors.toList());
 
@@ -92,5 +93,19 @@ public abstract class SearchViewModel<Item> extends ViewModel {
      */
     private boolean matchesFilters(final Item item) {
         return this.filters.values().stream().allMatch(filter -> filter.test(item));
+    }
+
+    /**
+     * Retrieves the list of unfiltered items. If there is no current value, a new {@link ArrayList}
+     * is returned, otherwise the current value is returned.
+     *
+     * @return The list of unfiltered items
+     */
+    private List<Item> getItems() {
+        final List<Item> items = this.originalItems.getValue();
+        if (items == null) {
+            return new ArrayList<>();
+        }
+        return items;
     }
 }

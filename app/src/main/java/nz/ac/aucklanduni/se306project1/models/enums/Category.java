@@ -11,6 +11,7 @@ import java.util.Map;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
+import nz.ac.aucklanduni.se306project1.builders.ui.MeltingPointFilterBuilder;
 import nz.ac.aucklanduni.se306project1.builders.ui.SubcategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.models.items.ChemmatItem;
 import nz.ac.aucklanduni.se306project1.models.items.CivilItem;
@@ -26,7 +27,7 @@ public enum Category {
     SOFTWARE("software", SoftwareItem.class, R.string.software, R.drawable.software_category_image,
             new SubcategoryFilterBuilder<>(SoftwareItem.class, SoftwareSubcategory.values(), SoftwareItem::getSubcategory)),
 
-    CHEMMAT("chemmat", ChemmatItem.class, R.string.chemmat, R.drawable.chemmat_category_image),
+    CHEMMAT("chemmat", ChemmatItem.class, R.string.chemmat, R.drawable.chemmat_category_image, new MeltingPointFilterBuilder()),
 
     MECHANICAL("mechanical", MechanicalItem.class, R.string.mechanical, R.drawable.mechanical_category_image);
 
