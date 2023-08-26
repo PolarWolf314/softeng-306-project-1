@@ -16,6 +16,6 @@ public class BackButton implements IconButton {
 
     @Override
     public BiConsumer<Activity, TopBarViewModel> getOnClickListener() {
-        return (activity, topBarViewModel) -> activity.onBackPressed();
+        return (activity, topBarViewModel) -> activity.finish();
     }
 }
