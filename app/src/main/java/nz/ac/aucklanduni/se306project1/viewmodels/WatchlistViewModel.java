@@ -32,4 +32,8 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
         this.userDataProvider.clearWatchlist();
         this.watchlistItems.setValue(new HashSet<>());
     }
+
+    public boolean isUserLoggedIn() {
+        return this.userDataProvider != null;
+    }
 }
