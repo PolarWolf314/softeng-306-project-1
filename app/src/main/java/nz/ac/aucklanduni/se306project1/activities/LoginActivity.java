@@ -52,6 +52,13 @@ public class LoginActivity extends AppCompatActivity {
             this.startActivity(intent);
             this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
+
+        this.binding.continueAsGuest.setOnClickListener(v -> {
+            final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.blue_onboarding));
     }
 }
