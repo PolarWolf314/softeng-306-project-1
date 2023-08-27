@@ -47,7 +47,6 @@ public class ListActivity extends TopBarActivity {
 
         this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-        this.handleListingItems();
         this.setCategoryInformation();
         this.setSystemBarColours();
     }
@@ -61,16 +60,6 @@ public class ListActivity extends TopBarActivity {
         if (isExpanded) {
             this.binding.appBar.setExpanded(false);
         }
-    }
-
-    private void handleListingItems() {
-        final RecyclerView recyclerView = this.binding.listRecyclerView;
-        final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), new ItemCardViewHolder.Builder(this.listViewModel));
-
-        recyclerView.setAdapter(adapter);
-        GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
-        this.searchViewModel.getFilteredItems().observe(this, this::updateItemCountLabel);
     }
 
     private void setSystemBarColours() {
@@ -98,13 +87,28 @@ public class ListActivity extends TopBarActivity {
     private void setCategoryInformation() {
         final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
 
-        this.listViewModel.getItemDataProvider().getItemsByCategory(category)
-                .thenAccept(this.searchViewModel::setOriginalItems);
-
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());
 
         this.addCategoryFilterView(category);
+        this.displayItems(category);
+    }
+
+    private void displayItems(final Category category) {
+        if (category == Category.ALL_ITEMS) {
+            this.topBarViewModel.setSearchBarExpanded(true);
+            this.listViewModel.getAllItems().thenAccept(this.searchViewModel::setOriginalItems);
+        } else {
+            this.listViewModel.getItemsByCategory(category).thenAccept(this.searchViewModel::setOriginalItems);
+        }
+
+        final RecyclerView recyclerView = this.binding.listRecyclerView;
+        final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
+                this, this.searchViewModel.getFilteredItems(), new ItemCardViewHolder.Builder(this.listViewModel));
+
+        recyclerView.setAdapter(adapter);
+        GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
+        this.searchViewModel.getFilteredItems().observe(this, this::updateItemCountLabel);
     }
 
     private void addCategoryFilterView(final Category category) {
