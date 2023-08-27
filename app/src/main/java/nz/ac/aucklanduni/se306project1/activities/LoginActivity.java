@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                     return null;
                 });
             } else {
-                Toast.makeText(this, Constants.ToastMessages.NO_USERNAME_OR_PASSWORD, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, Constants.ToastMessages.NOT_ALL_FIELDS_FILLED, Toast.LENGTH_LONG).show();
             }
         });
 

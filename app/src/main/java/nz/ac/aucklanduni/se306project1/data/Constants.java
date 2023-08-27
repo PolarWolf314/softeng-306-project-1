@@ -19,7 +19,7 @@ public class Constants {
     }
 
     public static class ToastMessages {
-        public static final String NO_USERNAME_OR_PASSWORD = "Please fill out username and password";
+        public static final String NOT_ALL_FIELDS_FILLED = "Please fill out all fields";
         public static final String INCORRECT_USERNAME_OR_PASSWORD = "Username and/or password is incorrect";
         public static final String EMAIL_ALREADY_IN_USE = "Email address already in use";
         public static final String WEAK_PASSWORD = "Password must be at least 6 characters in length";
