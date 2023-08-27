@@ -31,13 +31,11 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
 
     public void setSpinner(@Nullable final LoadingSpinner spinner) {
         this.spinner = spinner;
+        if (spinner != null) spinner.show();
     }
 
     @Override
     protected void getWatchlist() {
-        if (this.spinner != null) {
-            this.spinner.show();
-        }
         this.userDataProvider.getWatchlist().thenAccept(watchlistItems -> {
             this.watchlistItems.setValue(watchlistItems);
             if (this.spinner != null) {

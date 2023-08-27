@@ -37,7 +37,6 @@ public class WatchlistActivity extends AppCompatActivity {
         this.binding = ActivityWatchlistBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
@@ -47,8 +46,7 @@ public class WatchlistActivity extends AppCompatActivity {
         this.watchlistViewModel.setSpinner(new LoadingSpinner(this.binding.getRoot()));
 
         this.binding.clearWatchlist.setOnClickListener(v -> this.watchlistViewModel.clearWatchlist());
-
-
+        
         this.displayItems();
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
