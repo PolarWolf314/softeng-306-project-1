@@ -14,6 +14,7 @@ import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityHomeBinding;
+import nz.ac.aucklanduni.se306project1.iconbuttons.HomeSearchIcon;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
@@ -56,6 +57,7 @@ public class HomeActivity extends TopBarActivity {
         this.setupCategories();
         this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
         this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
+        this.topBarViewModel.setEndIconButton(new HomeSearchIcon());
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
