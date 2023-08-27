@@ -22,14 +22,16 @@ public class ShoppingCartItemViewModel extends ViewModel {
 
     public ShoppingCartItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
-        this.userDataProvider.getShoppingCart().thenAccept(cartItems -> {
-            this.shoppingCartItems.setValue(cartItems);
-            Double tempPrice = 0.0;
-            for (CartItem cartItem : this.shoppingCartItems.getValue()) {
-                tempPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
-            }
-            this.totalPrice.setValue(tempPrice);
-        });
+        if (this.userDataProvider != null) {
+            this.userDataProvider.getShoppingCart().thenAccept(cartItems -> {
+                this.shoppingCartItems.setValue(cartItems);
+                Double tempPrice = 0.0;
+                for (CartItem cartItem : this.shoppingCartItems.getValue()) {
+                    tempPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
+                }
+                this.totalPrice.setValue(tempPrice);
+            });
+        }
     }
 
     public void incrementItemQuantity(final CartItem cartItem) {
