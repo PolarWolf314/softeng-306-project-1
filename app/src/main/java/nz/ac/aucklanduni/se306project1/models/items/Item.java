@@ -59,12 +59,12 @@ public abstract class Item implements SearchFilterable {
         return Collections.unmodifiableList(this.colours);
     }
 
-    public ColouredItemInformation getColour(final String colour) {
+    public ColouredItemInformation getColourInformation(final String colour) {
         return this.colours.stream()
                 .filter(colourInfo -> colourInfo.getColour().equals(colour))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
-                        String.format("There is no colour '%s' for '%s'", colour, this.displayName)));
+                        String.format("There is no colour '%s' for '%s (%s)'", colour, this.displayName, this.id)));
     }
 
     @Override

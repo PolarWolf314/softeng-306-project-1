@@ -54,7 +54,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
     public void bindFrom(final CartItem cartItem) {
         final Item item = cartItem.getItem();
 
-        final ColouredItemInformation colourInformation = item.getColour(cartItem.getColour());
+        final ColouredItemInformation colourInformation = item.getColourInformation(cartItem.getColour());
         final ImageInfo imageInfo = colourInformation.getImages().get(0);
 
         Glide.with(this.context).load(imageInfo.getUrl()).into(this.itemImage);
