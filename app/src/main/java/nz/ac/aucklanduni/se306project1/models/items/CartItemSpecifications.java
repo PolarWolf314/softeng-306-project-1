@@ -24,7 +24,7 @@ public abstract class CartItemSpecifications {
         this.quantity++;
     }
 
-    public void changeQuantity(int newQuantity) {
+    public void changeQuantity(final int newQuantity) {
         this.quantity = newQuantity;
     }
 
