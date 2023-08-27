@@ -35,22 +35,14 @@ public class ShoppingCartItemViewModel extends ViewModel {
     public void incrementItemQuantity(final CartItem cartItem) {
         this.userDataProvider.incrementShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()));
-        Set<CartItem> cartItems = this.getCartItems();
-        cartItems.remove(cartItem);
         cartItem.incrementQuantity();
-        cartItems.add(cartItem);
-        this.shoppingCartItems.setValue(cartItems);
         this.totalPrice.setValue(this.totalPrice.getValue() + cartItem.getItem().getPrice());
     }
 
     public void decrementItemQuantity(final CartItem cartItem) {
         this.userDataProvider.decrementShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()));
-        Set<CartItem> cartItems = this.getCartItems();
-        cartItems.remove(cartItem);
         cartItem.decrementQuantity();
-        cartItems.add(cartItem);
-        this.shoppingCartItems.setValue(cartItems);
         this.totalPrice.setValue(this.totalPrice.getValue() - cartItem.getItem().getPrice());
     }
 
@@ -58,11 +50,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
         this.totalPrice.setValue(this.totalPrice.getValue() + ((newQuantity - cartItem.getQuantity()) * cartItem.getItem().getPrice()));
         this.userDataProvider.changeShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()), newQuantity);
-        Set<CartItem> cartItems = this.getCartItems();
-        cartItems.remove(cartItem);
         cartItem.changeQuantity(newQuantity);
-        cartItems.add(cartItem);
-        this.shoppingCartItems.setValue(cartItems);
     }
 
     public void removeItemFromCart(final CartItem cartItem) {
