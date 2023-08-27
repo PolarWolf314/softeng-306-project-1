@@ -46,8 +46,6 @@ public class TopBarFragment extends Fragment {
 
         final ViewModelProvider provider = new ViewModelProvider(this.requireActivity());
         this.viewModel = provider.get(TopBarViewModel.class);
-        this.viewModel.getIsSearchBarExpanded()
-                .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
         this.searchViewModel = provider.get(this.viewModel.getSearchViewModelClass());
 
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
@@ -62,6 +60,9 @@ public class TopBarFragment extends Fragment {
 
         title.observe(this.getViewLifecycleOwner(), (newTitle) -> this.binding.topBarTitle.setText(newTitle));
         titleColour.observe(this.getViewLifecycleOwner(), (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
+        
+        this.viewModel.getIsSearchBarExpanded()
+                .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
 
         this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
                 (newQuery) -> {
