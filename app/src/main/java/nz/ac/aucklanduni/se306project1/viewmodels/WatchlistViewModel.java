@@ -31,11 +31,13 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
 
     public void setSpinner(@Nullable final LoadingSpinner spinner) {
         this.spinner = spinner;
-        if (spinner != null) spinner.show();
     }
 
     @Override
-    protected void getWatchlist() {
+    protected void getWatchlist(final boolean fromConstructor) {
+        if (fromConstructor || this.userDataProvider == null) return;
+
+        if (this.spinner != null) this.spinner.show();
         this.userDataProvider.getWatchlist().thenAccept(watchlistItems -> {
             this.watchlistItems.setValue(watchlistItems);
             if (this.spinner != null) {
@@ -49,7 +51,13 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
     }
 
     public void clearWatchlist() {
-        this.userDataProvider.clearWatchlist();
+        if (this.userDataProvider != null) {
+            this.userDataProvider.clearWatchlist();
+        }
         this.watchlistItems.setValue(new HashSet<>());
+    }
+
+    public void loadWatchlist() {
+        this.getWatchlist(false);
     }
 }

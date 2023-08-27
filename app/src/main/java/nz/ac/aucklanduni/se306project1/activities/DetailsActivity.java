@@ -1,6 +1,5 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -10,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.core.widget.TintableCompoundButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
@@ -50,7 +50,8 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(DetailsViewModel.INITIALIZER))
                 .get(DetailsViewModel.class);
 
-        this.detailsViewModel.getItemById(itemId).thenAccept(this::bindItemData);
+        this.detailsViewModel.setItemId(itemId);
+        this.detailsViewModel.getItem().thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
 
@@ -63,7 +64,6 @@ public class DetailsActivity extends TopBarActivity {
 
     private void bindItemData(final Item item) {
         this.topBarViewModel.setTitle(item.getDisplayName());
-
         this.detailsViewModel.setItem(item);
 
         this.generateColourOptions(item);
@@ -88,7 +88,6 @@ public class DetailsActivity extends TopBarActivity {
         });
     }
 
-    @SuppressLint("RestrictedApi")
     private void generateColourOptions(final Item item) {
         final RadioGroup radioGroup = this.binding.detailsItemColorSelectorRadioGroup;
         final List<ColouredItemInformation> colouredItemInfo = item.getColours();
@@ -97,8 +96,11 @@ public class DetailsActivity extends TopBarActivity {
             final ColouredItemInformation colouredInfo = colouredItemInfo.get(index);
 
             final MaterialRadioButton radio = new MaterialRadioButton(this);
+            final ColorStateList colorStateList = ColorStateList.valueOf(Color.parseColor(colouredInfo.getColour()));
             radio.setButtonDrawable(R.drawable.colour_option_selector);
-            radio.setSupportButtonTintList(ColorStateList.valueOf(Color.parseColor(colouredInfo.getColour())));
+            // MaterialRadioButton inherits from TintableCompoundButton but we cannot access it
+            // directly unfortunately due to a RestrictedAPI warning.
+            ((TintableCompoundButton) radio).setSupportButtonTintList(colorStateList);
             radioGroup.addView(radio);
 
             radio.setOnCheckedChangeListener((r, isChecked) -> {
