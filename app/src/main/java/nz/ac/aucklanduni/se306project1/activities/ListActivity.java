@@ -20,6 +20,7 @@ import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.ui.CategoryFilterBuilder;
+import nz.ac.aucklanduni.se306project1.ui.LoadingSpinner;
 import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.ItemCardViewHolder;
 import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
@@ -30,6 +31,7 @@ public class ListActivity extends TopBarActivity {
     private ActivityListBinding binding;
     private ItemSearchViewModel searchViewModel;
     private ListViewModel listViewModel;
+    private LoadingSpinner spinner;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class ListActivity extends TopBarActivity {
         this.topBarViewModel.setStartIconButton(new BackButton());
         this.topBarViewModel.getIsSearchBarExpanded().observe(this, this::onChangeSearchBarExpansion);
 
-        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        this.spinner = new LoadingSpinner(this.binding.getRoot());
 
         this.setCategoryInformation();
         this.setSystemBarColours();
@@ -86,7 +88,7 @@ public class ListActivity extends TopBarActivity {
 
     private void setCategoryInformation() {
         final Category category = Category.fromId(this.getIntent().getStringExtra(Constants.IntentKeys.CATEGORY_ID));
-
+        
         this.topBarViewModel.setTitle(category.getDisplayName(this.getResources()));
         this.binding.categoryImage.setImageResource(category.getCategoryImageId());
 
@@ -95,11 +97,12 @@ public class ListActivity extends TopBarActivity {
     }
 
     private void displayItems(final Category category) {
+        this.spinner.show();
         if (category == Category.ALL_ITEMS) {
             this.topBarViewModel.setSearchBarExpanded(true);
-            this.listViewModel.getAllItems().thenAccept(this.searchViewModel::setOriginalItems);
+            this.listViewModel.getAllItems().thenAccept(this::setSearchViewModelItems);
         } else {
-            this.listViewModel.getItemsByCategory(category).thenAccept(this.searchViewModel::setOriginalItems);
+            this.listViewModel.getItemsByCategory(category).thenAccept(this::setSearchViewModelItems);
         }
 
         final RecyclerView recyclerView = this.binding.listRecyclerView;
@@ -109,6 +112,11 @@ public class ListActivity extends TopBarActivity {
         recyclerView.setAdapter(adapter);
         GridSpacingItemDecoration.attachGrid(recyclerView, this, 2, 12, 20);
         this.searchViewModel.getFilteredItems().observe(this, this::updateItemCountLabel);
+    }
+
+    private void setSearchViewModelItems(final List<Item> items) {
+        this.spinner.hide();
+        this.searchViewModel.setOriginalItems(items);
     }
 
     private void addCategoryFilterView(final Category category) {
