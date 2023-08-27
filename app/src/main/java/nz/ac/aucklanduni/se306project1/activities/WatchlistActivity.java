@@ -1,8 +1,6 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,7 +12,6 @@ import java.util.Set;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
-import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityWatchlistBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.GridSpacingItemDecoration;
 import nz.ac.aucklanduni.se306project1.models.items.Item;

@@ -1,6 +1,5 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
-import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.CartItemCardViewHolder;
