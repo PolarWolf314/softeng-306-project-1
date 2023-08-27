@@ -1,5 +1,6 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityShoppingCartBinding;
 import nz.ac.aucklanduni.se306project1.itemdecorations.VerticalItemSpacingDecoration;
+import nz.ac.aucklanduni.se306project1.models.ShoppingCart;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.CartItemCardViewHolder;
@@ -42,6 +44,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(CartItemSearchViewModel.class);
         this.shoppingCartViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ShoppingCartViewModel.initializer)).get(ShoppingCartViewModel.class);
+
+        if (!this.shoppingCartViewModel.isUserLoggedIn()) {
+            final Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+            this.startActivity(intent);
+            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            Toast.makeText(this, Constants.ToastMessages.SHOPPING_CART_REDIRECT, Toast.LENGTH_LONG).show();
+        }
+
         this.shoppingCartViewModel.getShoppingCartItems().observe(this, this::onShoppingCartItemsLoaded);
         this.shoppingCartViewModel.getTotalPrice().observe(this, this::onTotalPriceChange);
 
