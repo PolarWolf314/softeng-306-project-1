@@ -50,7 +50,8 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(DetailsViewModel.INITIALIZER))
                 .get(DetailsViewModel.class);
 
-        this.detailsViewModel.getItemById(itemId).thenAccept(this::bindItemData);
+        this.detailsViewModel.setItemId(itemId);
+        this.detailsViewModel.getItem().thenAccept(this::bindItemData);
 
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
 
@@ -63,7 +64,6 @@ public class DetailsActivity extends TopBarActivity {
 
     private void bindItemData(final Item item) {
         this.topBarViewModel.setTitle(item.getDisplayName());
-
         this.detailsViewModel.setItem(item);
 
         this.generateColourOptions(item);

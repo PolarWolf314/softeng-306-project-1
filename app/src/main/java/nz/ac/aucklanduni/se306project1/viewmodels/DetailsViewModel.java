@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.ViewModelInitializer;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import nz.ac.aucklanduni.se306project1.EngiWearApplication;
@@ -29,22 +30,35 @@ public class DetailsViewModel extends ViewModel {
     private final ItemDataProvider itemDataProvider;
     private final UserDataProvider userDataProvider;
     private final MutableLiveData<ColouredItemInformation> selectedColourInfo = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isInWatchlist = new MutableLiveData<>();
+    private String itemId;
     private Item item;
     private String selectedSize = null;
     private List<String> currentSizes = Collections.emptyList();
-    private final MutableLiveData<Boolean> isInWatchlist = new MutableLiveData<>();
 
     public DetailsViewModel(final ItemDataProvider itemDataProvider, final UserDataProvider userDataProvider) {
         this.itemDataProvider = itemDataProvider;
         this.userDataProvider = userDataProvider;
     }
 
-    public void setItem(final Item item) {
-        this.item = item;
+    public void setItemId(final String itemId) {
+        this.itemId = itemId;
+        if (this.userDataProvider != null) {
+            this.userDataProvider.getWatchlist().thenAccept((items) -> {
+                final boolean isInWatchlist = items.stream()
+                        .anyMatch(item -> item.getId().equals(itemId));
+
+                this.isInWatchlist.setValue(isInWatchlist);
+            });
+        }
     }
 
-    public CompletableFuture<Item> getItemById(String itemId) {
-        return this.itemDataProvider.getItemById(itemId);
+    public CompletableFuture<Item> getItem() {
+        return this.itemDataProvider.getItemById(this.itemId);
+    }
+
+    public void setItem(final Item item) {
+        this.item = item;
     }
 
     public LiveData<Boolean> isInWatchlist() {
@@ -52,18 +66,15 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public void toggleIsInWatchlist() {
-        final Boolean isInWatchlist = this.isInWatchlist.getValue();
-        if (isInWatchlist == null) {
-            this.isInWatchlist.setValue(true);
+        final boolean isInWatchlist = Objects.requireNonNullElse(this.isInWatchlist.getValue(), false);
+        final boolean newIsInWatchlist = !isInWatchlist;
+        this.isInWatchlist.setValue(newIsInWatchlist);
+
+        if (newIsInWatchlist) {
+            this.userDataProvider.addToWatchlist(this.itemId);
         } else {
-            this.isInWatchlist.setValue(!isInWatchlist);
+            this.userDataProvider.removeFromWatchlist(this.itemId);
         }
-
-        // TODO: Update user data provider
-    }
-
-    public String getSelectedSize() {
-        return this.selectedSize;
     }
 
     public void setSelectedSize(final String selectedSize) {
@@ -87,7 +98,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public void addToCart() {
-        if (item != null) {
+        if (this.item != null) {
             this.userDataProvider.addToShoppingCart(new SerializedCartItem(1, this.selectedColourInfo.getValue().getColour(),
                     this.selectedSize, this.item.getId()));
         }
