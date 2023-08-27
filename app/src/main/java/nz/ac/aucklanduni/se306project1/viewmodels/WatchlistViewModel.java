@@ -52,4 +52,13 @@ public class WatchlistViewModel extends WatchlistItemViewModel {
         this.userDataProvider.clearWatchlist();
         this.watchlistItems.setValue(new HashSet<>());
     }
+
+    public void loadWatchlist() {
+        super.getWatchlist();
+    }
+
+    @Override
+    protected void getWatchlist() {
+        // We'll do it using the loadWatchlist method instead of in the constructor.
+    }
 }

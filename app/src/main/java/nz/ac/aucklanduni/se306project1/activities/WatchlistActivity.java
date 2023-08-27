@@ -69,4 +69,12 @@ public class WatchlistActivity extends AppCompatActivity {
                 R.string.no_items_in_watchlist, watchlistItems.size());
         this.binding.itemsInWatchlist.setText(label);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // If we navigate back from the detailed item page we want to re-fetch the items in case
+        // they've been changed. `onCreate` isn't called again in that situation.
+        this.watchlistViewModel.loadWatchlist();
+    }
 }
