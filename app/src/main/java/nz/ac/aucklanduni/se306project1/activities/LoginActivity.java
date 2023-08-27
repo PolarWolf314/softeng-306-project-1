@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         this.binding.continueAsGuest.setOnClickListener(v -> this.onContinueAsGuest());
 
         this.spinner = new LoadingSpinner(this.binding.getRoot());
-        this.spinner.setColor(this.getResources().getColor(R.color.primary_alt, this.getTheme()));
+        this.spinner.setColor(this.getResources().getColor(R.color.blue_onboarding, this.getTheme()));
 
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.blue_onboarding));
     }

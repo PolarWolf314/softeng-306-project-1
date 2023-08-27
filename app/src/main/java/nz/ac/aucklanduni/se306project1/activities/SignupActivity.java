@@ -15,12 +15,14 @@ import nz.ac.aucklanduni.se306project1.databinding.ActivitySignupBinding;
 import nz.ac.aucklanduni.se306project1.exceptions.EmailAlreadyInUseException;
 import nz.ac.aucklanduni.se306project1.exceptions.InvalidEmailException;
 import nz.ac.aucklanduni.se306project1.exceptions.WeakPasswordException;
+import nz.ac.aucklanduni.se306project1.ui.LoadingSpinner;
 import nz.ac.aucklanduni.se306project1.viewmodels.SignupViewModel;
 
 public class SignupActivity extends AppCompatActivity {
-    private ActivitySignupBinding binding;
 
+    private ActivitySignupBinding binding;
     private SignupViewModel signupViewModel;
+    private LoadingSpinner spinner;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class SignupActivity extends AppCompatActivity {
 
         this.binding.signupSignUpButton.setOnClickListener(v -> this.onSignup());
         this.binding.signupSignInButton.setOnClickListener(v -> this.onGoToLogin());
+
+        this.spinner = new LoadingSpinner(this.binding.getRoot());
+        this.spinner.setColor(this.getResources().getColor(R.color.blue_onboarding, this.getTheme()));
 
         this.getWindow().setStatusBarColor(this.getResources().getColor(R.color.blue_onboarding, this.getTheme()));
     }
@@ -54,6 +59,7 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
+        this.spinner.show();
         this.signupViewModel.authenticateUser(email, password)
                 .whenComplete((nothing, exception) -> {
                     if (exception != null) {
@@ -62,6 +68,7 @@ public class SignupActivity extends AppCompatActivity {
                     } else {
                         this.switchToActivity(HomeActivity.class);
                     }
+                    this.spinner.hide();
                 });
     }
 

@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/primary_alt"
+                android:backgroundTint="@color/blue_onboarding"
                 android:fontFamily="@font/pptelegraf_medium"
                 android:shadowColor="@color/fui_transparent"
                 android:text="@string/login"
