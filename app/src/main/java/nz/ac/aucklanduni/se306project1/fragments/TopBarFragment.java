@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -46,33 +47,41 @@ public class TopBarFragment extends Fragment {
 
         final ViewModelProvider provider = new ViewModelProvider(this.requireActivity());
         this.viewModel = provider.get(TopBarViewModel.class);
-        this.viewModel.getIsSearchBarExpanded()
-                .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
         this.searchViewModel = provider.get(this.viewModel.getSearchViewModelClass());
 
-        this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
-        this.viewModel.getEndIconButton()
-                .observe(this.getViewLifecycleOwner(), iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
+        this.bindTopBarData();
 
+        this.binding.topBarSearchView.setOnQueryTextListener(
+                QueryUtils.createQueryChangeListener(this::onQueryChange));
+    }
+
+    private void bindTopBarData() {
+
+        final LifecycleOwner lifecycleOwner = this.getViewLifecycleOwner();
         final LiveData<String> title = this.viewModel.getTitle();
         final LiveData<Integer> titleColour = this.viewModel.getTitleColour();
+        final LiveData<IconButton> endIconButton = this.viewModel.getEndIconButton();
 
         this.binding.topBarTitle.setText(title.getValue());
         this.binding.topBarTitle.setTextColor(Objects.requireNonNullElse(titleColour.getValue(), Color.WHITE));
+        this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
 
-        title.observe(this.getViewLifecycleOwner(), (newTitle) -> this.binding.topBarTitle.setText(newTitle));
-        titleColour.observe(this.getViewLifecycleOwner(), (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
+        title.observe(lifecycleOwner, (newTitle) -> this.binding.topBarTitle.setText(newTitle));
+        titleColour.observe(lifecycleOwner, (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
+        endIconButton.observe(lifecycleOwner, iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
 
-        this.binding.topBarSearchView.setOnQueryTextListener(QueryUtils.createQueryChangeListener(
-                (newQuery) -> {
-                    this.searchViewModel.removeFilter(Constants.FilterKeys.SEARCH_QUERY);
-                    final String loweredQuery = newQuery.trim().toLowerCase();
 
-                    if (loweredQuery.length() != 0) {
-                        this.searchViewModel.putFilter(Constants.FilterKeys.SEARCH_QUERY, (item) -> item.matches(loweredQuery));
-                    }
-                }
-        ));
+        this.viewModel.getIsSearchBarExpanded()
+                .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
+    }
+
+    private void onQueryChange(final String newQuery) {
+        this.searchViewModel.removeFilter(Constants.FilterKeys.SEARCH_QUERY);
+        final String loweredQuery = newQuery.trim().toLowerCase();
+
+        if (loweredQuery.length() != 0) {
+            this.searchViewModel.putFilter(Constants.FilterKeys.SEARCH_QUERY, (item) -> item.matches(loweredQuery));
+        }
     }
 
     private void bindIconButton(final MaterialButton button, @Nullable final IconButton iconButton) {

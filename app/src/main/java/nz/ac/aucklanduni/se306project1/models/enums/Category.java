@@ -29,7 +29,8 @@ public enum Category {
 
     CHEMMAT("chemmat", ChemmatItem.class, R.string.chemmat, R.drawable.chemmat_category_image, new MeltingPointFilterBuilder()),
 
-    MECHANICAL("mechanical", MechanicalItem.class, R.string.mechanical, R.drawable.mechanical_category_image);
+    MECHANICAL("mechanical", MechanicalItem.class, R.string.mechanical, R.drawable.mechanical_category_image),
+    ALL_ITEMS("all_items", Item.class, R.string.all_items, R.drawable.all_items_category_image);
 
     public static final Map<String, Category> mappedCategories = new HashMap<>();
 
