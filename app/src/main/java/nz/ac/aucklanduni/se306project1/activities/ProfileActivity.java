@@ -30,6 +30,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         this.profileViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ProfileViewModel.initializer)).get(ProfileViewModel.class);
 
+        this.binding.userNameTextView.setText(this.profileViewModel.getUserEmailAddress());
+
         this.binding.logoutButton.setOnClickListener(v -> {
             this.profileViewModel.signoutUser();
             final Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
