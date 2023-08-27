@@ -38,6 +38,10 @@ public abstract class WatchlistItemViewModel extends ViewModel {
         return this.getItems().contains(item);
     }
 
+    public boolean isUserLoggedIn() {
+        return this.userDataProvider != null;
+    }
+
     private Set<Item> getItems() {
         final Set<Item> items = this.watchlistItems.getValue();
         if (items == null) return new HashSet<>();
