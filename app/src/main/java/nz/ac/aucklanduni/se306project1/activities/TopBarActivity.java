@@ -27,16 +27,15 @@ public abstract class TopBarActivity extends AppCompatActivity {
     public boolean dispatchTouchEvent(final MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             final View view = this.getCurrentFocus();
-            // The actual search view is contained somewhere internally so we can't check the id to
-            // see if it matches our specific search view. That's fine for now though as we only
-            // have one.
             if (view instanceof SearchView.SearchAutoComplete) {
                 // We can get the actual search view by navigating the XML tree... Yes this is cursed.
-                final View searchView = (View) view.getParent().getParent().getParent().getParent();
-                final Rect outRect = new Rect();
-                searchView.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    this.topBarViewModel.setSearchBarExpanded(false);
+                final SearchView searchView = (SearchView) view.getParent().getParent().getParent().getParent();
+                if (searchView.getQuery().toString().trim().isEmpty()) {
+                    final Rect outRect = new Rect();
+                    searchView.getGlobalVisibleRect(outRect);
+                    if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                        this.topBarViewModel.setSearchBarExpanded(false);
+                    }
                 }
             }
         }
