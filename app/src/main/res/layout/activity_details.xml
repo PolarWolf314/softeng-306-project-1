@@ -144,7 +144,7 @@
 
             </RadioGroup>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_to_cart_button"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -152,7 +152,8 @@
                 android:fontFamily="@font/pptelegraf_medium"
                 android:text="@string/add_to_cart_placeholder"
                 android:textColor="@color/white"
-                android:textFontWeight="900" />
+                android:textFontWeight="900"
+                app:cornerRadius="10dp" />
         </LinearLayout>
 
 
