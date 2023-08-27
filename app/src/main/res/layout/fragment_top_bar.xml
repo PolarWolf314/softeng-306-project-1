@@ -38,11 +38,12 @@
         <TextView
             android:id="@+id/top_bar_title"
             style="@style/HeadlineSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="48dp"
+            android:gravity="center"
             android:paddingHorizontal="12dp"
             android:textAlignment="center"
             android:textColor="@color/white"
