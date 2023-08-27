@@ -41,7 +41,7 @@
                     android:layout_centerInParent="true"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    app:imagePlaceholder="@null"
+                    app:imagePlaceholder="@drawable/baseline_downloading_24"
                     app:imageScaleType="fitCenter"
                     app:infiniteCarousel="false"
                     app:showBottomShadow="false"
