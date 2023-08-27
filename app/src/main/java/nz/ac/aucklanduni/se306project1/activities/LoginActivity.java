@@ -13,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.ActivityLoginBinding;
+import nz.ac.aucklanduni.se306project1.ui.LoadingSpinner;
 import nz.ac.aucklanduni.se306project1.viewmodels.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
 
     private LoginViewModel loginViewModel;
+    private LoadingSpinner spinner;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -35,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         this.binding.signUpButton.setOnClickListener(v -> this.onGoToSignup());
         this.binding.continueAsGuest.setOnClickListener(v -> this.onContinueAsGuest());
 
+        this.spinner = new LoadingSpinner(this.binding.getRoot());
+        this.spinner.setColor(this.getResources().getColor(R.color.primary_alt, this.getTheme()));
+
         this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.blue_onboarding));
     }
 
@@ -43,11 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         final String password = this.binding.passwordTextInputLayout.getEditText().getText().toString();
 
         if (!email.isEmpty() && !password.isEmpty()) {
+            this.spinner.show();
             this.loginViewModel.authenticateUser(email, password)
-                    .thenAccept(nothing -> this.switchToActivity(HomeActivity.class))
-                    .exceptionally(exception -> {
-                        Toast.makeText(this, Constants.ToastMessages.INCORRECT_USERNAME_OR_PASSWORD, Toast.LENGTH_LONG).show();
-                        return null;
+                    .whenComplete((nothing, exception) -> {
+                        if (exception != null) {
+                            Toast.makeText(this, Constants.ToastMessages.INCORRECT_USERNAME_OR_PASSWORD, Toast.LENGTH_LONG).show();
+                        } else {
+                            this.switchToActivity(HomeActivity.class);
+                        }
+                        this.spinner.hide();
                     });
         } else {
             Toast.makeText(this, Constants.ToastMessages.NOT_ALL_FIELDS_FILLED, Toast.LENGTH_LONG).show();

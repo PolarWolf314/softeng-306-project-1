@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#75E6FF"
+                android:backgroundTint="@color/primary_alt"
                 android:fontFamily="@font/pptelegraf_medium"
                 android:shadowColor="@color/fui_transparent"
                 android:text="@string/button_sign_up"

@@ -16,9 +16,9 @@ public class LoadingSpinner {
         this.spinnerContainer = root.findViewById(R.id.spinner);
     }
 
-    public void setColor(@ColorInt final int colourId) {
+    public void setColor(@ColorInt final int colour) {
         final ProgressBar spinner = (ProgressBar) this.spinnerContainer.getChildAt(0);
-        spinner.setIndeterminateTintList(ColorStateList.valueOf(colourId));
+        spinner.setIndeterminateTintList(ColorStateList.valueOf(colour));
     }
 
     public void show() {
