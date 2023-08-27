@@ -34,14 +34,35 @@
             android:textFontWeight="700" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/profile_image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/top_bar_background_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/baseline_person_24"
+        android:contentDescription="@string/profile_image"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/user_name_text_view"
+        style="@style/TitleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/email" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/clear_data_button"
         style="@style/ButtonIconCustomStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/top_bar_background_image_view"
+        android:layout_below="@id/user_name_text_view"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@color/red_top_bar"
         android:fontFamily="@font/pptelegraf_medium"
         android:shadowColor="@color/fui_transparent"

@@ -62,4 +62,5 @@
     <string name="clear_user_data">Clear User Data</string>
     <string name="chemmat_slider_filter_label">Filter by melting point</string>
     <string name="no_items">No items</string>
+    <string name="profile_image">profile image</string>
 </resources>

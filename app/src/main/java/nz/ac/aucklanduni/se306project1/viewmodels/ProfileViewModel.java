@@ -30,4 +30,8 @@ public class ProfileViewModel extends ViewModel {
         this.engiWear.getUserDataProvider().clearShoppingCart();
         this.engiWear.getUserDataProvider().clearWatchlist();
     }
+
+    public String getUserEmailAddress() {
+        return this.engiWear.getUserDataProvider().getUserEmailAddress();
+    }
 }

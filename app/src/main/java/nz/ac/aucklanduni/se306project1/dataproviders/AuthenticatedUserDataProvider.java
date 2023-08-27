@@ -235,6 +235,11 @@ public class AuthenticatedUserDataProvider implements UserDataProvider {
     }
 
     @Override
+    public String getUserEmailAddress() {
+        return this.user.getEmail();
+    }
+
+    @Override
     public CompletableFuture<Set<CartItem>> getShoppingCart() {
         if (this.user == null) {
             throw new RuntimeException("User does not exist");
