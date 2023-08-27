@@ -42,15 +42,13 @@
         android:layout_below="@id/top_bar_background_image_view"
         android:layout_marginHorizontal="36dp"
         android:layout_marginTop="56dp"
-        android:backgroundTint="@color/red_top_bar"
+        android:backgroundTint="@color/primary"
         android:fontFamily="@font/pptelegraf_medium"
         android:shadowColor="@color/fui_transparent"
         android:text="@string/clear_user_data"
         android:textColor="@color/white"
         android:textFontWeight="900"
-        app:cornerRadius="10dp"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp" />
+        app:cornerRadius="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/logout_button"
@@ -60,15 +58,13 @@
         android:layout_below="@id/clear_data_button"
         android:layout_marginHorizontal="36dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/red_top_bar"
+        android:backgroundTint="@color/primary"
         android:fontFamily="@font/pptelegraf_medium"
         android:shadowColor="@color/fui_transparent"
         android:text="@string/log_out"
         android:textColor="@color/white"
         android:textFontWeight="900"
-        app:cornerRadius="10dp"
-        app:strokeColor="@color/black"
-        app:strokeWidth="1dp" />
+        app:cornerRadius="10dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/cart_fragment_container"
