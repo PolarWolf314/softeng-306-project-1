@@ -22,31 +22,25 @@ import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolderBuilder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
 import nz.ac.aucklanduni.se306project1.viewmodels.HomeViewModel;
-import nz.ac.aucklanduni.se306project1.viewmodels.ItemSearchViewModel;
 
 public class HomeActivity extends TopBarActivity {
 
     private ActivityHomeBinding binding;
     private HomeViewModel homeViewModel;
-    private ItemSearchViewModel searchViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final int NUM_FEATURED_ITEMS = 5;
-
         this.binding = ActivityHomeBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        this.homeViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(HomeViewModel.initializer)).get(HomeViewModel.class);
-        this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
-        this.homeViewModel.getFeaturedItems(NUM_FEATURED_ITEMS).thenAccept(items -> this.searchViewModel.setOriginalItems(items));
+        this.homeViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(HomeViewModel.INITIALIZER)).get(HomeViewModel.class);
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.searchViewModel.getFilteredItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
+                this, this.homeViewModel.getFeaturedItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
