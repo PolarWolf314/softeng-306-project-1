@@ -48,7 +48,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         final RecyclerView recyclerView = this.binding.cartRecyclerView;
 
         final ListRecyclerAdapter<CartItem, ?> adapter = new ListRecyclerAdapter<>(
-                this.getApplication(), this.searchViewModel.getFilteredItems(),
+                this, this.searchViewModel.getFilteredItems(),
                 new CartItemCardViewHolder.Builder(this.shoppingCartViewModel));
 
         recyclerView.setAdapter(adapter);
