@@ -120,7 +120,7 @@
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:backgroundTint="@color/red_top_bar"
+            android:backgroundTint="@color/primary"
             android:text="@string/checkout"
             app:cornerRadius="10dp" />
     </RelativeLayout>
