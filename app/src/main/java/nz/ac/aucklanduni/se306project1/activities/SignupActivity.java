@@ -30,29 +30,36 @@ public class SignupActivity extends AppCompatActivity {
         this.signupViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(SignupViewModel.initializer)).get(SignupViewModel.class);
 
         this.binding.signupSignUpButton.setOnClickListener(v -> {
+            final String firstName = this.binding.signupFirstnameTextInputLayout.getEditText().getText().toString();
+            final String lastName = this.binding.signupLastnameTextInputLayout.getEditText().getText().toString();
             final String email = this.binding.signupEmailTextInputLayout.getEditText().getText().toString();
             final String password = this.binding.signupPasswordTextInputLayout.getEditText().getText().toString();
             final String confirmedPassword = this.binding.signupConfirmPasswordTextInputLayout.getEditText().getText().toString();
-            if (password.equals(confirmedPassword)) {
-                this.signupViewModel.authenticateUser(email, password).thenAccept(nothing -> {
-                    final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                    this.startActivity(intent);
-                    this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }).exceptionally(exception -> {
-                    String errorMessage = "";
-                    Class<?> exceptionClass = exception.getCause().getClass();
-                    if (exceptionClass.equals(EmailAlreadyInUseException.class)) {
-                        errorMessage = Constants.ToastMessages.EMAIL_ALREADY_IN_USE;
-                    } else if (exceptionClass.equals(WeakPasswordException.class)) {
-                        errorMessage = Constants.ToastMessages.WEAK_PASSWORD;
-                    } else if (exceptionClass.equals(InvalidEmailException.class)){
-                        errorMessage = Constants.ToastMessages.INVALID_EMAIL;
-                    }
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-                    return null;
-                });
+
+            if ((!firstName.isEmpty()) && (!lastName.isEmpty()) && (!email.isEmpty()) && (!password.isEmpty())) {
+                if (password.equals(confirmedPassword)) {
+                    this.signupViewModel.authenticateUser(email, password).thenAccept(nothing -> {
+                        final Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
+                        this.startActivity(intent);
+                        this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    }).exceptionally(exception -> {
+                        String errorMessage = "";
+                        Class<?> exceptionClass = exception.getCause().getClass();
+                        if (exceptionClass.equals(EmailAlreadyInUseException.class)) {
+                            errorMessage = Constants.ToastMessages.EMAIL_ALREADY_IN_USE;
+                        } else if (exceptionClass.equals(WeakPasswordException.class)) {
+                            errorMessage = Constants.ToastMessages.WEAK_PASSWORD;
+                        } else if (exceptionClass.equals(InvalidEmailException.class)) {
+                            errorMessage = Constants.ToastMessages.INVALID_EMAIL;
+                        }
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+                        return null;
+                    });
+                } else {
+                    Toast.makeText(this, Constants.ToastMessages.CONFIRMED_PASSWORD_MISMATCH, Toast.LENGTH_LONG).show();
+                }
             } else {
-                Toast.makeText(this, Constants.ToastMessages.CONFIRMED_PASSWORD_MISMATCH, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, Constants.ToastMessages.NOT_ALL_FIELDS_FILLED, Toast.LENGTH_LONG).show();
             }
         });
 
