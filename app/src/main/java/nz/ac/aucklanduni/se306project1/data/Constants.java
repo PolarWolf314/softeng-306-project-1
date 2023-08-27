@@ -19,6 +19,7 @@ public class Constants {
     }
 
     public static class ToastMessages {
+        public static final String GENERIC_FAILURE = "Something went wrong sorry!";
         public static final String NOT_ALL_FIELDS_FILLED = "Please fill out all fields";
         public static final String INCORRECT_USERNAME_OR_PASSWORD = "Username and/or password is incorrect";
         public static final String EMAIL_ALREADY_IN_USE = "Email address already in use";
