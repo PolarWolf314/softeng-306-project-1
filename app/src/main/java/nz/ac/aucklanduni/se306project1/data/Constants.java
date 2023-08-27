@@ -28,6 +28,7 @@ public class Constants {
         public static final String USER_DATA_CLEARED = "Cleared shopping cart and watchlist";
         public static final String ITEM_ADDED_TO_CART = "Item added to cart";
         public static final String CHECKOUT_MESSAGE = "Order placed";
+        public static final String PROFILE_REDIRECT = "Login to view profile";
     }
 
     public static class Colours {
