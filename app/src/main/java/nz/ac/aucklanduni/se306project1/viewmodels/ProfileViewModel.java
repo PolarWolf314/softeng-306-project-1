@@ -24,6 +24,7 @@ public class ProfileViewModel extends ViewModel {
 
     public void signoutUser() {
         this.engiWear.getAuthenticationProvider().logoutUser();
+        this.engiWear.setUserDataProvider(null);
     }
 
     public void clearUserData() {
