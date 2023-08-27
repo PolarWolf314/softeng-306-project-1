@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
 import nz.ac.aucklanduni.se306project1.iconbuttons.IconButton;
@@ -49,6 +51,9 @@ public class TopBarFragment extends Fragment {
 
         this.binding.topBarSearchView.setOnQueryTextListener(
                 QueryUtils.createQueryChangeListener(this::onQueryChange));
+        KeyboardVisibilityEvent.setEventListener(
+                this.requireActivity(),
+                this::onKeyboardVisibilityChange);
     }
 
     private void bindTopBarData() {
@@ -65,6 +70,16 @@ public class TopBarFragment extends Fragment {
                 .observe(lifecycleOwner, iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
         this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
+    }
+
+    private void onKeyboardVisibilityChange(final boolean isOpen) {
+        if (isOpen) return;
+
+        final String query = this.binding.topBarSearchView.getQuery().toString().trim();
+        if (query.isEmpty()) {
+            // If there's no query and they've closed the keyboard, collapse the search bar
+            this.viewModel.setSearchBarExpanded(false);
+        }
     }
 
     private void onQueryChange(final String newQuery) {
