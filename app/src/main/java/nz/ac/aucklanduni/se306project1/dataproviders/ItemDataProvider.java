@@ -14,4 +14,6 @@ public interface ItemDataProvider {
     CompletableFuture<List<Item>> getFeaturedItems(int numItems);
 
     CompletableFuture<Integer> getItemCountPerCategory(Category category);
+
+    CompletableFuture<List<Item>> getAllItems();
 }

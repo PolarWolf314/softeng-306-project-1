@@ -102,12 +102,26 @@ public class FirebaseItemDataProvider implements ItemDataProvider {
                 .thenApply(QuerySnapshot::size);
     }
 
+    @Override
+    public CompletableFuture<List<Item>> getAllItems() {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        return FutureUtils.fromTask(db.collection("items").get())
+                .thenApply(documentSnapshot -> {
+                    final List<Item> categoryItemList = new ArrayList<>();
+                    for (final DocumentSnapshot document : documentSnapshot.getDocuments()) {
+                        final Category category = Category.fromId(document.getString("categoryId"));
+                        categoryItemList.add(this.parseDocumentForItem(document, category));
+                    }
+                    return categoryItemList;
+                });
+    }
+
     private Item parseDocumentForItem(final DocumentSnapshot document, final Category category) {
         final Item item = document.toObject(category.getItemClass());
         item.setId(document.getId());
 
         this.cachedItems.put(item.getId(), item);
-
         return item;
     }
 
