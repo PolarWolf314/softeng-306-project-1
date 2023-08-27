@@ -17,7 +17,8 @@ public abstract class WatchlistItemViewModel extends ViewModel {
 
     public WatchlistItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
-        if (this.userDataProvider != null) this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
+        this.getWatchlist();
+
     }
 
     public void addItemToWatchlist(final Item item) {
@@ -46,5 +47,11 @@ public abstract class WatchlistItemViewModel extends ViewModel {
         final Set<Item> items = this.watchlistItems.getValue();
         if (items == null) return new HashSet<>();
         return items;
+    }
+
+    protected void getWatchlist() {
+        if (this.userDataProvider != null) {
+            this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
+        }
     }
 }
