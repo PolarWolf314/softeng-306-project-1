@@ -130,4 +130,8 @@
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="Widget.Material3.Chip.Filter.Text" parent="Widget.Material3.Chip.Filter">
+        <item name="android:textAppearance">@style/LabelSmall</item>
+    </style>
 </resources>
