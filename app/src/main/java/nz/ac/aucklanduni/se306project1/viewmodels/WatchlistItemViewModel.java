@@ -17,7 +17,7 @@ public abstract class WatchlistItemViewModel extends ViewModel {
 
     public WatchlistItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
-        this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
+        if (this.userDataProvider != null) this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
     }
 
     public void addItemToWatchlist(final Item item) {
