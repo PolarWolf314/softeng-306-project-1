@@ -133,7 +133,7 @@ public class DetailsActivity extends TopBarActivity {
         final List<String> availableSizes = Arrays.asList("s", "m", "l", "xl");
         final List<String> sizes = availableSizes
                 .stream()
-                .filter(size -> sizeQuantities.get(size) > 0)
+                .filter(size -> sizeQuantities.getOrDefault(size, 0) > 0)
                 .collect(Collectors.toList());
 
         if (this.detailsViewModel.getCurrentSizes().equals(sizes)) {
