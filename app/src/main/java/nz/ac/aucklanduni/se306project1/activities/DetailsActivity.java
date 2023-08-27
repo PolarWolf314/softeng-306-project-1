@@ -56,10 +56,16 @@ public class DetailsActivity extends TopBarActivity {
         this.detailsViewModel.getSelectedColourInfo().observe(this, this::setColourInformation);
 
         this.topBarViewModel.setStartIconButton(new BackButton());
-        this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
+
 
         this.detailsViewModel.isInWatchlist().observe(this, isInWatchlist ->
                 this.topBarViewModel.setEndIconButton(new WatchlistButton(isInWatchlist, this.detailsViewModel::toggleIsInWatchlist)));
+
+        if (this.detailsViewModel.isUserLoggedIn()) {
+            this.topBarViewModel.setEndIconButton(new WatchlistButton(false, this.detailsViewModel::toggleIsInWatchlist));
+        } else {
+            this.topBarViewModel.setEndIconButton(null);
+        }
     }
 
     private void bindItemData(final Item item) {
