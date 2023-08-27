@@ -17,6 +17,7 @@ public class HomeSearchIcon extends SearchIcon {
             final Intent intent = new Intent(activity, ListActivity.class);
             intent.putExtra(Constants.IntentKeys.CATEGORY_ID, Category.ALL_ITEMS.getId());
             activity.startActivity(intent);
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         };
     }
 }
