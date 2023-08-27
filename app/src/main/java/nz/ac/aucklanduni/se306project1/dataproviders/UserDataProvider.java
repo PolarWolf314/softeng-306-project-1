@@ -32,6 +32,8 @@ public interface UserDataProvider {
 
     String getUserId();
 
+    String getUserEmailAddress();
+
     CompletableFuture<Set<CartItem>> getShoppingCart();
 
     CompletableFuture<Set<Item>> getWatchlist();
