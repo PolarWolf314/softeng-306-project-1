@@ -93,6 +93,8 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
                     android:paddingHorizontal="20dp" />
+
+                <include layout="@layout/loading_spinner" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

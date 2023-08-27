@@ -1,6 +1,5 @@
 package nz.ac.aucklanduni.se306project1.viewmodels;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.viewmodel.ViewModelInitializer;
@@ -33,12 +32,10 @@ public class HomeViewModel extends WatchlistItemViewModel {
     public HomeViewModel(final ItemDataProvider itemDataProvider, final UserDataProvider userDataProvider) {
         super(userDataProvider);
         this.itemDataProvider = itemDataProvider;
-        this.itemDataProvider.getFeaturedItems(NUM_FEATURED_ITEMS)
-                .thenAccept(this.featuredItems::setValue);
     }
 
-    public LiveData<List<Item>> getFeaturedItems() {
-        return this.featuredItems;
+    public CompletableFuture<List<Item>> getFeaturedItems() {
+        return this.itemDataProvider.getFeaturedItems(NUM_FEATURED_ITEMS);
     }
 
     public CompletableFuture<Integer> getItemCountPerCategory(final Category category) {

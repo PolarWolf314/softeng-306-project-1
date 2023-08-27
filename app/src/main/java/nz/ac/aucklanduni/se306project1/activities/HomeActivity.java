@@ -6,9 +6,13 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Collections;
+import java.util.List;
 
 import nz.ac.aucklanduni.se306project1.R;
 import nz.ac.aucklanduni.se306project1.adapters.ListRecyclerAdapter;
@@ -18,6 +22,7 @@ import nz.ac.aucklanduni.se306project1.iconbuttons.HomeSearchIcon;
 import nz.ac.aucklanduni.se306project1.itemdecorations.HorizontalItemSpacingDecoration;
 import nz.ac.aucklanduni.se306project1.models.enums.Category;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
+import nz.ac.aucklanduni.se306project1.ui.LoadingSpinner;
 import nz.ac.aucklanduni.se306project1.utils.StringUtils;
 import nz.ac.aucklanduni.se306project1.viewholders.FeaturedItemCardViewHolderBuilder;
 import nz.ac.aucklanduni.se306project1.viewmodels.BottomNavigationViewModel;
@@ -28,6 +33,7 @@ public class HomeActivity extends TopBarActivity {
     private ActivityHomeBinding binding;
     private HomeViewModel homeViewModel;
     private BottomNavigationViewModel bottomNavigationViewModel;
+    private LoadingSpinner loadingSpinner;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -37,10 +43,33 @@ public class HomeActivity extends TopBarActivity {
         this.setContentView(this.binding.getRoot());
 
         this.homeViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(HomeViewModel.INITIALIZER)).get(HomeViewModel.class);
+        this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
+
+        this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
+        this.topBarViewModel.setEndIconButton(new HomeSearchIcon());
+
+        this.loadingSpinner = new LoadingSpinner(this.binding.getRoot());
+
+        this.displayFeaturedItems();
+        this.setupCategories();
+
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
+    }
+
+    private void displayFeaturedItems() {
+
+        final MutableLiveData<List<Item>> featuredItems = new MutableLiveData<>(Collections.emptyList());
+
+        this.loadingSpinner.show();
+        this.homeViewModel.getFeaturedItems().thenAccept(items -> {
+            this.loadingSpinner.hide();
+            featuredItems.setValue(items);
+        });
 
         final RecyclerView recyclerView = this.binding.featuredProductsRecyclerView;
         final ListRecyclerAdapter<Item, ?> adapter = new ListRecyclerAdapter<>(
-                this, this.homeViewModel.getFeaturedItems(), new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
+                this, featuredItems, new FeaturedItemCardViewHolderBuilder(this.homeViewModel));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -48,13 +77,6 @@ public class HomeActivity extends TopBarActivity {
         final int horizontalSpacingInPixels = this.getResources().getDimensionPixelSize(R.dimen.horizontal_item_spacing);
         recyclerView.addItemDecoration(new HorizontalItemSpacingDecoration(this, horizontalSpacingInPixels));
 
-        this.setupCategories();
-        this.bottomNavigationViewModel = new ViewModelProvider(this).get(BottomNavigationViewModel.class);
-        this.bottomNavigationViewModel.setSelectedItemId(R.id.navigation_home);
-        this.topBarViewModel.setEndIconButton(new HomeSearchIcon());
-
-        this.getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.red_top_bar));
-        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.background_light_gray));
     }
 
     private void switchToCategory(final Category category) {

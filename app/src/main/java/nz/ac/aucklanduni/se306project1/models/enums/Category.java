@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nz.ac.aucklanduni.se306project1.R;
-import nz.ac.aucklanduni.se306project1.builders.ui.CategoryFilterBuilder;
-import nz.ac.aucklanduni.se306project1.builders.ui.MeltingPointFilterBuilder;
-import nz.ac.aucklanduni.se306project1.builders.ui.SubcategoryFilterBuilder;
 import nz.ac.aucklanduni.se306project1.models.items.ChemmatItem;
 import nz.ac.aucklanduni.se306project1.models.items.CivilItem;
 import nz.ac.aucklanduni.se306project1.models.items.Item;
 import nz.ac.aucklanduni.se306project1.models.items.MechanicalItem;
 import nz.ac.aucklanduni.se306project1.models.items.SoftwareItem;
+import nz.ac.aucklanduni.se306project1.ui.CategoryFilterBuilder;
+import nz.ac.aucklanduni.se306project1.ui.MeltingPointFilterBuilder;
+import nz.ac.aucklanduni.se306project1.ui.SubcategoryFilterBuilder;
 
 // TODO: Refactor this, possibly into classes? They're starting to get pretty chunky
 public enum Category {

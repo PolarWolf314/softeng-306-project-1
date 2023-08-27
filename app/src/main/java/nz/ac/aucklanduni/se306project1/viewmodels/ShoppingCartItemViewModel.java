@@ -23,14 +23,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
     public ShoppingCartItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
         if (this.userDataProvider != null) {
-            this.userDataProvider.getShoppingCart().thenAccept(cartItems -> {
-                this.shoppingCartItems.setValue(cartItems);
-                Double tempPrice = 0.0;
-                for (CartItem cartItem : this.shoppingCartItems.getValue()) {
-                    tempPrice += (cartItem.getQuantity() * cartItem.getItem().getPrice());
-                }
-                this.totalPrice.setValue(tempPrice);
-            });
+            this.userDataProvider.getShoppingCart().thenAccept(this::setInitialShoppingCartItems);
         }
     }
 
@@ -48,7 +41,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
         this.totalPrice.setValue(this.totalPrice.getValue() - cartItem.getItem().getPrice());
     }
 
-    public void changeItemQuantity(final CartItem cartItem, int newQuantity) {
+    public void changeItemQuantity(final CartItem cartItem, final int newQuantity) {
         this.totalPrice.setValue(this.totalPrice.getValue() + ((newQuantity - cartItem.getQuantity()) * cartItem.getItem().getPrice()));
         this.userDataProvider.changeShoppingCartItemQuantity(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()), newQuantity);
@@ -58,7 +51,7 @@ public class ShoppingCartItemViewModel extends ViewModel {
     public void removeItemFromCart(final CartItem cartItem) {
         this.userDataProvider.removeFromShoppingCart(new SerializedCartItem(cartItem.getQuantity(),
                 cartItem.getColour(), cartItem.getSize(), cartItem.getItem().getId()));
-        Set<CartItem> cartItems = this.getCartItems();
+        final Set<CartItem> cartItems = this.getCartItems();
         cartItems.remove(cartItem);
         this.shoppingCartItems.setValue(cartItems);
         this.totalPrice.setValue(this.totalPrice.getValue() - cartItem.getCollectivePrice());
@@ -72,5 +65,14 @@ public class ShoppingCartItemViewModel extends ViewModel {
         final Set<CartItem> items = this.shoppingCartItems.getValue();
         if (items == null) return new HashSet<>();
         return items;
+    }
+
+    protected void setInitialShoppingCartItems(final Set<CartItem> cartItems) {
+        this.shoppingCartItems.setValue(cartItems);
+        double tempPrice = 0.0;
+        for (final CartItem cartItem : cartItems) {
+            tempPrice += cartItem.getCollectivePrice();
+        }
+        this.totalPrice.setValue(tempPrice);
     }
 }

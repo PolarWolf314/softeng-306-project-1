@@ -1,4 +1,4 @@
-package nz.ac.aucklanduni.se306project1.builders.ui;
+package nz.ac.aucklanduni.se306project1.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;

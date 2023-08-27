@@ -74,6 +74,8 @@
                 android:id="@+id/watchlist_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <include layout="@layout/loading_spinner" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

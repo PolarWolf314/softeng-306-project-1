@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#75E6FF"
+                android:backgroundTint="@color/blue_onboarding"
                 android:fontFamily="@font/pptelegraf_medium"
                 android:shadowColor="@color/fui_transparent"
                 android:text="@string/login"
@@ -140,5 +140,11 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <include
+        layout="@layout/loading_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
