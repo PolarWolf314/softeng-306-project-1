@@ -64,7 +64,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:fontFamily="@font/pptelegraf_medium" />
+                    android:fontFamily="@font/pptelegraf_medium"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
