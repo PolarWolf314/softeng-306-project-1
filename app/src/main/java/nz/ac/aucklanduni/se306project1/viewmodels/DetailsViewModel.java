@@ -92,4 +92,8 @@ public class DetailsViewModel extends ViewModel {
                     this.selectedSize, this.item.getId()));
         }
     }
+
+    public boolean isUserLoggedIn() {
+        return this.userDataProvider != null;
+    }
 }

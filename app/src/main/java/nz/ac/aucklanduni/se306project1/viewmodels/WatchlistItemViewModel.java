@@ -17,7 +17,7 @@ public abstract class WatchlistItemViewModel extends ViewModel {
 
     public WatchlistItemViewModel(final UserDataProvider userDataProvider) {
         this.userDataProvider = userDataProvider;
-        this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
+        if (this.userDataProvider != null) this.userDataProvider.getWatchlist().thenAccept(this.watchlistItems::setValue);
     }
 
     public void addItemToWatchlist(final Item item) {
@@ -36,6 +36,10 @@ public abstract class WatchlistItemViewModel extends ViewModel {
 
     public boolean isInWatchlist(final Item item) {
         return this.getItems().contains(item);
+    }
+
+    public boolean isUserLoggedIn() {
+        return this.userDataProvider != null;
     }
 
     private Set<Item> getItems() {
