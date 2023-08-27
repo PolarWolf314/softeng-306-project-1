@@ -34,8 +34,4 @@ public class ProfileViewModel extends ViewModel {
     public String getUserEmailAddress() {
         return this.engiWear.getUserDataProvider().getUserEmailAddress();
     }
-
-    public boolean isUserLoggedIn() {
-        return this.engiWear.getUserDataProvider() != null;
-    }
 }

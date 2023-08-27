@@ -41,14 +41,6 @@ public class WatchlistActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(ItemSearchViewModel.class);
         this.watchlistViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(WatchlistViewModel.initializer)).get(WatchlistViewModel.class);
-
-        if (!this.watchlistViewModel.isUserLoggedIn()) {
-            final Intent intent = new Intent(WatchlistActivity.this, LoginActivity.class);
-            this.startActivity(intent);
-            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            Toast.makeText(this, Constants.ToastMessages.WATCHLIST_REDIRECT, Toast.LENGTH_LONG).show();
-        }
-
         this.watchlistViewModel.getWatchlistItems().observe(this, this::onWatchlistItemsLoaded);
 
         final RecyclerView recyclerView = this.binding.watchlistRecyclerView;

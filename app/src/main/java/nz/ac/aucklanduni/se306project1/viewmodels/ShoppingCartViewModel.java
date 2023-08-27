@@ -46,8 +46,4 @@ public class ShoppingCartViewModel extends ShoppingCartItemViewModel {
         this.userDataProvider.placeOrder(new Order(this.userDataProvider.getUserId(), LocalDateTime.now(), orderItems));
         this.clearShoppingCart();
     }
-
-    public boolean isUserLoggedIn() {
-        return this.userDataProvider != null;
-    }
 }

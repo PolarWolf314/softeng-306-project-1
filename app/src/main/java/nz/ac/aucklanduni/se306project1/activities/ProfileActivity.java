@@ -29,14 +29,6 @@ public class ProfileActivity extends AppCompatActivity {
         this.setContentView(this.binding.getRoot());
 
         this.profileViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ProfileViewModel.initializer)).get(ProfileViewModel.class);
-
-        if (!this.profileViewModel.isUserLoggedIn()) {
-            final Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-            this.startActivity(intent);
-            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            Toast.makeText(this, Constants.ToastMessages.PROFILE_REDIRECT, Toast.LENGTH_LONG).show();
-        }
-
         this.binding.userNameTextView.setText(this.profileViewModel.getUserEmailAddress());
 
         this.binding.logoutButton.setOnClickListener(v -> {

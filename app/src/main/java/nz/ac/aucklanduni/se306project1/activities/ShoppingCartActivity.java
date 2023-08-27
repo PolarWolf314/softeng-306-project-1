@@ -44,14 +44,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         this.searchViewModel = new ViewModelProvider(this).get(CartItemSearchViewModel.class);
         this.shoppingCartViewModel = new ViewModelProvider(this, ViewModelProvider.Factory.from(ShoppingCartViewModel.initializer)).get(ShoppingCartViewModel.class);
-
-        if (!this.shoppingCartViewModel.isUserLoggedIn()) {
-            final Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
-            this.startActivity(intent);
-            this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            Toast.makeText(this, Constants.ToastMessages.SHOPPING_CART_REDIRECT, Toast.LENGTH_LONG).show();
-        }
-
         this.shoppingCartViewModel.getShoppingCartItems().observe(this, this::onShoppingCartItemsLoaded);
         this.shoppingCartViewModel.getTotalPrice().observe(this, this::onTotalPriceChange);
 
