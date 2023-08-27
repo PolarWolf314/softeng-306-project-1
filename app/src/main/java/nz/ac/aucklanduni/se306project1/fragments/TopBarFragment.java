@@ -1,6 +1,5 @@
 package nz.ac.aucklanduni.se306project1.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButton;
-
-import java.util.Objects;
 
 import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.databinding.FragmentTopBarBinding;
@@ -58,19 +54,15 @@ public class TopBarFragment extends Fragment {
     private void bindTopBarData() {
 
         final LifecycleOwner lifecycleOwner = this.getViewLifecycleOwner();
-        final LiveData<String> title = this.viewModel.getTitle();
-        final LiveData<Integer> titleColour = this.viewModel.getTitleColour();
-        final LiveData<IconButton> endIconButton = this.viewModel.getEndIconButton();
 
-        this.binding.topBarTitle.setText(title.getValue());
-        this.binding.topBarTitle.setTextColor(Objects.requireNonNullElse(titleColour.getValue(), Color.WHITE));
         this.bindIconButton(this.binding.startIconButton, this.viewModel.getStartIconButton());
 
-        title.observe(lifecycleOwner, (newTitle) -> this.binding.topBarTitle.setText(newTitle));
-        titleColour.observe(lifecycleOwner, (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
-        endIconButton.observe(lifecycleOwner, iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
-
-
+        this.viewModel.getTitle()
+                .observe(lifecycleOwner, (newTitle) -> this.binding.topBarTitle.setText(newTitle));
+        this.viewModel.getTitleColour()
+                .observe(lifecycleOwner, (newColour) -> this.binding.topBarTitle.setTextColor(newColour));
+        this.viewModel.getEndIconButton()
+                .observe(lifecycleOwner, iconButton -> this.bindIconButton(this.binding.endIconButton, iconButton));
         this.viewModel.getIsSearchBarExpanded()
                 .observe(this.getViewLifecycleOwner(), this::setIsSearchBarExpanded);
     }

@@ -65,8 +65,6 @@ public class WatchlistActivity extends AppCompatActivity {
     }
 
     private void onWatchlistItemsLoaded(final Set<Item> watchlistItems) {
-        System.out.println("Hide");
-        System.out.println(watchlistItems.size());
         this.searchViewModel.setOriginalItems(new ArrayList<>(watchlistItems));
         final String label = StringUtils.getQuantity(
                 this.getResources(), R.plurals.number_of_items_in_watchlist,
