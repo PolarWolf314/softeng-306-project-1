@@ -18,6 +18,7 @@
     <string name="clear_watchlist">Clear Watchlist</string>
     <string name="no_items_in_watchlist">No Items in watchlist</string>
     <string name="clear_cart">Clear cart</string>
+    <string name="cart_item_title">%s (%s)</string>
     <string name="no_items_in_cart">No Items in cart</string>
     <string name="checkout">Checkout</string>
     <string name="item_image">Item Image</string>

@@ -30,12 +30,13 @@ public abstract class Item implements SearchFilterable {
     public boolean matches(final String query) {
         return this.displayName.toLowerCase().contains(query);
     }
-    public void setId(String newId) {
-        this.id = newId;
-    }
 
     public String getId() {
         return this.id;
+    }
+
+    public void setId(final String newId) {
+        this.id = newId;
     }
 
     public String getDisplayName() {
@@ -56,6 +57,14 @@ public abstract class Item implements SearchFilterable {
 
     public List<ColouredItemInformation> getColours() {
         return Collections.unmodifiableList(this.colours);
+    }
+
+    public ColouredItemInformation getColour(final String colour) {
+        return this.colours.stream()
+                .filter(colourInfo -> colourInfo.getColour().equals(colour))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        String.format("There is no colour '%s' for '%s'", colour, this.displayName)));
     }
 
     @Override
