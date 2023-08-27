@@ -15,6 +15,7 @@ import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -129,7 +130,8 @@ public class DetailsActivity extends TopBarActivity {
     }
 
     private void generateSizeOptions(final Map<String, Integer> sizeQuantities) {
-        final List<String> sizes = sizeQuantities.keySet()
+        final List<String> availableSizes = Arrays.asList("s", "m", "l", "xl");
+        final List<String> sizes = availableSizes
                 .stream()
                 .filter(size -> sizeQuantities.get(size) > 0)
                 .collect(Collectors.toList());
