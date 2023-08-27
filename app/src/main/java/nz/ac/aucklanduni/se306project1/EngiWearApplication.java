@@ -40,8 +40,4 @@ public class EngiWearApplication extends Application {
     public ItemDataProvider getItemDataProvider() {
         return this.itemDataProvider;
     }
-
-    public boolean isUserLoggedIn() {
-        return this.userDataProvider != null;
-    }
 }
