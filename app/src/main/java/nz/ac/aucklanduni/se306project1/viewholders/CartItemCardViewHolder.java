@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.viewholders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import java.util.Locale;
 
 import nz.ac.aucklanduni.se306project1.R;
+import nz.ac.aucklanduni.se306project1.activities.DetailsActivity;
+import nz.ac.aucklanduni.se306project1.data.Constants;
 import nz.ac.aucklanduni.se306project1.models.ImageInfo;
 import nz.ac.aucklanduni.se306project1.models.items.CartItem;
 import nz.ac.aucklanduni.se306project1.models.items.ColouredItemInformation;
@@ -33,6 +36,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
     private final MaterialButton incrementButton;
     private final MaterialButton removeButton;
     private final CardView imageContainer;
+    private final CardView cartItemCard;
 
 
     public CartItemCardViewHolder(final ShoppingCartItemViewModel viewModel, @NonNull final Context context, @NonNull final View itemView) {
@@ -48,6 +52,7 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
         this.incrementButton = itemView.findViewById(R.id.cart_item_card_increment_button);
         this.removeButton = itemView.findViewById(R.id.cart_item_card_delete_button);
         this.imageContainer = itemView.findViewById(R.id.cart_image_position);
+        this.cartItemCard = itemView.findViewById(R.id.cart_item_card);
     }
 
     @Override
@@ -76,8 +81,13 @@ public class CartItemCardViewHolder extends BindableViewHolder<CartItem> {
             this.viewModel.incrementItemQuantity(cartItem);
             this.setPriceAndQuantity(cartItem);
         });
-
+        this.cartItemCard.setOnClickListener((v) -> {
+            final Intent intent = new Intent(this.context, DetailsActivity.class);
+            intent.putExtra(Constants.IntentKeys.ITEM_ID, item.getId());
+            this.context.startActivity(intent);
+        });
         this.removeButton.setOnClickListener(v -> this.viewModel.removeItemFromCart(cartItem));
+
     }
 
     private void setPriceAndQuantity(final CartItem cartItem) {
