@@ -1,6 +1,7 @@
 package nz.ac.aucklanduni.se306project1.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -75,8 +76,15 @@ public class DetailsActivity extends TopBarActivity {
         this.binding.detailsItemDescription.setText(item.getDescription());
 
         this.binding.addToCartButton.setOnClickListener(v -> {
-            this.detailsViewModel.addToCart();
-            Toast.makeText(this, Constants.ToastMessages.ITEM_ADDED_TO_CART, Toast.LENGTH_LONG).show();
+            if (this.detailsViewModel.isUserLoggedIn()) {
+                this.detailsViewModel.addToCart();
+                Toast.makeText(this, Constants.ToastMessages.ITEM_ADDED_TO_CART, Toast.LENGTH_LONG).show();
+            } else {
+                final Intent intent = new Intent(DetailsActivity.this, LoginActivity.class);
+                this.startActivity(intent);
+                this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                Toast.makeText(this, Constants.ToastMessages.ADD_TO_CART_REDIRECT, Toast.LENGTH_LONG).show();
+            }
         });
     }
 
