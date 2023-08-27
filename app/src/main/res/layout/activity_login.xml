@@ -89,8 +89,6 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <include layout="@layout/loading_spinner" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button"
                 style="@style/ButtonIconCustomStyle"
@@ -142,5 +140,11 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <include
+        layout="@layout/loading_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
